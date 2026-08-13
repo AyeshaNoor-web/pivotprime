@@ -98,7 +98,8 @@ const SCALE = [
   { v: null, t: "Not applicable", na: true },
 ];
 
-const WEIGHTS: Record<string, { label: string; founder: number; process: number; commercial: number; data: number; people: number; tech: number }> = {
+type WeightKeys = "founder" | "process" | "commercial" | "data" | "people" | "tech";
+const WEIGHTS: Record<string, { label: string } & Record<WeightKeys, number>> = {
   founderled: { label: "Founder-led, under 20 staff", founder: 25, process: 20, commercial: 20, data: 10, people: 15, tech: 10 },
   sme: { label: "Scaling SME, 20 to 100 staff", founder: 15, process: 20, commercial: 25, data: 15, people: 15, tech: 10 },
   midmarket: { label: "Mid-market, 100+ staff", founder: 5, process: 25, commercial: 20, data: 20, people: 20, tech: 10 },
@@ -130,7 +131,7 @@ const COMMENTARY: Record<string, { line: string; body: string; svc: string }> = 
 export default function DiagnosticApp() {
   const [step, setStep] = useState(0);
   const [meta, setMeta] = useState({ biz: "", who: "", role: "leadership", preset: "sme" });
-  const [answers, setAnswers] = useState<Record<number, { oi: number; v: number; na: boolean; dk: boolean }>>({});
+  const [answers, setAnswers] = useState<Record<number, { oi: number; v: number | null; na: boolean; dk: boolean }>>({});
   const [textAnswers, setTextAnswers] = useState<string[]>(["", "", "", ""]);
   const [hint, setHint] = useState("");
 
@@ -177,7 +178,7 @@ export default function DiagnosticApp() {
     
     QUESTIONS.forEach((q, i) => {
       const a = answers[i];
-      if (!a || a.na) return;
+      if (!a || a.na || a.v === null) return;
       sums[q.d] += a.v;
       counts[q.d]++;
     });
@@ -188,8 +189,8 @@ export default function DiagnosticApp() {
     });
 
     const usable = rows.filter((r) => !r.insufficient);
-    const wSum = usable.reduce((t, r) => t + w[r.d], 0);
-    usable.forEach((r) => { r.weight = wSum ? (w[r.d] / wSum) * 100 : 0; });
+    const wSum = usable.reduce((t, r) => t + (w as Record<string, number>)[r.d], 0);
+    usable.forEach((r) => { r.weight = wSum ? ((w as Record<string, number>)[r.d] / wSum) * 100 : 0; });
     const overall = wSum ? Math.round(usable.reduce((t, r) => t + r.score * r.weight, 0) / 100) : null;
     usable.forEach((r) => { r.deficit = +(r.weight * (100 - r.score) / 100).toFixed(1); });
     

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import FadeUp from "@/components/FadeUp";
+import CountUp from "@/components/CountUp";
 
 export default function Home() {
   return (
@@ -11,7 +13,7 @@ export default function Home() {
             src="/home-banner.jpg" 
             alt="Hero background" 
             fill 
-            className="object-cover"
+            className="object-cover animate-water-pan"
             priority 
           />
           <div className="absolute inset-0 bg-[#013325]/50" />
@@ -77,39 +79,39 @@ export default function Home() {
           This is what we have delivered for our clients
         </h2>
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-20 gap-x-8">
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">~2 days</div>
+          <FadeUp delay={100} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">~<CountUp end={2} /> days</div>
             <div className="text-base text-gray-500 font-medium px-4">freed for founders and<br />leaders, per week</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+40-60%</div>
+          </FadeUp>
+          <FadeUp delay={200} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={40} />-<CountUp end={60} />%</div>
             <div className="text-base text-gray-500 font-medium px-4">reduction in<br />duplicated work,<br />rework, and<br />inefficiencies.</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+20-35%</div>
+          </FadeUp>
+          <FadeUp delay={300} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={20} />-<CountUp end={35} />%</div>
             <div className="text-base text-gray-500 font-medium px-4">revenue growth</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+10-15%</div>
+          </FadeUp>
+          <FadeUp delay={400} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={10} />-<CountUp end={15} />%</div>
             <div className="text-base text-gray-500 font-medium px-4">increase in customer<br />retention</div>
-          </div>
+          </FadeUp>
           
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">30-50%</div>
+          <FadeUp delay={500} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={30} />-<CountUp end={50} />%</div>
             <div className="text-base text-gray-500 font-medium px-4">faster execution<br />across teams</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">2-4x</div>
+          </FadeUp>
+          <FadeUp delay={600} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={2} />-<CountUp end={4} />x</div>
             <div className="text-base text-gray-500 font-medium px-4">higher quality leads</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">43%</div>
+          </FadeUp>
+          <FadeUp delay={700} className="flex flex-col items-center">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={43} />%</div>
             <div className="text-base text-gray-500 font-medium px-4">fewer mis-hires and<br />faster confidence in<br />new hires</div>
-          </div>
-          <div className="flex flex-col items-center">
+          </FadeUp>
+          <FadeUp delay={800} className="flex flex-col items-center">
             <div className="text-4xl md:text-5xl font-bold text-primary mb-4 leading-tight">Aligned &<br />Accountable</div>
             <div className="text-base text-gray-500 font-medium px-4">Team Culture</div>
-          </div>
+          </FadeUp>
         </div>
       </section>
 

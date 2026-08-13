@@ -9,6 +9,8 @@
   --color-light: #f5f5f5;
   --color-background: #ffffff;
   --color-foreground: #000000;
+
+  --animate-water-pan: water-pan 20s ease-in-out infinite alternate;
 }
 
 @layer base {
@@ -24,4 +26,10 @@
   100% {
     transform: translateX(-50%);
   }
+}
+
+@keyframes water-pan {
+  0% { transform: scale(1.05) translate(0, 0); }
+  50% { transform: scale(1.08) translate(-1%, 1%); }
+  100% { transform: scale(1.05) translate(1%, -1%); }
 }
