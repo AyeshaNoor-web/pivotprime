@@ -11,10 +11,10 @@ export default function Home() {
             src="/home-banner.jpg" 
             alt="Hero background" 
             fill 
-            className="object-cover brightness-75"
+            className="object-cover"
             priority 
           />
-          <div className="absolute inset-0 bg-[#093524]/70 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-[#013325]/50" />
         </div>
         
         <div className="relative z-10 max-w-5xl mx-auto w-full text-white">
