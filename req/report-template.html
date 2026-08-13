@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Operational Constraint Diagnostic Report</title>
+<style>
+@font-face{font-family:'Poppins';src:url('fonts/out/Poppins-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:'Poppins';src:url('fonts/out/Poppins-500.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Poppins';src:url('fonts/out/Poppins-600.woff2') format('woff2');font-weight:600}
+@font-face{font-family:'Poppins';src:url('fonts/out/Poppins-700.woff2') format('woff2');font-weight:700}
+
+:root{
+  --dark:#013325; --mid:#009f50; --neon:#00d76d; --gold:#af8943;
+  --teal:#1f7f95; --cream:#fefbf8; --ink:#101d18; --muted:#5f6f69;
+  --line:#dde5e1; --panel:#f3f8f4;
+}
+
+@page{
+  size:A4; margin:20mm 18mm 18mm;
+  @bottom-left{
+    content:"Pivot Prime  ·  Operational Constraint Diagnostic";
+    font-family:Carlito,Calibri,sans-serif; font-size:8pt; color:#7a8a84;
+  }
+  @bottom-right{
+    content:counter(page);
+    font-family:Poppins,sans-serif; font-size:8pt; color:#7a8a84;
+  }
+}
+@page cover{ margin:0; @bottom-left{content:""} @bottom-right{content:""} }
+
+*{box-sizing:border-box}
+body{margin:0;font-family:Carlito,Calibri,sans-serif;font-size:10.5pt;line-height:1.5;color:var(--ink)}
+h1,h2,h3,h4,.num{font-family:Poppins,sans-serif}
+p{margin:0 0 9pt}
+.small{font-size:9pt}
+.muted{color:var(--muted)}
+
+/* ---------- cover ---------- */
+.cover{page:cover;height:297mm;background:var(--dark);color:#fff;padding:26mm 20mm;position:relative;page-break-after:always}
+.cover .mark{font-family:Poppins;font-weight:600;font-size:11pt;letter-spacing:.22em;text-transform:uppercase}
+.cover .mark b{color:var(--neon);font-weight:600}
+.cover .rule{height:2px;background:var(--gold);width:54mm;margin:9mm 0 0}
+.cover h1{font-size:33pt;line-height:1.1;font-weight:700;margin:52mm 0 0;max-width:130mm}
+.cover .sub{font-size:13pt;color:#a9ccbd;margin-top:6mm;max-width:120mm;font-family:Carlito,Calibri,sans-serif}
+.cover .meta{position:absolute;bottom:26mm;left:20mm;right:20mm;border-top:1px solid rgba(255,255,255,.22);padding-top:6mm;
+  display:flex;justify-content:space-between;font-size:9.5pt;color:#a9ccbd}
+.cover .meta b{display:block;color:#fff;font-family:Poppins;font-weight:500;font-size:11pt;margin-top:1mm}
+
+/* ---------- section furniture ---------- */
+.eyebrow{font-family:Poppins;font-weight:600;font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin:0 0 3mm}
+h2{font-size:19pt;font-weight:700;line-height:1.2;color:var(--dark);margin:0 0 4mm}
+h3{font-size:12pt;font-weight:600;color:var(--dark);margin:0 0 3mm}
+h4{font-size:10pt;font-weight:600;color:var(--dark);margin:0 0 2mm}
+.page-break{page-break-before:always}
+.callout,.rank,table.dv,.gap,.next,.tpl{page-break-inside:avoid}
+.checks li,.bar,dl.ft dd{page-break-inside:avoid}
+h2,h3,.eyebrow{page-break-after:avoid}
+hr.div{border:none;border-top:1px solid var(--line);margin:8mm 0}
+
+/* ---------- headline ---------- */
+.headline{background:var(--dark);color:#fff;border-radius:3mm;padding:11mm 12mm;margin:0 0 9mm;display:flex;gap:12mm;align-items:flex-start}
+.headline .figure{text-align:center;flex:0 0 40mm}
+.headline .score{font-family:Poppins;font-weight:700;font-size:52pt;line-height:.95;color:var(--neon)}
+.headline .outof{font-size:9pt;color:#8fbfa9;letter-spacing:.1em;text-transform:uppercase}
+.headline .band{font-family:Poppins;font-weight:600;font-size:16pt;margin:0 0 3mm}
+.headline p{color:#c9e0d6;margin:0;font-size:10pt}
+
+/* ---------- domain bars ---------- */
+.bar{margin:0 0 5.5mm}
+.bar .top{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 1.6mm}
+.bar .nm{font-family:Poppins;font-weight:500;font-size:10pt}
+.bar .vl{font-family:Poppins;font-weight:600;font-size:10pt;color:var(--mid)}
+.bar .track{height:3mm;background:var(--line);border-radius:1.5mm;position:relative;overflow:hidden}
+.bar .fill{height:100%;background:var(--mid);border-radius:1.5mm;position:relative;z-index:2}
+.bar .range{position:absolute;top:0;height:100%;background:rgba(1,51,37,.16);z-index:1}
+.bar.low .fill{background:var(--gold)}
+.bar.low .vl{color:var(--gold)}
+.bar .cap{font-size:8.5pt;color:var(--muted);margin-top:1.2mm}
+
+/* ---------- ranking ---------- */
+.rank{border:1px solid var(--line);border-radius:3mm;overflow:hidden}
+.rank .r{display:flex;align-items:center;gap:5mm;padding:5mm 6mm;border-top:1px solid var(--line)}
+.rank .r:first-child{border-top:none}
+.rank .r.p1{background:var(--panel)}
+.rank .pos{font-family:Poppins;font-weight:700;font-size:11pt;color:var(--gold);width:6mm;flex:0 0 6mm}
+.rank .r.p1 .pos{color:var(--dark)}
+.rank .mid{flex:1}
+.rank .nm{font-family:Poppins;font-weight:600;font-size:10.5pt}
+.rank .sub{font-size:8.5pt;color:var(--muted)}
+.rank .def{flex:0 0 30mm;text-align:right}
+.rank .dn{font-family:Poppins;font-weight:600;font-size:11pt;color:var(--gold)}
+.rank .db{height:2mm;background:var(--line);border-radius:1mm;margin-top:1.4mm;overflow:hidden}
+.rank .db i{display:block;height:100%;background:var(--gold);border-radius:1mm}
+
+/* ---------- blocks ---------- */
+.callout{border-left:1.2mm solid var(--mid);background:var(--panel);padding:6mm 7mm;border-radius:0 2mm 2mm 0;margin:0 0 7mm}
+.callout p:last-child{margin-bottom:0}
+.checks{counter-reset:c;margin:0;padding:0;list-style:none}
+.checks li{counter-increment:c;position:relative;padding:0 0 4mm 11mm;font-size:10pt}
+.checks li::before{content:counter(c);position:absolute;left:0;top:-.4mm;width:7mm;height:7mm;border-radius:50%;
+  background:var(--dark);color:#fff;font-family:Poppins;font-weight:600;font-size:8.5pt;text-align:center;line-height:7mm}
+.checks li b{display:block;font-family:Poppins;font-weight:600;font-size:10pt;margin-bottom:.6mm}
+
+.gap{display:flex;gap:6mm;margin:0 0 6mm}
+.gap>div{flex:1;border:1px solid var(--line);border-radius:2mm;padding:5mm}
+.gap .lab{font-family:Poppins;font-weight:600;font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2mm}
+.gap .you{border-color:var(--gold)}
+.gap .you .lab{color:var(--gold)}
+
+table.dv{width:100%;border-collapse:collapse;font-size:9.5pt}
+table.dv th{background:var(--dark);color:#fff;font-family:Poppins;font-weight:600;font-size:8.5pt;text-align:left;padding:3mm 4mm}
+table.dv td{border-bottom:1px solid var(--line);padding:3mm 4mm;vertical-align:top}
+table.dv tr:nth-child(even) td{background:var(--panel)}
+table.dv td.n{font-family:Poppins;font-weight:600;color:var(--gold);white-space:nowrap}
+
+dl.ft{margin:0}
+dl.ft dt{font-family:Poppins;font-weight:600;font-size:9.5pt;color:var(--mid);margin:0 0 1.5mm}
+dl.ft dd{margin:0 0 6mm;padding-left:4mm;border-left:1px solid var(--line);font-size:10pt}
+
+.next{background:var(--dark);color:#fff;border-radius:3mm;padding:9mm 10mm;margin-top:6mm}
+.next h3{color:#fff;margin-bottom:3mm}
+.next p{color:#c9e0d6;margin-bottom:5mm}
+.next .cta{font-family:Poppins;font-weight:600;font-size:10.5pt;color:var(--neon)}
+
+/* template guidance */
+.tpl{border:1px dashed var(--gold);border-radius:2mm;padding:5mm 6mm;margin:0 0 6mm;background:#fdf9f2}
+.tpl .lab{font-family:Poppins;font-weight:600;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2mm}
+.tpl p{font-size:9.5pt;margin-bottom:4pt}
+code{font-family:'DejaVu Sans Mono',monospace;font-size:8.5pt;background:#eef3f0;padding:.4mm 1mm;border-radius:1mm}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div class="mark">Pivot<b>Prime</b></div>
+  <div class="rule"></div>
+  <h1>Operational Constraint Diagnostic</h1>
+  <div class="sub">A ranked view of what is limiting the business, and the order in which to address it.</div>
+  <div class="meta">
+    <div>Prepared for<b>Meridian Wellness Group</b></div>
+    <div>Respondents<b>4 of 4 completed</b></div>
+    <div>Date<b>11 August 2026</b></div>
+  </div>
+</section>
+
+<!-- ============ PAGE 2: RESULT ============ -->
+<div class="eyebrow">The result</div>
+<h2>Where the business scored</h2>
+
+<div class="headline">
+  <div class="figure">
+    <div class="score">58</div>
+    <div class="outof">out of 100</div>
+  </div>
+  <div>
+    <div class="band">Straining</div>
+    <p>The business works, but it is absorbing effort it should not need to. Two areas are carrying most of the problem, and one of them sits upstream of the other.</p>
+  </div>
+</div>
+
+<p class="small muted">Scored against 42 statements across six operational areas, weighted for a business of 20 to 100 staff. Four respondents: two leadership, two team. Figures below are the mean, with the shaded band showing the range across respondents.</p>
+
+<hr class="div">
+
+<div class="eyebrow">Domain scores</div>
+<h3>The six areas</h3>
+
+<div class="bar low">
+  <div class="top"><span class="nm">Commercial and margin</span><span class="vl">34</span></div>
+  <div class="track"><div class="range" style="left:25%;width:22%"></div><div class="fill" style="width:34%"></div></div>
+  <div class="cap">Range across respondents 25 to 47</div>
+</div>
+
+<div class="bar low">
+  <div class="top"><span class="nm">Data and visibility</span><span class="vl">41</span></div>
+  <div class="track"><div class="range" style="left:32%;width:18%"></div><div class="fill" style="width:41%"></div></div>
+  <div class="cap">Range across respondents 32 to 50</div>
+</div>
+
+<div class="bar">
+  <div class="top"><span class="nm">Process and delivery</span><span class="vl">57</span></div>
+  <div class="track"><div class="range" style="left:39%;width:32%"></div><div class="fill" style="width:57%"></div></div>
+  <div class="cap">Range across respondents 39 to 71. Widest disagreement of any area.</div>
+</div>
+
+<div class="bar">
+  <div class="top"><span class="nm">People and accountability</span><span class="vl">61</span></div>
+  <div class="track"><div class="range" style="left:54%;width:14%"></div><div class="fill" style="width:61%"></div></div>
+  <div class="cap">Range across respondents 54 to 68</div>
+</div>
+
+<div class="bar">
+  <div class="top"><span class="nm">Technology leverage</span><span class="vl">64</span></div>
+  <div class="track"><div class="range" style="left:57%;width:14%"></div><div class="fill" style="width:64%"></div></div>
+  <div class="cap">Range across respondents 57 to 71</div>
+</div>
+
+<div class="bar">
+  <div class="top"><span class="nm">Founder dependency</span><span class="vl">79</span></div>
+  <div class="track"><div class="range" style="left:71%;width:11%"></div><div class="fill" style="width:79%"></div></div>
+  <div class="cap">Range across respondents 71 to 82</div>
+</div>
+
+<!-- ============ PAGE 3: RANKING ============ -->
+<div class="page-break"></div>
+<div class="eyebrow">Sequence</div>
+<h2>Constraint ranking</h2>
+<p>Ranked by weighted deficit rather than by lowest score. An area scoring 40 at a weight of 25 is holding the business back more than one scoring 30 at a weight of 5. This order is the recommended sequence of work.</p>
+
+<div class="rank">
+  <div class="r p1">
+    <div class="pos">1</div>
+    <div class="mid"><div class="nm">Commercial and margin</div><div class="sub">Score 34 · weight 25</div></div>
+    <div class="def"><div class="dn">16.5</div><div class="db"><i style="width:100%"></i></div></div>
+  </div>
+  <div class="r">
+    <div class="pos">2</div>
+    <div class="mid"><div class="nm">Process and delivery</div><div class="sub">Score 57 · weight 20</div></div>
+    <div class="def"><div class="dn">8.6</div><div class="db"><i style="width:52%"></i></div></div>
+  </div>
+  <div class="r">
+    <div class="pos">3</div>
+    <div class="mid"><div class="nm">Data and visibility</div><div class="sub">Score 41 · weight 15</div></div>
+    <div class="def"><div class="dn">8.5</div><div class="db"><i style="width:52%"></i></div></div>
+  </div>
+  <div class="r">
+    <div class="pos">4</div>
+    <div class="mid"><div class="nm">People and accountability</div><div class="sub">Score 61 · weight 15</div></div>
+    <div class="def"><div class="dn">5.9</div><div class="db"><i style="width:36%"></i></div></div>
+  </div>
+  <div class="r">
+    <div class="pos">5</div>
+    <div class="mid"><div class="nm">Technology leverage</div><div class="sub">Score 64 · weight 10</div></div>
+    <div class="def"><div class="dn">3.6</div><div class="db"><i style="width:22%"></i></div></div>
+  </div>
+  <div class="r">
+    <div class="pos">6</div>
+    <div class="mid"><div class="nm">Founder dependency</div><div class="sub">Score 79 · weight 15</div></div>
+    <div class="def"><div class="dn">3.2</div><div class="db"><i style="width:19%"></i></div></div>
+  </div>
+</div>
+
+<div style="height:8mm"></div>
+
+<div class="eyebrow">The primary constraint</div>
+<h3>Commercial and margin</h3>
+
+<div class="callout">
+  <p>Margin is the constraint, and it is the one that makes the others expensive. The business does not know what a job costs while it is running, so pricing is set on instinct and corrected after the fact. That produces months that look strong and months that look tight, with no clear reason for the difference.</p>
+  <p>What this usually costs is not visible on the P&amp;L as a single line. It shows up as work that was never profitable being repeated, as discounting that becomes a habit rather than a decision, and as growth that adds revenue without adding profit. Businesses in this position often grow their way into a cash problem.</p>
+  <p>It ranks first because it sits upstream. Fixing delivery in a business that does not know which work is worth doing simply makes it more efficient at the wrong things.</p>
+</div>
+
+<div class="page-break"></div>
+<div class="eyebrow">Where the answers disagreed most</div>
+<h3>Process and delivery, leadership 71 against team 39</h3>
+<p>Four respondents produced a 32-point spread on process and delivery, the widest of any area. Leadership scored it comfortably. The team did not.</p>
+
+<table class="dv">
+  <tr><th style="width:62%">Statement</th><th>Leadership</th><th>Team</th><th class="n">Gap</th></tr>
+  <tr><td>Work is delivered on time without someone having to chase it.</td><td>Agree</td><td>Strongly disagree</td><td class="n">3</td></tr>
+  <tr><td>What sales commits to is consistently what delivery can actually deliver.</td><td>Agree</td><td>Disagree</td><td class="n">2</td></tr>
+  <tr><td>Our core processes are documented well enough that a new person could follow them.</td><td>Strongly agree</td><td>Neither</td><td class="n">2</td></tr>
+</table>
+
+<p class="small muted" style="margin-top:4mm">A gap in this direction almost always means the problem is known at the front line and not visible at the top. It is the most actionable finding in this report, and the cheapest to verify.</p>
+
+<!-- ============ ACTION ============ -->
+<hr class="div">
+<div class="eyebrow">This week</div>
+<h2>Three things to check</h2>
+<p>Specific to the primary constraint. Each one is answerable inside a week and none of them requires a project.</p>
+
+<ol class="checks">
+  <li><b>Take the last ten completed jobs and work out what each one actually made.</b>
+  Include delivery hours at real cost, not at estimate. If more than two of the ten lost money, the pricing model is the problem rather than the sales pipeline.</li>
+  <li><b>List every discount given in the last quarter and who approved it.</b>
+  If most were approved by the same person, or by nobody, discounting has become a habit rather than a decision. That is a control problem and it is fixable in a fortnight.</li>
+  <li><b>Check when your prices were last reviewed against your costs.</b>
+  If it is more than twelve months, and your costs have moved, you already know the answer. Quantify the gap before deciding what to do about it.</li>
+</ol>
+
+<hr class="div">
+
+<div class="eyebrow">What you told us</div>
+<h3>Set against what the scores say</h3>
+
+<div class="gap">
+  <div class="you">
+    <div class="lab">You said the problem is</div>
+    <p style="margin:0">Delivery capacity. The team is stretched and we keep missing dates, so we need more people.</p>
+  </div>
+  <div>
+    <div class="lab">The scores say</div>
+    <p style="margin:0">Commercial and margin ranks first, delivery second. Adding capacity to unprofitable work increases the cost of the constraint rather than removing it.</p>
+  </div>
+</div>
+
+<p>This is the most common gap we see, and it is not a criticism. Capacity is what a stretched team feels, so it is what gets reported upwards. But the diagnostic suggests the business is busy with work that was priced before anyone knew what it cost to deliver. Hiring into that pattern makes the problem larger and harder to reverse.</p>
+
+<div class="next">
+  <h3>What we would do</h3>
+  <p>On these findings we would start with an Operational Clarity Audit focused on the commercial model: margin by client and service, the true cost to deliver, and where pricing has drifted from cost. That produces the baseline the rest of the work is measured against, and it will settle the capacity question with evidence rather than opinion.</p>
+  <div class="cta">Talk to us on WhatsApp  ·  +971 52 440 1075</div>
+</div>
+
+<!-- ============ PAGE 5: ANSWERS ============ -->
+<div class="page-break"></div>
+<div class="eyebrow">In your words</div>
+<h2>The four open questions</h2>
+
+<dl class="ft">
+  <dt>What have you already tried to fix, and what happened?</dt>
+  <dd>We brought in a new project management tool last year and rewrote the onboarding process. It helped for about three months and then people drifted back to the old way of working.</dd>
+
+  <dt>What do you believe is actually holding the business back?</dt>
+  <dd>Delivery capacity. The team is stretched and we keep missing dates, so we need more people.</dd>
+
+  <dt>What single change would make the biggest difference in the next six months?</dt>
+  <dd>Getting to a point where I can see, weekly, whether we are actually making money without waiting for the management accounts.</dd>
+
+  <dt>What is coming in the next twelve months that the business is not ready for?</dt>
+  <dd>A second location, and a large retail contract that would roughly double volume in one product line.</dd>
+</dl>
+
+<div class="callout">
+  <p>Worth noting: the third answer describes the second-ranked constraint precisely, and the fourth describes a volume increase landing on a business that does not yet know its unit economics. Both point the same way as the scores.</p>
+</div>
+
+<hr class="div">
+<p class="small muted">This report is generated from the Operational Constraint Diagnostic, a 42-statement instrument scored across six operational domains and weighted by business size. Scoring is deterministic: the same answers always produce the same result, which means this score can be compared against a later one. Individual respondent answers are held by Pivot Prime and are not shared with the business.</p>
+<p class="small muted">Pivot Prime Consultancy FZ-LLC · Al Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE · hello@pivotprime.ae · pivotprime.ae</p>
+
+<!-- ============ PAGE 6: HOW TO USE ============ -->
+<div class="page-break"></div>
+<div class="eyebrow">For Pivot Prime, not for the client</div>
+<h2>How this template works</h2>
+<p>Delete this page before sending. Everything above is a worked example using sample data, so the tone and length of each written block can be copied rather than invented.</p>
+
+<div class="tpl">
+  <div class="lab">Filled automatically from the diagnostic export</div>
+  <p>Business name, date, respondent count, overall score, band and band line, all six domain scores and ranges, the full constraint ranking with weights and weighted deficits, the divergence table, and the four open answers verbatim. Every one of these comes from the JSON the diagnostic produces. Nothing here is written by hand.</p>
+</div>
+
+<div class="tpl">
+  <div class="lab">Written once, then reused: the content library</div>
+  <p><b>Constraint commentary.</b> Six blocks, one per domain, three paragraphs each, following the pattern on page 3, what the constraint is, what it costs in ways that do not show on the P&amp;L, and why it ranks where it does. Selected by primary constraint.</p>
+  <p><b>Three checks.</b> Six sets of three, following page 4, but written for each domain. Each must be answerable within a week without starting a project. Selected by primary constraint.</p>
+  <p><b>What we would do.</b> Six short paragraphs naming the service the findings justify. Selected by primary constraint.</p>
+  <p>Eighteen blocks in total. Written once, and the report assembles itself from then on.</p>
+</div>
+
+<div class="tpl">
+  <div class="lab">Written per report, roughly ten minutes</div>
+  <p><b>The perception gap</b> on page 5, comparing what the client said against what the scores show. This is the section clients react to most and it cannot be templated, because it depends on what they wrote.</p>
+  <p><b>The closing note</b> on page 6, drawing a line between the open answers and the ranking.</p>
+  <p><b>The divergence interpretation</b> on page 4, where there were multiple respondents.</p>
+</div>
+
+<div class="tpl">
+  <div class="lab">Sections to remove when they do not apply</div>
+  <p>The range bands on the domain bars, the divergence table, and the divergence interpretation are all multi-respondent only. With a single respondent, drop them and the report runs to four pages.</p>
+</div>
+
+<div class="tpl">
+  <div class="lab">Production</div>
+  <p>Rendered with WeasyPrint from this HTML file. Poppins is embedded from <code>fonts/out/</code> and body text is Carlito, which is metrically identical to Calibri. Keep both alongside the HTML or the layout will shift.</p>
+</div>
+
+</body>
+</html>

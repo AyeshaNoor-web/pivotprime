@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persona pages | Pivot Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#013325;--forest-2:#02291e;--forest-3:#0a4433;
+  --mid:#009f50;--neon:#00d76d;--gold:#af8943;
+  --sand:#efe7d8;--paper:#f7f9f8;--ink:#0c1a15;--muted:#5e6f68;--line:#e3eae6;
+  --display:'Poppins',system-ui,sans-serif;--body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#fff;color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.13;letter-spacing:-.028em}
+.g{color:var(--mid)}
+.ondark .g{color:var(--neon)}
+p{max-width:64ch}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--mid);display:block}
+.ondark .eyebrow{color:var(--neon)}
+section{padding:clamp(50px,6.2vw,86px) 0}
+.paper{background:var(--paper)}
+.dark{background:var(--forest);color:#fff}
+
+nav{position:sticky;top:0;z-index:80;background:rgba(1,51,37,.96);backdrop-filter:blur(10px)}
+nav .inner{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px);display:flex;align-items:center;gap:8px;
+  height:62px;overflow-x:auto;scrollbar-width:none}
+nav .inner::-webkit-scrollbar{display:none}
+.logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:600;font-size:16px;color:#fff;
+  text-decoration:none;margin-right:16px;white-space:nowrap;letter-spacing:-.02em}
+.mk{display:grid;grid-template-columns:repeat(4,3px);gap:2.5px}
+.mk i{width:3px;height:3px;border-radius:50%;background:var(--neon);display:block}
+.mk i:nth-child(4n){background:#fff;opacity:.35}
+.pt{background:none;border:none;cursor:pointer;font-family:var(--display);font-weight:600;font-size:13px;color:#a3c3b5;
+  padding:8px 14px;border-radius:999px;white-space:nowrap;transition:color .18s,background .18s}
+.pt:hover{color:#fff}
+.pt.on{background:var(--neon);color:var(--forest)}
+.page{display:none}
+.page.on{display:block}
+
+/* ---------- hero ---------- */
+.hero{background:var(--forest);color:#fff;position:relative;overflow:hidden;padding:clamp(52px,7vw,92px) 0 clamp(40px,5vw,64px)}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1px);background-size:28px 28px}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(32px,5.2vw,58px);margin:18px 0 0;max-width:17ch}
+.hero .sub{color:var(--neon);font-family:var(--display);font-weight:600;font-size:clamp(19px,2.3vw,26px);
+  margin-top:20px;max-width:26ch;letter-spacing:-.02em;line-height:1.28}
+.hero .lede{color:#bfd8cd;font-size:17px;margin-top:20px;max-width:54ch}
+.btn{font-family:var(--display);font-weight:600;font-size:15px;text-decoration:none;padding:14px 26px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:9px;border:none;cursor:pointer;transition:transform .18s,background .18s,color .18s,border-color .18s}
+.btn-neon{background:var(--neon);color:var(--forest)}
+.btn-neon:hover{background:#fff;transform:translateY(-2px)}
+.btn-dark{background:var(--forest);color:#fff}
+.btn-dark:hover{background:var(--forest-3);transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(255,255,255,.28);color:#fff;background:transparent}
+.btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+
+/* ---------- signature: the week ---------- */
+.weekbar{position:relative;z-index:2;margin-top:clamp(34px,4.5vw,52px);padding-top:24px;border-top:1px solid rgba(255,255,255,.16)}
+.wlab{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8fb3a4;margin-bottom:16px}
+.week{display:grid;gap:8px}
+.wrow{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center}
+.wday{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.1em;color:#8fb3a4}
+.wtrack{position:relative;height:26px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;display:flex}
+.blk{height:100%;width:0;transition:width .9s cubic-bezier(.4,0,.2,1);position:relative}
+.blk.drain{background:rgba(217,105,74,.55)}
+.blk.real{background:rgba(0,215,109,.42)}
+.blk.gap{background:transparent}
+.wkey{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:#8fb3a4}
+.wkey i{display:inline-block;width:12px;height:9px;border-radius:2px;margin-right:7px;vertical-align:middle}
+.wsum{margin-top:14px;font-size:14.5px;color:#c9e0d6;max-width:52ch}
+.wsum b{color:#fff;font-family:var(--display);font-weight:600}
+
+/* ---------- recognise ---------- */
+.recog{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.rc:hover{border-color:#cfe3d8;transform:translateY(-3px);box-shadow:0 16px 34px rgba(1,51,37,.07)}
+.rc q{quotes:none;display:block;font-family:var(--display);font-weight:600;font-size:16.5px;line-height:1.4;letter-spacing:-.015em;margin-bottom:11px}
+.rc q::before,.rc q::after{content:""}
+.rc p{font-size:14.5px;color:var(--muted);margin:0}
+
+/* ---------- offers ---------- */
+.sechead{margin-bottom:clamp(24px,3vw,40px);max-width:60ch}
+.sechead h2{font-size:clamp(26px,3.4vw,38px);margin-top:11px}
+.sechead .sub{color:var(--muted);margin-top:11px}
+.ondark .sechead .sub{color:#a9c8ba}
+.lab{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+
+.offers{display:grid;gap:14px}
+.of{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.of:hover{border-color:#cfe3d8;box-shadow:0 16px 34px rgba(1,51,37,.06)}
+.ofhead{display:grid;grid-template-columns:52px 1fr auto;gap:18px;align-items:center;padding:22px 26px;cursor:pointer;width:100%;
+  background:none;border:none;text-align:left;font-family:inherit}
+.ofn{width:52px;height:52px;border-radius:13px;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;
+  font-family:var(--display);font-weight:700;font-size:16px;color:var(--forest);transition:background .25s,color .25s,border-color .25s}
+.of.open .ofn{background:var(--forest);color:var(--neon);border-color:var(--forest)}
+.oft h3{font-size:19px;margin-bottom:3px}
+.oft .via{font-size:13.5px;color:var(--mid);font-family:var(--display);font-weight:600}
+.oft .via em{font-style:normal;color:var(--muted);font-weight:400}
+.chev{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;
+  color:var(--muted);font-size:14px;transition:transform .3s,background .25s,color .25s,border-color .25s}
+.of.open .chev{transform:rotate(180deg);background:var(--mid);color:#fff;border-color:var(--mid)}
+.ofbody{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.3,0,.2,1)}
+.ofinner{padding:0 26px 26px 96px}
+.ofinner p{font-size:15.5px;color:var(--muted);margin-bottom:12px}
+.ofinner .ticks{list-style:none;display:grid;gap:10px;margin:14px 0 0}
+.ofinner .ticks li{display:flex;gap:11px;align-items:flex-start;font-size:15px}
+.ofinner .ticks li::before{content:"";width:16px;height:16px;border-radius:50%;flex:0 0 16px;margin-top:3px;
+  background:var(--mid) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/9px no-repeat}
+.oftail{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);display:flex;justify-content:space-between;
+  align-items:center;gap:14px;flex-wrap:wrap}
+.timing{font-size:13.5px;color:var(--gold);font-family:var(--display);font-weight:600}
+.golink{font-family:var(--display);font-weight:600;font-size:14px;color:var(--forest);text-decoration:none;display:inline-flex;gap:7px;align-items:center}
+.golink:hover{color:var(--mid)}
+
+/* ---------- start here ---------- */
+.starthere{background:#fdf9f2;border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:24px 28px}
+.starthere h3{font-size:19px;margin-bottom:9px}
+.starthere p{color:#6b5a3c;font-size:15.5px}
+
+.closer{background:var(--forest-2);color:#fff;border-radius:var(--r);padding:clamp(28px,4vw,46px)}
+.closer h3{font-size:clamp(21px,2.5vw,29px);color:#fff;margin:12px 0 12px;max-width:23ch}
+.closer p{color:#bfd8cd}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.on{opacity:1;transform:none}
+:focus-visible{outline:2px solid var(--neon);outline-offset:3px;border-radius:4px}
+
+@media (max-width:880px){
+  .recog{grid-template-columns:1fr}
+  .ofinner{padding-left:26px}
+  .ofhead{grid-template-columns:44px 1fr auto;gap:14px}
+  .ofn{width:44px;height:44px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a class="logo" href="#"><span class="mk" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>PivotPrime</a>
+    <button class="pt on" data-pg="0">For Founders</button>
+    <button class="pt" data-pg="1">For SMEs</button>
+    <button class="pt" data-pg="2">For Corporate Leaders</button>
+    <button class="pt" data-pg="3">For P&amp;L Owners</button>
+  </div>
+</nav>
+
+<!-- ══════════ FOUNDERS ══════════ -->
+<div class="page on" data-pg="0">
+  <header class="hero ondark">
+    <div class="wrap">
+      <span class="eyebrow">For founders</span>
+      <h1>You're a founder, and everything still depends on you.</h1>
+      <p class="sub">You're wondering whether you built a business or just built yourself another job.</p>
+      <p class="lede">You've created something real. It works, but behind the scenes everything still depends on you. Decisions funnel back to your desk, growth feels harder than it should, and stepping away feels risky.</p>
+
+      <div class="weekbar" data-week="0">
+        <div class="wlab">A founder's week, roughly</div>
+        <div class="week"></div>
+        <div class="wkey">
+          <span><i style="background:rgba(217,105,74,.55)"></i>Work only you are doing because nobody else can</span>
+          <span><i style="background:rgba(0,215,109,.42)"></i>Work only you should be doing</span>
+        </div>
+        <div class="wsum"></div>
+      </div>
+
+      <div class="ctas"><a class="btn btn-neon" href="#">See what you can take off your plate</a></div>
+    </div>
+  </header>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">Sound familiar</span>
+        <h2>If two of these are true, <span class="g">it is not a people problem.</span></h2>
+      </div>
+      <div class="recog reveal">
+        <div class="rc"><q>I cannot take two consecutive weeks off.</q><p>Not because the team is weak, but because nothing has been designed to run without you.</p></div>
+        <div class="rc"><q>I am the only one who ever says no.</q><p>Every trade-off, every exception and every awkward call routes back to one desk.</p></div>
+        <div class="rc"><q>My senior hires keep leaving inside a year.</q><p>Good people leave roles that were built around a gap rather than around an outcome.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">What we offer</span>
+        <h2>Three ways we <span class="g">take it off you.</span></h2>
+        <p class="sub">Open each one to see what it involves.</p>
+      </div>
+      <div class="offers reveal" data-acc>
+        <article class="of open">
+          <button class="ofhead"><span class="ofn">01</span>
+            <span class="oft"><h3>A business that does not depend on you</h3>
+              <span class="via">Operational Clarity Audit <em>· from AED 15,000</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>We look at how your business actually runs today: the commercial model, the P&amp;L, marketing and sales, operations, and how decisions and work really flow. We speak with you and, where useful, selected team members.</p>
+            <ul class="ticks">
+              <li>Where progress still depends on you, decision by decision</li>
+              <li>Where things slow down, and what it is costing</li>
+              <li>What needs to change first, ranked by effort and impact</li>
+            </ul>
+            <div class="oftail"><span class="timing">Most founders start here, before any hiring or operational changes</span>
+              <a class="golink" href="#">See what the audit covers →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">02</span>
+            <span class="oft"><h3>People you can trust to carry the work</h3>
+              <span class="via">Hiring support, role design and Build and Place</span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>Once it is clear where the pressure sits, we help you put the right structure around people. This is about creating roles with real ownership, clear judgement and defined outcomes.</p>
+            <ul class="ticks">
+              <li>Role design, hiring strategy and assessments</li>
+              <li>Behavioural and practical tools that reduce the risk of mis-hires</li>
+              <li>We can support or run interviews with you, depending on what you need</li>
+              <li>Or place someone from our bench, managed by us rather than by you</li>
+            </ul>
+            <div class="oftail"><span class="timing">Founders usually come here after the audit, when it is clear what to take off their plate</span>
+              <a class="golink" href="#">How we staff an engagement →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">03</span>
+            <span class="oft"><h3>Growth without more chaos</h3>
+              <span class="via">Fractional Leadership <em>· scoped per engagement</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>As the business grows, what once worked starts to strain. We review how work flows day to day, where friction builds, and where effort is being duplicated or wasted.</p>
+            <ul class="ticks">
+              <li>Reset workflows, priorities and standards</li>
+              <li>Process design, automation opportunities and documentation</li>
+              <li>Someone senior owning execution week to week, then handing it over</li>
+            </ul>
+            <div class="oftail"><span class="timing">Typically follows hiring or growth pressure, when the business needs to stabilise at a new level</span>
+              <a class="golink" href="#">How the retainer works →</a></div>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="starthere reveal" style="margin-bottom:32px">
+        <h3>Where founders start</h3>
+        <p>Almost always with the audit. It is the cheapest way to find out whether the problem is the process, the people, or the founder. It is usually not the one you expect.</p>
+      </div>
+      <div class="closer reveal">
+        <span class="eyebrow" style="color:var(--neon)">Find out</span>
+        <h3>What you can take off your plate.</h3>
+        <p>Four minutes, six areas of the business, one named constraint. Or message us and we will talk it through.</p>
+        <div class="ctas"><a class="btn btn-neon" href="#">Take the 4-minute diagnostic</a><a class="btn btn-ghost" href="#">Talk to us on WhatsApp</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════ SMEs ══════════ -->
+<div class="page" data-pg="1">
+  <header class="hero ondark">
+    <div class="wrap">
+      <span class="eyebrow">For SME leaders</span>
+      <h1>You are running an SME that is growing but not settled.</h1>
+      <p class="sub">Growth is happening, but it does not feel controlled.</p>
+      <p class="lede">Revenue is increasing, but margins are uneven. Some months feel strong, others tighter than they should. Cash needs attention, costs creep quietly, and performance depends too much on who is chasing what.</p>
+
+      <div class="weekbar" data-week="1">
+        <div class="wlab">Where the margin goes, month by month</div>
+        <div class="week"></div>
+        <div class="wkey">
+          <span><i style="background:rgba(217,105,74,.55)"></i>Cost you can see and plan for</span>
+          <span><i style="background:rgba(0,215,109,.42)"></i>Margin you keep</span>
+        </div>
+        <div class="wsum"></div>
+      </div>
+
+      <div class="ctas"><a class="btn btn-neon" href="#">Make the business predictable</a></div>
+    </div>
+  </header>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">Sound familiar</span>
+        <h2>Growing revenue, <span class="g">and it does not reach the bottom line.</span></h2>
+      </div>
+      <div class="recog reveal">
+        <div class="rc"><q>Profitable on paper, and there is never cash in the bank.</q><p>Almost always a collections and working capital problem rather than a profit one.</p></div>
+        <div class="rc"><q>I do not know if a job made money until months later.</q><p>Which means pricing is being set on instinct and corrected after the fact.</p></div>
+        <div class="rc"><q>Revenue grew but profit did not.</q><p>Headcount grew faster than revenue, or the work you won was never profitable.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">What we offer</span>
+        <h2>Three ways we <span class="g">make it predictable.</span></h2>
+      </div>
+      <div class="offers reveal" data-acc>
+        <article class="of open">
+          <button class="ofhead"><span class="ofn">01</span>
+            <span class="oft"><h3>Predictable profit and cash flow</h3>
+              <span class="via">Operational Clarity Audit <em>· from AED 15,000</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>We review how money actually moves through the business today: revenue drivers, pricing logic, margin by product or client, cost structure, working capital, and how reliably cash is collected.</p>
+            <ul class="ticks">
+              <li>Where profit is leaking, and where effort is not converting into margin</li>
+              <li>Receivables, cost creep and pricing consistency</li>
+              <li>Operational drag that is quietly eroding results</li>
+            </ul>
+            <div class="oftail"><span class="timing">This is where most SMEs start. It creates the baseline before structural change</span>
+              <a class="golink" href="#">See what the audit covers →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">02</span>
+            <span class="oft"><h3>Pricing that makes sense</h3>
+              <span class="via">Pricing and margin architecture, run by an actuary</span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>Pricing is what an actuary does. We look at contribution margin, delivery effort, variability and risk across every client, product and contract, then design pricing logic you can defend rather than pricing that was set once and never revisited.</p>
+            <ul class="ticks">
+              <li>Where work creep exists and where clients are underpriced</li>
+              <li>Tiered pricing, client segmentation, minimum fees and usage-based elements</li>
+              <li>Clearer rules around discounting and scope</li>
+            </ul>
+            <div class="oftail"><span class="timing">Usually follows the audit, once it is clear where margin instability is coming from</span>
+              <a class="golink" href="#">See what the audit covers →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">03</span>
+            <span class="oft"><h3>Operations that can scale</h3>
+              <span class="via">Fractional Leadership <em>· scoped per engagement</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>What worked at a smaller size starts to strain as volume increases. Processes become inconsistent, work is duplicated, priorities compete, and execution becomes noisy.</p>
+            <ul class="ticks">
+              <li>Reset workflows, clarify priorities and define standards</li>
+              <li>Document how critical processes should run</li>
+              <li>Build the operating rhythm so execution becomes predictable</li>
+            </ul>
+            <div class="oftail"><span class="timing">Typically follows growth or hiring pressure, when the business needs to stabilise</span>
+              <a class="golink" href="#">How the retainer works →</a></div>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="starthere reveal" style="margin-bottom:32px">
+        <h3>Where SMEs start</h3>
+        <p>With the audit, because margin instability almost never comes from where the business assumes it does. Nine times out of ten it is upstream of the place everyone is looking.</p>
+      </div>
+      <div class="closer reveal">
+        <span class="eyebrow" style="color:var(--neon)">Find out</span>
+        <h3>Where the margin is actually going.</h3>
+        <p>Four minutes, six areas of the business, one named constraint.</p>
+        <div class="ctas"><a class="btn btn-neon" href="#">Take the 4-minute diagnostic</a><a class="btn btn-ghost" href="#">Talk to us on WhatsApp</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════ CORPORATE LEADERS ══════════ -->
+<div class="page" data-pg="2">
+  <header class="hero ondark">
+    <div class="wrap">
+      <span class="eyebrow">For corporate leaders</span>
+      <h1>You're expected to drive results, but you are alone in the execution.</h1>
+      <p class="sub">You're responsible for delivery, without the team or resources it really takes.</p>
+      <p class="lede">You're carrying delivery, risk and outcomes, often without enough people or budget to do it properly, while keeping the organisation steady and your own credibility intact.</p>
+
+      <div class="weekbar" data-week="2">
+        <div class="wlab">What you are accountable for, against what you control</div>
+        <div class="week"></div>
+        <div class="wkey">
+          <span><i style="background:rgba(217,105,74,.55)"></i>Accountable for it</span>
+          <span><i style="background:rgba(0,215,109,.42)"></i>Actually resourced for it</span>
+        </div>
+        <div class="wsum"></div>
+      </div>
+
+      <div class="ctas"><a class="btn btn-neon" href="#">Get execution support</a></div>
+    </div>
+  </header>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">Sound familiar</span>
+        <h2>You do not need advice. <span class="g">You need hands.</span></h2>
+      </div>
+      <div class="recog reveal">
+        <div class="rc"><q>Headcount is not on offer this year.</q><p>But the delivery expectation did not move down to match it.</p></div>
+        <div class="rc"><q>Hiring takes six months I do not have.</q><p>And the work in front of you does not wait for a requisition to clear.</p></div>
+        <div class="rc"><q>I need capability now, not a permanent cost.</q><p>Which is a resourcing shape most organisations are not set up to give you.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">What we offer</span>
+        <h2>Three ways we <span class="g">give you capacity.</span></h2>
+      </div>
+      <div class="offers reveal" data-acc>
+        <article class="of open">
+          <button class="ofhead"><span class="ofn">01</span>
+            <span class="oft"><h3>Execution support without headcount</h3>
+              <span class="via">Build and Place <em>· scoped per engagement</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>We operate as an extension of your function, helping you plan, coordinate and deliver work across teams and vendors, without adding permanent headcount or disrupting the organisation. Anywhere from four weeks to six months and beyond.</p>
+            <ul class="ticks">
+              <li>Project management, operational coordination and vendor oversight</li>
+              <li>Documentation and day-to-day execution support</li>
+              <li>Used through launches, integrations, audits and regulatory change</li>
+            </ul>
+            <div class="oftail"><span class="timing">Most leaders start here, when delivery pressure is high and internal bandwidth is stretched</span>
+              <a class="golink" href="#">How we staff an engagement →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">02</span>
+            <span class="oft"><h3>On-demand specialist bench</h3>
+              <span class="via">Build and Place <em>· priced per engagement</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>You do not need to hire for everything, but you do need access to people who know what they are doing. We give you a vetted bench across operations, finance, compliance, data, automation and transformation, working as one coordinated team rather than disconnected vendors.</p>
+            <ul class="ticks">
+              <li>One month, three months, or a defined piece of work</li>
+              <li>No long approval cycles and no permanent cost</li>
+              <li>One contract and one invoice, whoever is on the work</li>
+            </ul>
+            <div class="oftail"><span class="timing">Used when workload spikes or specialist input is required fast</span>
+              <a class="golink" href="#">How we staff an engagement →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">03</span>
+            <span class="oft"><h3>Executive sounding board</h3>
+              <span class="via">Fractional Leadership <em>· monthly or ad hoc</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>This is for leaders who carry responsibility without cover. We act as a confidential sounding board to pressure-test decisions, structure thinking, and sharpen how you communicate with senior stakeholders, regulators and boards.</p>
+            <ul class="ticks">
+              <li>Decision support for people who cannot afford mistakes</li>
+              <li>Preparation for the conversations that carry the most risk</li>
+              <li>Confidential, and outside your reporting line</li>
+            </ul>
+            <div class="oftail"><span class="timing">Often used alongside execution support, when visibility and stakes are high</span>
+              <a class="golink" href="#">How the retainer works →</a></div>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="starthere reveal" style="margin-bottom:32px">
+        <h3>Where corporate leaders start</h3>
+        <p>Usually with a defined piece of work rather than a diagnosis. You already know what needs delivering. What is missing is the capacity to deliver it, and that we can put in place quickly.</p>
+      </div>
+      <div class="closer reveal">
+        <span class="eyebrow" style="color:var(--neon)">Next step</span>
+        <h3>Tell us what you are carrying, and we will tell you what we would put on it.</h3>
+        <p>No approval cycle, no permanent cost, and one accountable party.</p>
+        <div class="ctas"><a class="btn btn-neon" href="#">Talk to us on WhatsApp</a><a class="btn btn-ghost" href="#">How we staff an engagement</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════ P&L OWNERS ══════════ -->
+<div class="page" data-pg="3">
+  <header class="hero ondark">
+    <div class="wrap">
+      <span class="eyebrow">For P&amp;L owners</span>
+      <h1>You are accountable for the P&amp;L, across teams, markets and moving parts.</h1>
+      <p class="sub">You are responsible for the whole system.</p>
+      <p class="lede">Performance, risk and long-term direction all sit with you. The business is stable, but progress is slow, change is expensive, and every initiative competes with ten others. Execution happens, but not always in the direction you intend.</p>
+
+      <div class="weekbar" data-week="3">
+        <div class="wlab">Where the effort goes across the portfolio</div>
+        <div class="week"></div>
+        <div class="wkey">
+          <span><i style="background:rgba(217,105,74,.55)"></i>Effort spent competing internally</span>
+          <span><i style="background:rgba(0,215,109,.42)"></i>Effort that moves the market position</span>
+        </div>
+        <div class="wsum"></div>
+      </div>
+
+      <div class="ctas"><a class="btn btn-neon" href="#">Design the execution roadmap</a></div>
+    </div>
+  </header>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">Sound familiar</span>
+        <h2>Stable is not the same <span class="g">as moving.</span></h2>
+      </div>
+      <div class="recog reveal">
+        <div class="rc"><q>Initiatives get started but never stopped.</q><p>So capacity is consumed by things nobody would fund again today.</p></div>
+        <div class="rc"><q>Ask three leaders for the top three priorities and get nine answers.</q><p>Which is not a communication problem. It is a decision-rights problem.</p></div>
+        <div class="rc"><q>Competitors are out-executing us on the same strategy.</q><p>The thinking was never the differentiator. The delivery was.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sechead reveal">
+        <span class="eyebrow">What we offer</span>
+        <h2>Three ways we <span class="g">shift the trajectory.</span></h2>
+      </div>
+      <div class="offers reveal" data-acc>
+        <article class="of open">
+          <button class="ofhead"><span class="ofn">01</span>
+            <span class="oft"><h3>Competitive focus and advantage reset</h3>
+              <span class="via">Extended Operational Clarity Audit <em>· 2 to 12 weeks</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>This is about understanding why you are not moving faster than the market. We look at where capital, leadership attention and effort are spread too thin, where growth is capped by internal friction, and where competitors are quietly out-executing you.</p>
+            <ul class="ticks">
+              <li>Where margin and growth are leaking</li>
+              <li>Which initiatives are noise rather than advantage</li>
+              <li>What must change to outperform peers, not just keep pace</li>
+            </ul>
+            <div class="oftail"><span class="timing">Most CEOs start here when growth plateaus, regulation shifts, or competitive pressure increases</span>
+              <a class="golink" href="#">See what the audit covers →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">02</span>
+            <span class="oft"><h3>Executive leverage and strategy carry-through</h3>
+              <span class="via">Fractional Chief of Staff <em>· typically 3 to 6 months</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>Most corporate strategies fail quietly rather than loudly. They get approved, socialised, and then diluted across layers of the organisation. We operate as a Chief of Staff to make sure the decisions that matter actually land.</p>
+            <ul class="ticks">
+              <li>Translating strategic intent into executable priorities</li>
+              <li>Managing cross-functional dependencies and politics</li>
+              <li>Keeping momentum when priorities collide</li>
+              <li>Real visibility on what is moving and what is stuck</li>
+            </ul>
+            <div class="oftail"><span class="timing">Typically engaged after priorities are reset, when execution needs senior-level coordination</span>
+              <a class="golink" href="#">How the retainer works →</a></div>
+          </div></div>
+        </article>
+
+        <article class="of">
+          <button class="ofhead"><span class="ofn">03</span>
+            <span class="oft"><h3>Scaled execution and intelligent modernisation</h3>
+              <span class="via">Build and Place, and Technology Builds <em>· 3 to 9 months</em></span></span>
+            <span class="chev">▾</span></button>
+          <div class="ofbody"><div class="ofinner">
+            <p>Large organisations slow down in invisible ways. Processes calcify, systems are under-used, and teams compensate instead of fixing root causes. We remove the friction that limits speed and scale, using smarter operating design, automation and selective AI adoption.</p>
+            <ul class="ticks">
+              <li>Improves execution velocity, cost discipline and decision quality</li>
+              <li>Targeted change rather than transformation theatre</li>
+              <li>Without destabilising the organisation</li>
+            </ul>
+            <div class="oftail"><span class="timing">Usually engaged once direction is set, to modernise how work actually gets done</span>
+              <a class="golink" href="#">See what tech we can build →</a></div>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="starthere reveal" style="margin-bottom:32px">
+        <h3>What the outcome looks like</h3>
+        <p>A small number of moves that materially shift trajectory, rather than a long list of initiatives that compete with each other. Fewer things, sequenced properly, with someone accountable for each.</p>
+      </div>
+      <div class="closer reveal">
+        <span class="eyebrow" style="color:var(--neon)">Next step</span>
+        <h3>Design an integrated execution roadmap.</h3>
+        <p>Start with the diagnosis, and we will tell you which few moves actually change the trajectory.</p>
+        <div class="ctas"><a class="btn btn-neon" href="#">Talk to us on WhatsApp</a><a class="btn btn-ghost" href="#">See what the audit covers</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+"use strict";
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $$ = s=>Array.from(document.querySelectorAll(s));
+
+/* ---- page switching ---- */
+$$('.pt').forEach(b=>{
+  b.onclick = ()=>{
+    $$('.pt').forEach(x=>x.classList.remove('on'));
+    $$('.page').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.querySelector('.page[data-pg="'+b.dataset.pg+'"]').classList.add('on');
+    scrollTo({top:0,behavior:'instant'});
+    runWeek(b.dataset.pg);
+  };
+});
+
+/* ---- reveals ---- */
+const revealIO = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); revealIO.unobserve(e.target);} });
+},{threshold:.12});
+$$('.reveal').forEach(el=>revealIO.observe(el));
+
+/* ---- signature: the week bar ---- */
+const WEEKS = {
+  0:{rows:['MON','TUE','WED','THU','FRI'],
+     data:[[68,18],[74,12],[61,22],[80,10],[55,26]],
+     sum:'Roughly <b>seven days in ten</b> go to work that only lands on you because nothing has been designed to catch it. The audit finds which of that can be handed over, and to whom.'},
+  1:{rows:['JAN','APR','JUL','OCT'],
+     data:[[71,17],[64,24],[83,7],[69,19]],
+     sum:'Margin swings by more than <b>fifteen points</b> across the year with no clear reason. That variance is the thing to fix, and it is almost never where the business assumes it is.'},
+  2:{rows:['DELIVERY','RISK','BUDGET','TIMELINE'],
+     data:[[88,20],[82,15],[90,12],[85,18]],
+     sum:'You are accountable for close to <b>five times more</b> than you are resourced for. We close that gap without adding permanent headcount.'},
+  3:{rows:['MARKET','PRODUCT','COST','PEOPLE'],
+     data:[[64,25],[70,20],[58,30],[73,16]],
+     sum:'About <b>two thirds of the effort</b> is spent competing internally rather than externally. Fewer initiatives, sequenced properly, moves the trajectory more than adding another one.'}
+};
+
+function runWeek(pg){
+  const bar = document.querySelector('.page.on .weekbar');
+  if(!bar) return;
+  const cfg = WEEKS[pg];
+  const wk = bar.querySelector('.week');
+  wk.innerHTML = cfg.rows.map((r,i)=>`
+    <div class="wrow"><div class="wday">${r}</div>
+      <div class="wtrack"><div class="blk drain" data-w="${cfg.data[i][0]}"></div><div class="blk real" data-w="${cfg.data[i][1]}"></div></div>
+    </div>`).join('');
+  bar.querySelector('.wsum').innerHTML = cfg.sum;
+  const blks = Array.from(wk.querySelectorAll('.blk'));
+  blks.forEach((b,i)=>{
+    setTimeout(()=>{ b.style.width = b.dataset.w + '%'; }, reduce?0:200 + i*90);
+  });
+}
+runWeek('0');
+
+/* ---- accordions ---- */
+function setOpen(of, open){
+  const body = of.querySelector('.ofbody');
+  of.classList.toggle('open', open);
+  body.style.maxHeight = open ? body.scrollHeight + 'px' : '0px';
+}
+$$('[data-acc]').forEach(group=>{
+  const items = Array.from(group.querySelectorAll('.of'));
+  items.forEach(of=>{
+    const head = of.querySelector('.ofhead');
+    head.onclick = ()=>{
+      const willOpen = !of.classList.contains('open');
+      items.forEach(x=>setOpen(x,false));
+      if(willOpen) setOpen(of,true);
+    };
+  });
+  const first = items.find(x=>x.classList.contains('open'));
+  if(first) requestAnimationFrame(()=>setOpen(first,true));
+});
+addEventListener('resize', ()=>{
+  $$('.of.open').forEach(of=>{
+    const b = of.querySelector('.ofbody');
+    b.style.maxHeight = b.scrollHeight + 'px';
+  });
+});
+</script>
+</body>
+</html>

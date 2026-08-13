@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case studies — redesign | Pivot Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#013325;--forest-2:#02291e;--mid:#009f50;--neon:#00d76d;
+  --gold:#af8943;--sand:#efe7d8;--paper:#f7f9f8;--ink:#0c1a15;
+  --muted:#5e6f68;--line:#e3eae6;
+  --display:'Poppins',system-ui,sans-serif;--body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.14;letter-spacing:-.026em}
+.g{color:var(--mid)}
+p{max-width:64ch}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--mid);display:block}
+
+section{padding:clamp(56px,7vw,96px) 0}
+.sechead{margin-bottom:clamp(26px,3vw,38px);max-width:60ch}
+.sechead h2{font-size:clamp(28px,3.6vw,42px);margin-top:12px}
+.sechead .sub{color:var(--muted);margin-top:12px}
+
+/* ---- tabs ---- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:0;margin-bottom:28px}
+.tab{background:none;border:none;cursor:pointer;font-family:var(--display);font-weight:600;font-size:14.5px;
+  color:var(--muted);padding:13px 18px;border-bottom:2px solid transparent;transition:color .18s,border-color .18s;
+  display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
+.tab .ix{font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--forest);border-bottom-color:var(--mid)}
+.tab.on .ix{color:var(--mid)}
+
+/* ---- panel ---- */
+.panel{display:none}
+.panel.on{display:block;animation:in .45s cubic-bezier(.22,1,.36,1) both}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+
+/* header strip */
+.chead{padding:28px 32px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;
+  align-items:flex-start;gap:24px;flex-wrap:wrap}
+.chead h3{font-size:clamp(22px,2.6vw,30px)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.chip{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.chip.svc{color:var(--forest);border-color:#cfe3d8;background:#f2f8f4}
+.cnum{font-family:var(--display);font-weight:700;font-size:46px;color:var(--line);letter-spacing:-.04em;line-height:1}
+
+/* headline metrics */
+.mstrip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.m{padding:26px 22px;border-left:1px solid var(--line)}
+.m:first-child{border-left:none}
+.m b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(26px,3vw,36px);
+  color:var(--mid);letter-spacing:-.035em;line-height:1}
+.m.hero-m b{color:var(--forest)}
+.m span{display:block;font-size:13px;color:var(--muted);margin-top:9px;line-height:1.45}
+
+/* body */
+.cbody{display:grid;grid-template-columns:1fr 1fr}
+.col{padding:30px 32px}
+.col + .col{border-left:1px solid var(--line)}
+.lab{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:13px;display:flex;align-items:center;gap:9px}
+.lab::after{content:"";flex:1;height:1px;background:var(--line)}
+.col p{font-size:15.5px;color:var(--muted);margin-bottom:11px}
+.moves{list-style:none;display:grid;gap:10px;margin-top:4px}
+.moves li{display:flex;gap:11px;align-items:flex-start;font-size:15px}
+.moves li::before{content:"";width:16px;height:16px;border-radius:50%;flex:0 0 16px;margin-top:3px;
+  background:var(--mid) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/9px no-repeat}
+
+/* results footer */
+.cfoot{background:var(--forest);color:#fff;padding:30px 32px;position:relative;overflow:hidden}
+.cfoot::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:26px 26px}
+.cfoot>*{position:relative;z-index:2}
+.cfoot .lab{color:var(--neon)}
+.cfoot .lab::after{background:rgba(255,255,255,.16)}
+.rlist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:13px 34px}
+.rlist li{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:#dcece4}
+.rlist li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--neon);flex:0 0 6px;margin-top:9px}
+.rlist li b{color:#fff;font-family:var(--display);font-weight:600}
+
+.quote{margin-top:24px;padding-top:22px;border-top:1px solid rgba(255,255,255,.16)}
+.quote q{font-family:var(--display);font-weight:500;font-size:17px;line-height:1.45;quotes:none;display:block;color:#fff;max-width:56ch}
+.quote q::before,.quote q::after{content:""}
+.quote .who{font-size:12.5px;color:#8fb3a4;margin-top:11px;letter-spacing:.04em}
+
+.after{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.after .note{font-size:13.5px;color:var(--muted)}
+.btn{font-family:var(--display);font-weight:600;font-size:14.5px;text-decoration:none;padding:13px 24px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:#fff;transition:transform .18s,background .18s}
+.btn:hover{background:#0a4433;transform:translateY(-2px)}
+.btn i{font-style:normal;transition:transform .18s}
+.btn:hover i{transform:translateX(3px)}
+
+.flag{margin-top:34px;border-left:3px solid var(--gold);background:#fdf9f2;border-radius:0 var(--r) var(--r) 0;padding:18px 22px;font-size:14px;color:#6b5a3c}
+.flag b{font-family:var(--display);font-weight:600;display:block;margin-bottom:4px;color:var(--forest)}
+
+@media (max-width:900px){
+  .mstrip{grid-template-columns:repeat(2,1fr)}
+  .m:nth-child(3){border-left:none}
+  .m:nth-child(n+3){border-top:1px solid var(--line)}
+  .cbody{grid-template-columns:1fr}
+  .col + .col{border-left:none;border-top:1px solid var(--line)}
+  .rlist{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .mstrip{grid-template-columns:1fr}
+  .m{border-left:none;border-top:1px solid var(--line)}
+  .m:first-child{border-top:none}
+  .cnum{display:none}
+  .tab{padding:11px 12px;font-size:13.5px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<section>
+  <div class="wrap">
+    <div class="sechead">
+      <span class="eyebrow">Proof</span>
+      <h2>What we have achieved <span class="g">for our clients.</span></h2>
+      <p class="sub">Measured outcomes from real operating environments. Every figure below was baselined before the work started.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab on" role="tab" data-p="0"><span class="ix">01</span> Insurance Hub</button>
+      <button class="tab" role="tab" data-p="1"><span class="ix">02</span> Scentmatic</button>
+      <button class="tab" role="tab" data-p="2"><span class="ix">03</span> Cinnacare</button>
+    </div>
+
+    <!-- ============ CASE 1 ============ -->
+    <div class="panel on" data-p="0">
+      <div class="card">
+        <div class="chead">
+          <div>
+            <h3>Insurance Hub</h3>
+            <div class="chips">
+              <span class="chip">Financial services</span>
+              <span class="chip">UAE</span>
+              <span class="chip svc">Post-acquisition stabilisation</span>
+            </div>
+          </div>
+          <div class="cnum">01</div>
+        </div>
+
+        <div class="mstrip">
+          <div class="m hero-m"><b data-count="67" data-suffix="%">0</b><span>Faster transaction processing per customer</span></div>
+          <div class="m"><b data-count="10" data-suffix="→3">0</b><span>KYC completion, days on average</span></div>
+          <div class="m"><b data-count="25" data-suffix="%">0</b><span>Reduction in operational waste</span></div>
+          <div class="m"><b data-count="3" data-prefix="2–">0</b><span>FTE roles removed from high-cost locations</span></div>
+        </div>
+
+        <div class="cbody">
+          <div class="col">
+            <div class="lab">The challenge</div>
+            <p>Customer onboarding and policy processing were slow and inconsistent. Teams had no visibility of workload, cost per client, or profitability at a client and transaction level.</p>
+            <p>KYC timelines were unpredictable, creating customer frustration and internal pressure. Leadership could not see where time and cost were being lost.</p>
+          </div>
+          <div class="col">
+            <div class="lab">The pivot</div>
+            <p>We rebuilt operations with discipline and data at the centre.</p>
+            <ul class="moves">
+              <li>Mapped end-to-end customer and transaction workflows</li>
+              <li>Reduced duplication and rework across compliance and operations</li>
+              <li>Offshored selected onboarding activities to cut bottlenecks and cost</li>
+              <li>Built real-time dashboards tracking cost per client, transaction time, CAC and LTV</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cfoot">
+          <div class="lab">The results</div>
+          <ul class="rlist">
+            <li><b>67% faster</b> transaction processing per customer</li>
+            <li><b>10 days to 3</b> average KYC completion time</li>
+            <li><b>25% reduction</b> in operational waste across onboarding and processing</li>
+            <li><b>2–3 FTE roles</b> removed from high-cost locations, holding service quality</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CASE 2 ============ -->
+    <div class="panel" data-p="1">
+      <div class="card">
+        <div class="chead">
+          <div>
+            <h3>Scentmatic</h3>
+            <div class="chips">
+              <span class="chip">Fragrance technology</span>
+              <span class="chip">Japan to UAE</span>
+              <span class="chip svc">Pricing &amp; market entry</span>
+            </div>
+          </div>
+          <div class="cnum">02</div>
+        </div>
+
+        <div class="mstrip">
+          <div class="m hero-m"><b data-count="13" data-suffix="%">0</b><span>Projected profit margin, from loss-making</span></div>
+          <div class="m"><b data-count="11" data-suffix=" mo">0</b><span>To breakeven on the new model</span></div>
+          <div class="m"><b data-count="18" data-suffix="x">0</b><span>Growth in audience engagement</span></div>
+          <div class="m"><b data-count="1" data-suffix="">0</b><span>Financial model built before a dirham was spent</span></div>
+        </div>
+
+        <div class="cbody">
+          <div class="col">
+            <div class="lab">The challenge</div>
+            <p>A proven product outside the region, priced on home-market assumptions that did not survive contact with the UAE. The commercial model was loss-making and nobody could say at what point it would stop being so.</p>
+            <p>Expansion was being planned before the unit economics were understood.</p>
+          </div>
+          <div class="col">
+            <div class="lab">The pivot</div>
+            <p>We built the numbers first, then the go-to-market around them.</p>
+            <ul class="moves">
+              <li>Full financial model with investment, breakeven and return priced in</li>
+              <li>Pricing redesigned around local cost to serve rather than home-market assumptions</li>
+              <li>Go-to-market and brand localisation built for how this market actually buys</li>
+              <li>Operating model set up so volume could scale without cost scaling with it</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cfoot">
+          <div class="lab">The results</div>
+          <ul class="rlist">
+            <li><b>13% projected margin</b>, from a loss-making position</li>
+            <li><b>Breakeven inside 11 months</b> on the redesigned model</li>
+            <li><b>Nearly eighteen-fold</b> growth in audience engagement</li>
+            <li><b>A defensible price</b>, set on evidence rather than instinct</li>
+          </ul>
+          <div class="quote">
+            <q>They would not let us launch until the model said it would make money here. That conversation saved us a year.</q>
+            <div class="who">Client quote to be confirmed before publication</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CASE 3 ============ -->
+    <div class="panel" data-p="2">
+      <div class="card">
+        <div class="chead">
+          <div>
+            <h3>Cinnacare</h3>
+            <div class="chips">
+              <span class="chip">Wellness</span>
+              <span class="chip">UAE &amp; UK</span>
+              <span class="chip svc">Market entry, ongoing</span>
+            </div>
+          </div>
+          <div class="cnum">03</div>
+        </div>
+
+        <div class="mstrip">
+          <div class="m hero-m"><b data-count="13" data-suffix="%">0</b><span>Increase in customer retention</span></div>
+          <div class="m"><b data-count="2" data-suffix="">0</b><span>Markets entered on one operating model</span></div>
+          <div class="m"><b data-count="40" data-suffix="%">0</b><span>Less duplicated work across the team</span></div>
+          <div class="m"><b data-count="1" data-suffix="">0</b><span>Set of numbers everyone now works from</span></div>
+        </div>
+
+        <div class="cbody">
+          <div class="col">
+            <div class="lab">The challenge</div>
+            <p>Growth across two markets with an operating model built for one. Customers were being won and quietly lost, and nobody could say which service or which stage was driving the cancellations.</p>
+            <p>Reporting was assembled by hand each month, so problems surfaced from customers rather than from the numbers.</p>
+          </div>
+          <div class="col">
+            <div class="lab">The pivot</div>
+            <p>We found the cancellation drivers and rebuilt around them.</p>
+            <ul class="moves">
+              <li>Identified and addressed the service cancellation drivers directly</li>
+              <li>One operating model that holds across both markets</li>
+              <li>Removed duplicated work between the two teams</li>
+              <li>Automated the reporting so issues surface before customers raise them</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cfoot">
+          <div class="lab">The results</div>
+          <ul class="rlist">
+            <li><b>13% increase</b> in customer retention</li>
+            <li><b>Two markets</b> running on a single operating model</li>
+            <li><b>40% less</b> duplicated work across the team</li>
+            <li><b>Automated reporting</b>, replacing a manual monthly build</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="after">
+      <div class="note">Every engagement begins with a baseline. Without one, there is nothing to measure against.</div>
+      <a class="btn" href="#">See what the audit covers <i>→</i></a>
+    </div>
+
+    <div class="flag">
+      <b>Before this goes live</b>
+      Client names and the quote on case study 02 need written permission. Case studies 02 and 03 are structured from figures already published in your interviews and decks; confirm each one against the master results table before publication. Swap in real client logos where the chips sit if you have them.
+    </div>
+  </div>
+</section>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+
+function runCounts(panel){
+  panel.querySelectorAll('[data-count]').forEach((el,i)=>{
+    const target = +el.dataset.count;
+    const suf = el.dataset.suffix || '';
+    const pre = el.dataset.prefix || '';
+    if(reduce){ el.textContent = pre+target+suf; return; }
+    const t0 = performance.now() + i*90;
+    (function step(t){
+      if(t < t0){ requestAnimationFrame(step); return; }
+      const p = Math.min((t-t0)/1100,1);
+      el.textContent = pre + Math.round(target*(1-Math.pow(1-p,3))) + suf;
+      if(p<1) requestAnimationFrame(step);
+    })(performance.now());
+  });
+}
+
+tabs.forEach(t=>{
+  t.onclick = ()=>{
+    tabs.forEach(x=>x.classList.remove('on'));
+    panels.forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    const p = document.querySelector('.panel[data-p="'+t.dataset.p+'"]');
+    p.classList.add('on');
+    runCounts(p);
+  };
+});
+
+new IntersectionObserver((es,o)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ runCounts(document.querySelector('.panel.on')); o.disconnect(); } });
+},{threshold:.3}).observe(document.querySelector('.mstrip'));
+</script>
+</body>
+</html>

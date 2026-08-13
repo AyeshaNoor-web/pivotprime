@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operational Constraint Diagnostic | Pivot Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#013325;--forest-2:#02291e;--forest-3:#0a4433;
+  --mid:#009f50;--neon:#22c55e;--gold:#af8943;--sand-lt:#efe7d8;
+  --paper:#f7f9f8;--ink:#0c1a15;--muted:#5e6f68;--line:#e3eae6;--line-dark:rgba(255,255,255,.14);
+  --display:'Poppins',system-ui,sans-serif;--body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.14;letter-spacing:-.028em}
+.g{color:var(--mid)}
+.ondark .g{color:var(--neon)}
+p{max-width:64ch}
+.wrap{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--mid);display:block}
+.ondark .eyebrow{color:var(--neon)}
+
+.logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.02em;text-decoration:none;color:#fff}
+.mk{display:grid;grid-template-columns:repeat(4,3px);gap:2.5px}
+.mk i{width:3px;height:3px;border-radius:50%;background:var(--neon);display:block}
+.mk i:nth-child(4n){background:#fff;opacity:.35}
+
+.bar{background:var(--forest);color:#fff;position:sticky;top:0;z-index:20}
+.bar .inner{max-width:860px;margin:0 auto;padding:15px clamp(20px,5vw,40px);display:flex;justify-content:space-between;align-items:center;gap:16px}
+.stepof{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8fb3a4}
+.pbar{height:3px;background:rgba(255,255,255,.14)}
+.pfill{height:100%;background:var(--neon);width:0;transition:width .45s cubic-bezier(.22,1,.36,1)}
+
+main{padding:clamp(34px,5vw,60px) 0 90px}
+.screen{animation:in .4s cubic-bezier(.22,1,.36,1) both}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* cover */
+.cover{background:var(--forest);color:#fff;position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center;padding:60px 0}
+.cover::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1px);background-size:26px 26px;opacity:.55}
+.cover::after{content:"";position:absolute;width:60vw;height:60vw;right:-20vw;top:-24vw;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.2),transparent 62%)}
+.cover .wrap{position:relative;z-index:2}
+.cover h1{font-size:clamp(32px,5.2vw,54px);margin:20px 0 0}
+.cover .lead{color:#bfd8cd;margin-top:20px;font-size:17px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0 0}
+.fact{background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-radius:var(--r);padding:17px}
+.fact b{display:block;font-family:var(--display);font-weight:700;font-size:22px;color:var(--neon);letter-spacing:-.02em}
+.fact span{font-size:12.5px;color:#a9c8ba}
+.setup{margin-top:28px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:620px}
+
+/* fields */
+.field{display:block}
+.field span.lb{display:block;font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--neon);margin-bottom:7px}
+.light .field span.lb{color:var(--mid)}
+input[type=text],select{width:100%;font-family:var(--body);font-size:15.5px;color:#fff;background:rgba(255,255,255,.07);
+  border:1px solid var(--line-dark);border-radius:9px;padding:12px 14px}
+select option{color:var(--ink)}
+input:focus,select:focus,button:focus-visible,.opt:focus-within span{outline:2px solid var(--neon);outline-offset:2px}
+.coverfoot{margin-top:28px;padding-top:18px;border-top:1px solid var(--line-dark);font-size:13.5px;color:#8fb3a4;max-width:60ch}
+
+/* domain screens */
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:8px}
+.shead h2{font-size:clamp(24px,3.2vw,34px)}
+.pagepos{font-family:var(--display);font-weight:700;font-size:44px;color:var(--line);letter-spacing:-.04em;line-height:1}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;margin-bottom:12px;
+  transition:border-color .18s}
+.qcard.answered{border-color:#cfe3d8}
+.qhead{display:flex;gap:13px;align-items:flex-start;margin-bottom:15px}
+.qnum{font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:.14em;color:var(--gold);padding-top:4px;flex:0 0 30px}
+.qtext{font-size:16.5px;font-weight:500;max-width:58ch}
+.qtag{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin-top:7px}
+.opts{display:flex;flex-wrap:wrap;gap:7px;padding-left:43px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt span{display:block;cursor:pointer;font-size:13.5px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+  background:#fff;user-select:none;transition:background .15s,border-color .15s,color .15s}
+.opt span:hover{border-color:var(--mid)}
+.opt input:checked + span{background:var(--forest);border-color:var(--forest);color:#fff}
+.opt.na input:checked + span{background:var(--muted);border-color:var(--muted)}
+.opt.dk input:checked + span{background:var(--gold);border-color:var(--gold)}
+
+.nav{display:flex;gap:12px;align-items:center;margin-top:26px;flex-wrap:wrap}
+.btn{font-family:var(--display);font-weight:600;font-size:15px;border:none;border-radius:999px;padding:14px 26px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .16s,background .16s,color .16s,border-color .16s}
+.btn-solid{background:var(--mid);color:#fff}
+.btn-solid:hover{background:var(--forest);transform:translateY(-2px)}
+.btn-neon{background:var(--neon);color:var(--forest)}
+.btn-neon:hover{background:#fff;transform:translateY(-2px)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--forest)}
+.btn-ghost.ondk{border-color:rgba(255,255,255,.28);color:#fff}
+.hint{font-size:13.5px;color:var(--gold)}
+
+textarea{width:100%;font-family:var(--body);font-size:15.5px;color:var(--ink);background:#fff;border:1px solid var(--line);
+  border-radius:9px;padding:13px 15px;min-height:100px;resize:vertical}
+.ftq{font-family:var(--display);font-weight:600;font-size:16.5px;margin-bottom:9px}
+.ftblock{margin-bottom:22px}
+
+/* results */
+.rhero{background:var(--forest);color:#fff;border-radius:var(--r);padding:32px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:24px;position:relative;overflow:hidden}
+.rhero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.5}
+.rhero>*{position:relative;z-index:2}
+.rscore{font-family:var(--display);font-weight:700;font-size:62px;line-height:.95;color:var(--neon);letter-spacing:-.04em}
+.rscore em{display:block;font-style:normal;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8fb3a4;font-weight:600;margin-top:6px}
+.rband{font-family:var(--display);font-weight:700;font-size:25px;letter-spacing:-.025em;margin-bottom:7px}
+.rhero p{color:#c9e0d6;margin:0;font-size:15px}
+
+.bar-row{margin-bottom:15px}
+.bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.bar-nm{font-family:var(--display);font-weight:600;font-size:14.5px}
+.bar-vl{font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--mid)}
+.bar-tr{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar-fl{height:100%;border-radius:4px;background:var(--mid);width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.bar-row.low .bar-fl{background:var(--gold)}
+.bar-row.low .bar-vl{color:var(--gold)}
+.bar-row.nodata .bar-vl{color:var(--muted);font-weight:500;font-size:12.5px}
+
+.rank{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff}
+.rrow{display:grid;grid-template-columns:34px 1fr 104px;gap:16px;align-items:center;padding:16px 20px;border-top:1px solid var(--line)}
+.rrow:first-child{border-top:none}
+.rrow.p1{background:var(--sand-lt)}
+.rpos{font-family:var(--display);font-weight:700;font-size:15px;color:var(--gold)}
+.rrow.p1 .rpos{color:var(--forest)}
+.rnm{font-family:var(--display);font-weight:600;font-size:15px}
+.rsub{font-size:12.5px;color:var(--muted)}
+.rdef{text-align:right}
+.rdn{font-family:var(--display);font-weight:700;font-size:16px;color:var(--gold)}
+.rdb{height:5px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}
+.rdb i{display:block;height:100%;background:var(--gold);border-radius:3px}
+
+.constraint{background:var(--sand-lt);border-radius:var(--r);padding:26px 28px;margin:26px 0}
+.constraint .l{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6b5a3c;margin-bottom:8px}
+.constraint h3{font-size:22px;color:var(--forest);margin-bottom:10px}
+.constraint p{color:#5a4d38;margin:0;font-size:15.5px}
+
+.next{background:var(--forest-2);color:#fff;border-radius:var(--r);padding:30px 32px;margin-top:26px}
+.next h3{color:#fff;font-size:21px;margin:12px 0 10px}
+.next p{color:#bfd8cd;font-size:15.5px}
+.next .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+
+dl.ft{margin:22px 0 0}
+dl.ft dt{font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--mid);margin-bottom:5px}
+dl.ft dd{margin:0 0 18px;padding-left:16px;border-left:2px solid var(--line);white-space:pre-wrap;font-size:15.5px}
+.smallprint{font-size:13px;color:var(--muted);margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+
+@media (max-width:700px){
+  .facts,.setup{grid-template-columns:1fr}
+  .opts{padding-left:0}
+  .rrow{grid-template-columns:26px 1fr 82px;gap:11px;padding:14px}
+  .rscore{font-size:50px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.bar,.nav,.noprint{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="inner">
+    <a class="logo" href="#"><span class="mk" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>PivotPrime</a>
+    <div class="stepof" id="stepof">Operational Constraint Diagnostic</div>
+  </div>
+  <div class="pbar"><div class="pfill" id="pfill"></div></div>
+</div>
+
+<div id="app"></div>
+
+<script>
+"use strict";
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const D = {
+  founder:'Founder dependency',
+  commercial:'Commercial and margin',
+  process:'Process and delivery',
+  tech:'Technology leverage',
+  people:'People and accountability',
+  data:'Data and visibility'
+};
+const ORDER = ['founder','commercial','process','tech','people','data'];
+
+/* seven per domain, round-robined so consecutive questions never share a domain */
+const POOL = {
+  founder:[
+    'If the founder were uncontactable for two weeks, the business would continue without disruption.',
+    'Decisions below a defined value are made without needing the founder to approve them.',
+    'Client relationships are held by the business rather than by one person.',
+    'The founder spends most of their time on work that only they can do.',
+    'There is at least one person who could run day to day operations if the founder stepped back.',
+    'The founder has taken two or more consecutive weeks of leave in the last year without checking in daily.',
+    'Significant commercial and operational decisions have a named owner other than the founder.'],
+  commercial:[
+    'We know our profit margin by product, service or client, not just overall.',
+    'Our prices were set deliberately and have been reviewed in the last twelve months.',
+    'We know whether a job or contract is making money while it is running, not months afterwards.',
+    'Discounting is exceptional rather than routine.',
+    'Cash is collected on the agreed terms without significant chasing.',
+    'No single client represents more than a quarter of revenue.',
+    'Profit has grown at least as fast as revenue over the last two years.'],
+  process:[
+    'Our core processes are documented well enough that a new person could follow them.',
+    'Work is delivered on time without someone having to chase it.',
+    'What sales commits to is consistently what delivery can actually deliver.',
+    'Work continues to run normally when a key person is on leave.',
+    'Quality holds when volume increases.',
+    'Work rarely has to be redone or corrected after it has been completed.',
+    'A new hire becomes productive within a defined onboarding period rather than by absorbing it slowly.'],
+  tech:[
+    'Our systems reduce manual work rather than creating more of it.',
+    'Information moves between our tools without anyone re-entering it.',
+    'Nobody in the business spends significant time copying data between systems.',
+    'We actively use the software we pay for.',
+    'Our CRM reflects what is genuinely happening in sales and delivery.',
+    'Technology decisions are made against a defined problem rather than a feature we liked.',
+    'We could describe our core process precisely enough for someone to automate it.'],
+  people:[
+    'Every important outcome in the business has one clearly named owner.',
+    'The team has the capacity to absorb the growth we are planning.',
+    'Roles were designed around the work the business needs, not around the people who were available.',
+    'If you asked three leaders for the top three priorities, you would get the same answers.',
+    'Initiatives that are not working get stopped rather than quietly continuing.',
+    'People who leave go for opportunity rather than frustration.',
+    'Performance conversations happen on a defined rhythm rather than when something goes wrong.'],
+  data:[
+    'I can see how the business is performing this month without asking someone to prepare it.',
+    'When two people report the same number, they agree.',
+    'We have a small set of KPIs that leadership genuinely uses to make decisions.',
+    'We find out about problems from our own data before customers tell us.',
+    'Our forecasts have been reasonably accurate over the last three periods.',
+    'Reporting is produced automatically rather than assembled by hand each time.',
+    'We could answer a detailed board or investor question about performance within a day.']
+};
+
+const QUESTIONS = [];
+for(let round=0; round<7; round++){
+  ORDER.forEach(d=>QUESTIONS.push({d, t:POOL[d][round]}));
+}
+const PER_PAGE = 7;
+const PAGES = Math.ceil(QUESTIONS.length / PER_PAGE); // 6
+
+const PAGE_TITLES = [
+  'How the business runs today',
+  'Where the money actually goes',
+  'What happens under pressure',
+  'Who owns what',
+  'What the numbers tell you',
+  'What is holding the ceiling down'
+];
+
+const SCALE = [
+  {v:4,t:'Strongly agree'},
+  {v:3,t:'Agree'},
+  {v:2,t:'Neither'},
+  {v:1,t:'Disagree'},
+  {v:0,t:'Strongly disagree'},
+  {v:1,t:'Do not know',dk:true},
+  {v:null,t:'Not applicable',na:true}
+];
+
+const WEIGHTS = {
+  founderled:{label:'Founder-led, under 20 staff', founder:25,process:20,commercial:20,data:10,people:15,tech:10},
+  sme:{label:'Scaling SME, 20 to 100 staff',       founder:15,process:20,commercial:25,data:15,people:15,tech:10},
+  midmarket:{label:'Mid-market, 100+ staff',        founder:5, process:25,commercial:20,data:20,people:20,tech:10}
+};
+
+const FREETEXT = [
+  'What have you already tried to fix, and what happened?',
+  'What do you believe is actually holding the business back?',
+  'What single change would make the biggest difference in the next six months?',
+  'What is coming in the next twelve months that the business is not ready for?'
+];
+
+const BANDS = [
+  {min:85,n:'Built to scale',l:'Structurally sound. The constraint is more likely to be demand than operations.'},
+  {min:65,n:'Stable',l:'The foundations hold. One area is limiting what the rest could do.'},
+  {min:40,n:'Straining',l:'The business works, but it is absorbing effort it should not need to.'},
+  {min:0, n:'Constrained',l:'The business is being held back in more than one place at once. Sequencing matters more than effort.'}
+];
+
+const COMMENTARY = {
+  founder:{line:'Everything routes back to one person, and that is the ceiling.',
+    body:'A business that cannot run without its founder is not yet an asset. It caps growth, makes absence expensive, and is the first thing an investor or buyer discounts.', svc:'Fractional Leadership'},
+  commercial:{line:'The business may be working hard on revenue that is not earning.',
+    body:'Where margin is not known by unit, pricing is set on instinct and corrected after the fact. It shows up as habitual discounting, unprofitable work being repeated, and growth that adds revenue without adding profit.', svc:'Operational Clarity Audit'},
+  process:{line:'The work gets done, but only because people push it.',
+    body:'Undocumented process means the business runs on individual memory. Quality slips as volume rises, onboarding takes months, and the same problems are solved repeatedly.', svc:'Fractional Leadership'},
+  tech:{line:'People are doing work the systems should be doing.',
+    body:'Manual re-entry between tools scales linearly with volume and never appears as a line on the P&L. It appears as headcount instead.', svc:'Technology Builds'},
+  people:{line:'Everyone is busy and very little finishes.',
+    body:'Where outcomes have no single owner, work stalls in the gaps between people. Meetings multiply to compensate, and good people leave for clarity rather than money.', svc:'Build and Place'},
+  data:{line:'Decisions are being made on the loudest opinion in the room.',
+    body:'Without trusted numbers, leadership hears about problems from customers rather than from reporting. Forecasts miss, and the business reacts to last month instead of steering the next one.', svc:'Technology Builds'}
+};
+
+/* ---------- state ---------- */
+const S = { step:0, meta:{biz:'',who:'',role:'leadership',preset:'sme'}, answers:{}, text:['','','',''] };
+const TOTAL = PAGES + 2; // pages + free text + result
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function progress(){
+  const pct = S.step===0 ? 0 : Math.min(100, ((S.step-1)/(PAGES+1))*100);
+  document.getElementById('pfill').style.width = pct+'%';
+  const so = document.getElementById('stepof');
+  if(S.step===0) so.textContent='Operational Constraint Diagnostic';
+  else if(S.step<=PAGES) so.textContent='Section '+S.step+' of '+PAGES;
+  else if(S.step===PAGES+1) so.textContent='Four open questions';
+  else so.textContent='The result';
+}
+
+/* ---------- screens ---------- */
+function cover(){
+  return `<section class="cover ondark"><div class="wrap">
+    <span class="eyebrow">The full instrument</span>
+    <h1>Operational Constraint<br><span class="g">Diagnostic.</span></h1>
+    <p class="lead">Forty-two statements across six areas of the business, weighted for your size, producing a ranked view of what is limiting growth and the order in which to fix it.</p>
+    <div class="facts">
+      <div class="fact"><b>42</b><span>Statements across six areas</span></div>
+      <div class="fact"><b>20 min</b><span>Six short sections</span></div>
+      <div class="fact"><b>Ranked</b><span>All six constraints, in order</span></div>
+    </div>
+    <div class="setup">
+      <label class="field"><span class="lb">Business name</span><input type="text" id="f-biz" value="${esc(S.meta.biz)}" placeholder="Business name"></label>
+      <label class="field"><span class="lb">Your name</span><input type="text" id="f-who" value="${esc(S.meta.who)}" placeholder="Your name"></label>
+      <label class="field"><span class="lb">Your role</span><select id="f-role">
+        <option value="leadership">Founder or leadership team</option>
+        <option value="team">Team, manager or specialist</option></select></label>
+      <label class="field"><span class="lb">Size of business</span><select id="f-preset">
+        ${Object.entries(WEIGHTS).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}
+      </select></label>
+    </div>
+    <div class="nav"><button class="btn btn-neon" id="go">Begin</button></div>
+    <div class="coverfoot">Size sets how the six areas are weighted: founder dependency matters far more in an eight-person business than in a two-hundred-person one. Answer as things are, not as they should be. Individual answers are held by Pivot Prime and are not shared with anyone else in your business.</div>
+  </div></section>`;
+}
+
+function page(pi){
+  const from = pi*PER_PAGE, to = Math.min(from+PER_PAGE, QUESTIONS.length);
+  const cards = [];
+  for(let i=from;i<to;i++){
+    const q = QUESTIONS[i], a = S.answers[i];
+    const opts = SCALE.map((o,oi)=>`<label class="opt ${o.na?'na':''} ${o.dk?'dk':''}">
+      <input type="radio" name="q${i}" value="${oi}" ${a&&a.oi===oi?'checked':''}><span>${o.t}</span></label>`).join('');
+    cards.push(`<div class="qcard ${a?'answered':''}" id="card${i}">
+      <div class="qhead"><div class="qnum">${String(i+1).padStart(2,'0')}</div>
+        <div><div class="qtext">${esc(q.t)}</div><span class="qtag">${D[q.d]}</span></div></div>
+      <div class="opts">${opts}</div></div>`);
+  }
+  return `<main class="light"><div class="wrap"><section class="screen">
+    <div class="shead">
+      <div><span class="eyebrow">Section ${pi+1} of ${PAGES}</span>
+        <h2 style="margin-top:10px">${PAGE_TITLES[pi]}</h2></div>
+      <div class="pagepos">${String(pi+1).padStart(2,'0')}</div>
+    </div>
+    <p style="color:var(--muted);margin-bottom:26px">Seven statements, drawn from across all six areas. Answer on instinct rather than deliberating.</p>
+    ${cards.join('')}
+    <div class="nav">
+      ${pi>0?'<button class="btn btn-ghost" id="back">Back</button>':'<button class="btn btn-ghost" id="back">Back</button>'}
+      <button class="btn btn-solid" id="go">${pi===PAGES-1?'Continue to open questions':'Next section'}</button>
+      <span class="hint" id="hint" style="display:none"></span>
+    </div>
+  </section></div></main>`;
+}
+
+function textStep(){
+  return `<main class="light"><div class="wrap"><section class="screen">
+    <span class="eyebrow">Four open questions</span>
+    <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 12px">In your own <span class="g">words.</span></h2>
+    <p style="color:var(--muted);margin-bottom:26px">Optional, but the result is materially more useful when they are answered. The gap between what you believe is wrong and what the scores say is usually the most productive thing in the report.</p>
+    ${FREETEXT.map((q,i)=>`<div class="ftblock"><div class="ftq">${q}</div><textarea id="t${i}">${esc(S.text[i])}</textarea></div>`).join('')}
+    <div class="nav">
+      <button class="btn btn-ghost" id="back">Back</button>
+      <button class="btn btn-solid" id="go">See the result</button>
+    </div>
+  </section></div></main>`;
+}
+
+/* ---------- scoring ---------- */
+function compute(){
+  const w = WEIGHTS[S.meta.preset];
+  const sums={}, counts={};
+  ORDER.forEach(d=>{sums[d]=0;counts[d]=0});
+  QUESTIONS.forEach((q,i)=>{
+    const a=S.answers[i];
+    if(!a || a.na) return;
+    sums[q.d]+=a.v; counts[q.d]++;
+  });
+  const rows = ORDER.map(d=>{
+    if(counts[d] < 4) return {d, name:D[d], scored:counts[d], insufficient:true};
+    return {d, name:D[d], scored:counts[d], insufficient:false, score:Math.round((sums[d]/(4*counts[d]))*100)};
+  });
+  const usable = rows.filter(r=>!r.insufficient);
+  const wSum = usable.reduce((t,r)=>t+w[r.d],0);
+  usable.forEach(r=>{ r.weight = wSum ? (w[r.d]/wSum)*100 : 0; });
+  const overall = wSum ? Math.round(usable.reduce((t,r)=>t+r.score*r.weight,0)/100) : null;
+  usable.forEach(r=>{ r.deficit = +(r.weight*(100-r.score)/100).toFixed(1); });
+  const ranked = [...usable].sort((a,b)=>b.deficit-a.deficit);
+  ranked.forEach((r,i)=>{ r.joint = i===1 && Math.abs(ranked[0].deficit-r.deficit)<=3; });
+  return {rows, ranked, overall, band: overall===null?null:BANDS.find(b=>overall>=b.min), wLabel:w.label};
+}
+
+function result(){
+  const r = compute();
+  const primary = r.ranked[0];
+  const c = primary ? COMMENTARY[primary.d] : null;
+  const answered = Object.values(S.answers).filter(a=>!a.na).length;
+
+  const bars = r.rows.map(row=>{
+    if(row.insufficient) return `<div class="bar-row nodata">
+      <div class="bar-top"><span class="bar-nm">${row.name}</span><span class="bar-vl">Insufficient data</span></div>
+      <div class="bar-tr"></div></div>`;
+    return `<div class="bar-row ${primary&&row.d===primary.d?'low':''}">
+      <div class="bar-top"><span class="bar-nm">${row.name}</span><span class="bar-vl">${row.score}</span></div>
+      <div class="bar-tr"><div class="bar-fl" data-w="${row.score}"></div></div></div>`;
+  }).join('');
+
+  const maxDef = r.ranked.length ? r.ranked[0].deficit : 1;
+  const rank = r.ranked.map((row,i)=>`<div class="rrow ${i===0?'p1':''}">
+      <div class="rpos">${i+1}</div>
+      <div><div class="rnm">${row.name}${row.joint?' (joint)':''}</div>
+        <div class="rsub">Score ${row.score} · weight ${Math.round(row.weight)}</div></div>
+      <div class="rdef"><div class="rdn">${row.deficit}</div>
+        <div class="rdb"><i style="width:${maxDef?Math.round(row.deficit/maxDef*100):0}%"></i></div></div>
+    </div>`).join('');
+
+  const texts = FREETEXT.map((q,i)=> S.text[i].trim()
+    ? `<dt>${q}</dt><dd>${esc(S.text[i])}</dd>` : '').join('');
+
+  return `<main class="light"><div class="wrap"><section class="screen">
+    <span class="eyebrow">The result</span>
+    <h2 style="font-size:clamp(24px,3.2vw,34px);margin:10px 0 6px">${S.meta.biz?esc(S.meta.biz):'Your business'}</h2>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:24px">${S.meta.who?esc(S.meta.who)+' · ':''}${S.meta.role==='leadership'?'Leadership':'Team'} · ${r.wLabel} · ${answered} of 42 statements scored</p>
+
+    <div class="rhero ondark">
+      <div class="rscore" id="rscore">0<em>out of 100</em></div>
+      <div style="flex:1;min-width:230px">
+        <div class="rband">${r.band?r.band.n:'Not enough data'}</div>
+        <p>${r.band?r.band.l:'Too many statements were marked not applicable to produce a score.'}</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:19px;margin-bottom:16px">The six areas</h3>
+    ${bars}
+
+    <h3 style="font-size:19px;margin:30px 0 8px">Constraint ranking</h3>
+    <p style="color:var(--muted);font-size:14.5px;margin-bottom:16px">Ranked by weighted deficit rather than lowest score. An area scoring 40 at a weight of 25 holds the business back more than one scoring 30 at a weight of 5. This order is the recommended sequence of work.</p>
+    <div class="rank">${rank}</div>
+
+    ${c?`<div class="constraint">
+      <div class="l">Your primary constraint</div>
+      <h3>${primary.name} · scored ${primary.score}</h3>
+      <p style="font-family:var(--display);font-weight:600;color:var(--forest);margin-bottom:10px">${c.line}</p>
+      <p>${c.body}</p>
+    </div>`:''}
+
+    ${texts?`<h3 style="font-size:19px;margin-top:8px">What you told us</h3><dl class="ft">${texts}</dl>`:''}
+
+    ${c?`<div class="next ondark">
+      <span class="eyebrow">What we would do</span>
+      <h3>Start with the ${c.svc}</h3>
+      <p>On these findings, that is the engagement the result actually justifies. Everything below it in the ranking gets easier once this one moves.</p>
+      <div class="ctas">
+        <a class="btn btn-neon" href="#">Talk to us on WhatsApp</a>
+        <a class="btn btn-ghost ondk" href="#">See what the audit covers</a>
+      </div>
+    </div>`:''}
+
+    <div class="smallprint">Scoring is deterministic: the same answers always produce the same result, so this score can be compared against a later one. Where several people in the same business complete the diagnostic, only the aggregate is shared.</div>
+
+    <div class="nav noprint">
+      <button class="btn btn-solid" id="print">Save as PDF</button>
+      <button class="btn btn-ghost" id="export">Download the data</button>
+      <button class="btn btn-ghost" id="restart">Start again</button>
+    </div>
+  </section></div></main>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  if(S.step===0) app.innerHTML = cover();
+  else if(S.step<=PAGES) app.innerHTML = page(S.step-1);
+  else if(S.step===PAGES+1) app.innerHTML = textStep();
+  else app.innerHTML = result();
+  progress(); bind(); scrollTo({top:0,behavior:'instant'});
+}
+
+function bind(){
+  const go = document.getElementById('go');
+  const back = document.getElementById('back');
+  if(back) back.onclick = ()=>{ saveText(); S.step--; render(); };
+
+  if(S.step===0){
+    document.getElementById('f-role').value = S.meta.role;
+    document.getElementById('f-preset').value = S.meta.preset;
+    go.onclick = ()=>{
+      S.meta.biz = document.getElementById('f-biz').value.trim();
+      S.meta.who = document.getElementById('f-who').value.trim();
+      S.meta.role = document.getElementById('f-role').value;
+      S.meta.preset = document.getElementById('f-preset').value;
+      S.step=1; render();
+    };
+    return;
+  }
+
+  if(S.step<=PAGES){
+    const pi = S.step-1, from = pi*PER_PAGE, to = Math.min(from+PER_PAGE, QUESTIONS.length);
+    document.querySelectorAll('input[type=radio]').forEach(inp=>{
+      inp.onchange = ()=>{
+        const i = +inp.name.slice(1), oi = +inp.value, o = SCALE[oi];
+        S.answers[i] = {oi, v:o.v, na:!!o.na, dk:!!o.dk};
+        document.getElementById('card'+i).classList.add('answered');
+        const h = document.getElementById('hint'); if(h) h.style.display='none';
+      };
+    });
+    go.onclick = ()=>{
+      let missing = null;
+      for(let i=from;i<to;i++) if(!S.answers[i]){ missing = i; break; }
+      if(missing !== null){
+        const h = document.getElementById('hint');
+        h.textContent = 'Answer every statement in this section before continuing.';
+        h.style.display = 'inline';
+        document.getElementById('card'+missing).scrollIntoView({behavior:'smooth',block:'center'});
+        return;
+      }
+      S.step++; render();
+    };
+    return;
+  }
+
+  if(S.step===PAGES+1){ go.onclick = ()=>{ saveText(); S.step++; render(); }; return; }
+
+  /* result */
+  const r = compute();
+  const rs = document.getElementById('rscore');
+  if(r.overall===null){ rs.innerHTML = '—<em>out of 100</em>'; }
+  else if(reduce){ rs.innerHTML = r.overall + '<em>out of 100</em>'; }
+  else {
+    const t0 = performance.now();
+    (function tick(t){
+      const p = Math.min((t-t0)/1300,1);
+      rs.innerHTML = Math.round(r.overall*(1-Math.pow(1-p,3))) + '<em>out of 100</em>';
+      if(p<1) requestAnimationFrame(tick);
+    })(performance.now());
+  }
+  document.querySelectorAll('.bar-fl').forEach((f,i)=>{
+    setTimeout(()=>{ f.style.width = f.dataset.w+'%'; }, reduce?0:180+i*85);
+  });
+  document.getElementById('print').onclick = ()=>print();
+  document.getElementById('restart').onclick = ()=>{ S.step=0; S.answers={}; S.text=['','','','']; render(); };
+  document.getElementById('export').onclick = ()=>{
+    const payload = {
+      instrument:'Pivot Prime Operational Constraint Diagnostic',
+      version:'1.0', completedAt:new Date().toISOString(),
+      meta:S.meta, weighting:r.wLabel, overall:r.overall, band:r.band?r.band.n:null,
+      domains:r.rows,
+      constraintRanking:r.ranked.map(x=>({domain:x.name,score:x.score,weight:Math.round(x.weight),weightedDeficit:x.deficit})),
+      answers:Object.fromEntries(Object.entries(S.answers).map(([k,v])=>[
+        'q'+(+k+1)+'_'+QUESTIONS[+k].d, v.na?'n/a':v.v])),
+      freeText:Object.fromEntries(FREETEXT.map((q,i)=>[q,S.text[i]]))
+    };
+    const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (S.meta.biz||'diagnostic').toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-constraint-diagnostic.json';
+    a.click(); URL.revokeObjectURL(a.href);
+  };
+}
+
+function saveText(){
+  if(S.step===PAGES+1) FREETEXT.forEach((_,i)=>{
+    const el = document.getElementById('t'+i); if(el) S.text[i]=el.value;
+  });
+}
+
+render();
+</script>
+</body>
+</html>

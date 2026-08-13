@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persona tiles — redesign | Pivot Prime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#013325;--forest-2:#02291e;--mid:#009f50;--neon:#00d76d;
+  --gold:#af8943;--sand:#efe7d8;--paper:#f7f9f8;--ink:#0c1a15;
+  --muted:#5e6f68;--line:#e3eae6;
+  --display:'Poppins',system-ui,sans-serif;--body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.14;letter-spacing:-.026em}
+.g{color:var(--mid)}
+p{max-width:64ch}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--mid);display:block}
+
+section{padding:clamp(56px,7vw,96px) 0}
+.sechead{margin-bottom:clamp(28px,3.2vw,42px);max-width:62ch}
+.sechead h2{font-size:clamp(28px,3.6vw,42px);margin-top:12px}
+.sechead .sub{color:var(--muted);margin-top:12px}
+
+/* ---- grid ---- */
+.people{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+
+.p{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:30px 30px 26px;display:flex;flex-direction:column;overflow:hidden;
+  transition:border-color .22s,transform .22s,box-shadow .22s}
+.p::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--line);transition:background .22s}
+.p:hover{border-color:#cfe3d8;transform:translateY(-4px);box-shadow:0 20px 44px rgba(1,51,37,.09)}
+.p:hover::before{background:var(--mid)}
+
+.ptop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}
+.tile{width:46px;height:46px;border-radius:12px;background:var(--paper);border:1px solid var(--line);
+  display:grid;place-items:center;flex:0 0 46px;transition:background .22s,border-color .22s}
+.tile svg{width:22px;height:22px;stroke:var(--forest);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .22s}
+.p:hover .tile{background:var(--forest);border-color:var(--forest)}
+.p:hover .tile svg{stroke:var(--neon)}
+.who{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);text-align:right;padding-top:6px}
+
+.p h3{font-size:clamp(20px,2.2vw,25px);margin-bottom:18px;max-width:19ch}
+
+.sym{list-style:none;display:grid;gap:11px;margin-bottom:22px}
+.sym li{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted);line-height:1.5}
+.sym li::before{content:"";width:5px;height:5px;border-radius:50%;background:#c3d5cc;flex:0 0 5px;margin-top:9px;transition:background .22s}
+.p:hover .sym li::before{background:var(--mid)}
+.sym li b{color:var(--ink);font-weight:600}
+
+.route{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.leads{font-size:12.5px;color:var(--muted)}
+.leads b{display:block;font-family:var(--display);font-weight:600;font-size:13.5px;color:var(--forest);margin-top:2px}
+.go{font-family:var(--display);font-weight:600;font-size:14px;color:var(--forest);text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.go i{font-style:normal;transition:transform .2s}
+.p:hover .go{color:var(--mid)}
+.p:hover .go i{transform:translateX(4px)}
+
+/* the fifth tile, for people who do not fit */
+.p.alt{background:var(--forest);border-color:var(--forest);grid-column:1 / -1;
+  flex-direction:row;align-items:center;justify-content:space-between;gap:26px;padding:28px 32px}
+.p.alt::before{background:var(--gold)}
+.p.alt:hover{transform:translateY(-3px);border-color:var(--forest)}
+.p.alt h3{color:#fff;margin:0 0 6px;max-width:26ch;font-size:clamp(19px,2.1vw,23px)}
+.p.alt p{color:#bfd8cd;font-size:15px;margin:0;max-width:50ch}
+.p.alt .btn{background:var(--neon);color:var(--forest);font-family:var(--display);font-weight:600;font-size:14.5px;
+  padding:14px 24px;border-radius:999px;text-decoration:none;display:inline-flex;gap:8px;align-items:center;white-space:nowrap;
+  transition:background .2s,transform .2s}
+.p.alt:hover .btn{background:#fff;transform:translateX(3px)}
+
+@media (max-width:880px){
+  .people{grid-template-columns:1fr}
+  .p.alt{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<section>
+  <div class="wrap">
+    <div class="sechead">
+      <span class="eyebrow">Who we work with</span>
+      <h2>You do not have to figure it all out <span class="g">on your own.</span></h2>
+      <p class="sub">Four situations, and we see all of them constantly. Find the one that sounds like your week.</p>
+    </div>
+
+    <div class="people">
+
+      <!-- 01 FOUNDER -->
+      <article class="p">
+        <div class="ptop">
+          <div class="tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="8.5"/></svg></div>
+          <div class="who">Founders</div>
+        </div>
+        <h3>You built something real, and it still runs through you.</h3>
+        <ul class="sym">
+          <li>Every decision <b>lands back on your desk</b></li>
+          <li>You are the glue, the driver and the backstop, all at once</li>
+          <li>Stepping away for two weeks feels <b>genuinely risky</b></li>
+        </ul>
+        <div class="route">
+          <div class="leads">Usually starts with<b>Operational Clarity Audit</b></div>
+          <a class="go" href="#">See what you can take off your plate <i>→</i></a>
+        </div>
+      </article>
+
+      <!-- 02 SME -->
+      <article class="p">
+        <div class="ptop">
+          <div class="tile"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></div>
+          <div class="who">SME leaders</div>
+        </div>
+        <h3>Growth is happening, but it does not feel controlled.</h3>
+        <ul class="sym">
+          <li>Some months feel strong, others feel <b>tighter than they should</b></li>
+          <li>Costs creep quietly and cash needs watching</li>
+          <li>Performance depends too much on <b>who is chasing what</b></li>
+        </ul>
+        <div class="route">
+          <div class="leads">Usually starts with<b>Operational Clarity Audit</b></div>
+          <a class="go" href="#">Make the business predictable <i>→</i></a>
+        </div>
+      </article>
+
+      <!-- 03 CORPORATE -->
+      <article class="p">
+        <div class="ptop">
+          <div class="tile"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+          <div class="who">Corporate leaders</div>
+        </div>
+        <h3>You are expected to deliver, without the team it really takes.</h3>
+        <ul class="sym">
+          <li>You carry delivery, risk and outcomes <b>without enough people</b></li>
+          <li>Hiring is slow, and headcount is not on offer</li>
+          <li>You need capability now, <b>not a permanent cost</b></li>
+        </ul>
+        <div class="route">
+          <div class="leads">Usually starts with<b>Build and Place</b></div>
+          <a class="go" href="#">Get execution support <i>→</i></a>
+        </div>
+      </article>
+
+      <!-- 04 P&L OWNER -->
+      <article class="p">
+        <div class="ptop">
+          <div class="tile"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M20 4h-5M20 4v5"/><path d="M3 21h18"/></svg></div>
+          <div class="who">P&amp;L owners</div>
+        </div>
+        <h3>The business is stable, and momentum is hard to create.</h3>
+        <ul class="sym">
+          <li>Progress is slow and <b>change is expensive</b></li>
+          <li>Every initiative competes with ten others</li>
+          <li>Execution happens, <b>but not always in the direction you intend</b></li>
+        </ul>
+        <div class="route">
+          <div class="leads">Usually starts with<b>Fractional Leadership</b></div>
+          <a class="go" href="#">Design the execution roadmap <i>→</i></a>
+        </div>
+      </article>
+
+      <!-- 05 NONE OF THE ABOVE -->
+      <article class="p alt">
+        <div>
+          <h3>None of these quite fit</h3>
+          <p>Answer twelve questions and we will tell you which of the four you actually are, and what is limiting the business.</p>
+        </div>
+        <a class="btn" href="#">Take the 4-minute diagnostic <span>→</span></a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
