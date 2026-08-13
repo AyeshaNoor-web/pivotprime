@@ -484,7 +484,7 @@ export default function DiagnosticApp() {
                   <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:24px_24px] opacity-50" />
                   
                   <div className="font-sans font-bold text-[62px] leading-none text-[#22c55e] tracking-tight relative z-10">
-                    {r.overall !== null ? r.overall : "—"}
+                    {r.overall !== null ? r.overall : "n/a"}
                     <em className="block not-italic font-semibold text-[10.5px] tracking-[0.18em] uppercase text-[#8fb3a4] mt-1.5">
                       out of 100
                     </em>

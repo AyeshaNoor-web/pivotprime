@@ -68,7 +68,7 @@ export default function WhoWeAre() {
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold mb-4 flex items-center"><span className="text-primary mr-3 text-3xl">•</span> We understand human behavior</h3>
+            <h3 className="text-2xl font-bold mb-4 flex items-center"><span className="text-primary mr-3 text-3xl">•</span> We understand human behaviour</h3>
             <p className="text-gray-600 leading-relaxed text-lg pl-8">
               Strategies only hold when they fit the culture, capacity, and motivations of the people expected to deliver them. We work with how teams actually operate under pressure, how leaders influence action, and where resistance or fatigue shows up.
             </p>

@@ -47,7 +47,7 @@ export default function ForCorporateOwners() {
                 </p>
               </div>
               <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 flex flex-col justify-center">
-                <p className="text-primary font-bold text-lg mb-4">This is a 2-12 week rest, depending on scope and complexity.</p>
+                <p className="text-primary font-bold text-lg mb-4">This is a 2 to 12 week reset, depending on scope and complexity.</p>
                 <p className="text-black font-medium">Most CEOs start here when growth plateaus, regulation shifts, or competitive pressure increases.</p>
               </div>
             </div>

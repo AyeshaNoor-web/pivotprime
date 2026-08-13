@@ -212,7 +212,7 @@ export default function WhatWeDo() {
               <div>
                 <h3 className="text-2xl font-bold mb-6">Team building workshops and communication labs</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  We run practical sessions that improve how teams communicate, make decisions, and work together under pressure. Our approach draws on behavioral and personality assessments, neuroscience, and organizational psychology to help teams understand how they think, react, and interact at work.
+                  We run practical sessions that improve how teams communicate, make decisions, and work together under pressure. Our approach draws on behavioural and personality assessments, neuroscience, and organisational psychology to help teams understand how they think, react, and interact at work.
                 </p>
                 <p className="text-black font-medium mb-8">
                   When teams struggle to work well together, progress slows and effort is wasted.

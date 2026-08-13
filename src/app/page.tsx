@@ -64,7 +64,7 @@ export default function Home() {
               <span className="text-gray-400 italic font-light">We want to scale, but don&apos;t know how</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-400 italic font-light">Operations feel messy and inefficient</span> <span className="text-gray-400 mx-2">•</span>
             </p>
             <p>
-              <span className="text-primary font-bold">Legacy processes drain time and money.</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-600 font-light">The team is stretched. misaligned, or burned out</span> <span className="text-gray-400 mx-2">•</span>
+              <span className="text-primary font-bold">Legacy processes drain time and money</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-600 font-light">The team is stretched, misaligned or burned out</span> <span className="text-gray-400 mx-2">•</span>
             </p>
             <p>
               <span className="text-black font-bold">We keep losing customers</span> <span className="text-gray-400 mx-2">•</span>
