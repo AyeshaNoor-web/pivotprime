@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PEOPLE, ROLES, TEAM_ANCHOR, TEAM_INTRO } from "@/content/team";
 
 
 export default function WhoWeAre() {
@@ -74,6 +75,53 @@ export default function WhoWeAre() {
             </p>
           </div>
 
+        </div>
+      </section>
+
+      {/* Team, spec 6.3. Anchor target for /about#team, linked from the About
+          dropdown. Layer one is roles, which never change. Layer two is named
+          people and is still partly blocked on spec 10 decision 2. */}
+      <section className="py-24" id={TEAM_ANCHOR}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <header className="mb-14 max-w-3xl">
+            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              {TEAM_INTRO.heading}
+            </h2>
+            <p className="mb-6 text-xl font-medium text-mid md:text-2xl">{TEAM_INTRO.standfirst}</p>
+            {TEAM_INTRO.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="mb-4 leading-relaxed text-neutral-600">
+                {paragraph}
+              </p>
+            ))}
+          </header>
+
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {ROLES.map((role) => (
+              <li
+                key={role.title}
+                className="rounded-xl border border-forest/10 bg-forest/[0.04] p-8"
+              >
+                <h3 className="mb-3 text-lg font-bold text-forest">{role.title}</h3>
+                <p className="leading-relaxed text-neutral-600">{role.body}</p>
+              </li>
+            ))}
+          </ul>
+
+          {/* Spec 6.3 requires this grid to render correctly with an empty
+              bench, so the remaining people can drop in without a layout change. */}
+          {PEOPLE.length > 0 && (
+            <ul className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {PEOPLE.map((person) => (
+                <li key={person.name} className="rounded-xl border border-neutral-200 p-8">
+                  <h3 className="text-xl font-extrabold text-foreground">{person.name}</h3>
+                  <p className="mt-1 mb-4 text-sm font-bold tracking-wide text-mid uppercase">
+                    {person.role}
+                  </p>
+                  <p className="leading-relaxed text-neutral-600">{person.credential}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 

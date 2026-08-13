@@ -28,6 +28,7 @@ client names.
 | 1.10 | CRM, dashboard and Scentmatic assets, client data blurred | 8.1, 10 #8 | **Saif** | Technology Builds |
 | 1.11 | Homepage services card 6 body. The spec reads "START WITH THE DIAGNOSTIC (TEXT AS PER CARD SHOWN)" and the card it refers to is an image, so there is no transcribable copy | 3.4 | client | Homepage 3.4, `/services` |
 | 1.12 | RAKEZ activity scope confirmation for selling software as a standalone product | 10 #7 | client | Technology Builds going live |
+| 1.13 | The WhatsApp pre-fill message. Spec 2.2 says to point the header button "at WhatsApp with the homepage pre-fill" but never states the wording. Linking without pre-filled text until it arrives, which opens the chat empty rather than putting words in a prospect's mouth | 2.2 | client | Nothing, the CTA works without it |
 
 ---
 

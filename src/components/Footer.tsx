@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FOOTER_LINKS } from "@/content/navigation";
 
 
 export default function Footer() {
@@ -47,12 +48,20 @@ export default function Footer() {
         
         {/* Bottom part: Links and Back to top */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-xs font-medium mb-8">
+          {/* Spec 3.12: the link list matches the new navigation, plus the
+              privacy policy required by 2.7. The contact link is the 2.4 fix:
+              it pointed at /contact while the live page was /contact-us, so the
+              site standardises on /contact and /contact-us redirects to it. */}
           <div className="flex flex-wrap gap-x-6 gap-y-4">
-            <Link href="/" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Unlock Your Prime</Link>
-            <Link href="/services/how-we-work" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">What We Do</Link>
-            <Link href="/about" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Who We Are</Link>
-            <Link href="/insights" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Prime Insights</Link>
-            <Link href="/contact" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Contact Us</Link>
+            {FOOTER_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="tracking-wider text-gray-300 uppercase transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
           
           <div className="mt-6 md:mt-0">

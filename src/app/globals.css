@@ -29,6 +29,23 @@
   body {
     @apply bg-background text-foreground antialiased font-sans;
   }
+
+  /* Spec 2.1: the About dropdown items are in-page anchors, built with smooth
+     scroll and a real URL fragment so /about#team can be linked directly.
+     Guarded by prefers-reduced-motion per spec 8.3, which asks for all
+     animation to stop for users who have motion sensitivity enabled. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* The navigation floats over the page, so an anchor target scrolled flush to
+     the viewport top lands underneath it. */
+  :target,
+  [id] {
+    scroll-margin-top: 7rem;
+  }
 }
 
 @layer utilities {
