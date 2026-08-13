@@ -159,7 +159,7 @@ export default function Home() {
               </p>
             </Link>
             
-            <Link href="/for-corporate-owners" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-pl-owners" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
               <div className="mr-6">
                 <Image src="/growth.svg" alt="Corporate Owner" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>

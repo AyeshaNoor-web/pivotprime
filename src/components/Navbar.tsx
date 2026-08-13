@@ -28,7 +28,7 @@ export default function Navbar() {
               <div className="relative h-full flex items-center" 
                    onMouseEnter={() => setIsDropdownOpen(true)}
                    onMouseLeave={() => setIsDropdownOpen(false)}>
-                <Link href="/what-we-do" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors flex items-center h-full py-2">
+                <Link href="/services/how-we-work" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors flex items-center h-full py-2">
                   What We Do
                   <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -42,17 +42,17 @@ export default function Navbar() {
                         <Link href="/for-founders" className="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary" role="menuitem">For Founders</Link>
                         <Link href="/for-smes" className="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary" role="menuitem">For SMEs</Link>
                         <Link href="/for-corporate-leaders" className="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary" role="menuitem">For Corporate Leaders</Link>
-                        <Link href="/for-corporate-owners" className="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary" role="menuitem">For Corporate Owners</Link>
+                        <Link href="/for-pl-owners" className="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary" role="menuitem">For Corporate Owners</Link>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
               
-              <Link href="/who-we-are" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors">
+              <Link href="/about" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors">
                 Who We Are
               </Link>
-              <Link href="/our-blog" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors">
+              <Link href="/insights" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors">
                 Prime Insights
               </Link>
               <Link href="/contact" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors">
@@ -96,11 +96,11 @@ export default function Navbar() {
                   <Link href="/for-founders" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-50">For Founders</Link>
                   <Link href="/for-smes" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-50">For SMEs</Link>
                   <Link href="/for-corporate-leaders" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-50">For Corporate Leaders</Link>
-                  <Link href="/for-corporate-owners" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-50">For Corporate Owners</Link>
+                  <Link href="/for-pl-owners" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-50">For Corporate Owners</Link>
                 </div>
               </div>
-              <Link href="/who-we-are" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Who We Are</Link>
-              <Link href="/our-blog" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Prime Insights</Link>
+              <Link href="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Who We Are</Link>
+              <Link href="/insights" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Prime Insights</Link>
               <Link href="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Contact Us</Link>
               <div className="pt-4 pb-2 px-3">
                 <a href="https://wa.me/971524401075" className="flex items-center justify-center w-full px-6 py-3 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-sm">

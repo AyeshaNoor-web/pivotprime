@@ -49,9 +49,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-xs font-medium mb-8">
           <div className="flex flex-wrap gap-x-6 gap-y-4">
             <Link href="/" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Unlock Your Prime</Link>
-            <Link href="/what-we-do" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">What We Do</Link>
-            <Link href="/who-we-are" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Who We Are</Link>
-            <Link href="/our-blog" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Prime Insights</Link>
+            <Link href="/services/how-we-work" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">What We Do</Link>
+            <Link href="/about" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Who We Are</Link>
+            <Link href="/insights" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Prime Insights</Link>
             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors uppercase tracking-wider">Contact Us</Link>
           </div>
           
