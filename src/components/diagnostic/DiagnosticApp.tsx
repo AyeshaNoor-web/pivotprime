@@ -2,19 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import {
+  DOMAIN_NAMES as D,
+  DOMAIN_ORDER as ORDER,
+  rankByWeightedDeficit,
+  type DomainId,
+} from "@/lib/diagnostic/domains";
 
-const D: Record<string, string> = {
-  founder: "Founder dependency",
-  commercial: "Commercial and margin",
-  process: "Process and delivery",
-  tech: "Technology leverage",
-  people: "People and accountability",
-  data: "Data and visibility",
-};
-
-const ORDER = ["founder", "commercial", "process", "tech", "people", "data"];
-
-const POOL: Record<string, string[]> = {
+const POOL: Record<DomainId, string[]> = {
   founder: [
     "If the founder were uncontactable for two weeks, the business would continue without disruption.",
     "Decisions below a defined value are made without needing the founder to approve them.",
@@ -71,7 +66,7 @@ const POOL: Record<string, string[]> = {
   ],
 };
 
-const QUESTIONS: { d: string; t: string }[] = [];
+const QUESTIONS: { d: DomainId; t: string }[] = [];
 for (let round = 0; round < 7; round++) {
   ORDER.forEach((d) => QUESTIONS.push({ d, t: POOL[d][round] }));
 }
@@ -194,7 +189,7 @@ export default function DiagnosticApp() {
     const overall = wSum ? Math.round(usable.reduce((t, r) => t + r.score * r.weight, 0) / 100) : null;
     usable.forEach((r) => { r.deficit = +(r.weight * (100 - r.score) / 100).toFixed(1); });
     
-    const ranked = [...usable].sort((a, b) => b.deficit - a.deficit);
+    const ranked = rankByWeightedDeficit(usable);
     ranked.forEach((r, i) => { r.joint = i === 1 && Math.abs(ranked[0].deficit - r.deficit) <= 3; });
     
     return {
