@@ -41,6 +41,35 @@ const GRANDFATHERED = ["src/components/services/", "src/components/diagnostic/"]
 
 const HEX = /#[0-9a-fA-F]{3,8}\b/g;
 
+/**
+ * Tokens that have been removed from @theme.
+ *
+ * This exists because of a failure mode that nothing else catches. Deleting a
+ * token does not break a utility that references it: Tailwind simply stops
+ * generating the class, so `hover:bg-primary-dark` silently renders no style at
+ * all. eslint sees a valid string, tsc sees a valid string, the build passes,
+ * and the button just stops changing on hover. Nobody finds that by reading a
+ * diff.
+ *
+ * Add an entry here whenever a colour token is deleted, so a stale reference
+ * fails the build instead of quietly rendering nothing.
+ */
+const REMOVED_TOKENS = [
+  { name: "primary-dark", removedIn: "c04d14b", use: "hover:bg-mid/90 on light, hover:bg-neon/90 on dark" },
+  { name: "dark", removedIn: "c04d14b", use: "forest, or foreground for text" },
+  { name: "light", removedIn: "c04d14b", use: "background, or a neutral utility" },
+];
+
+/** Tailwind colour utilities, so `dark:` the variant is never mistaken for `bg-dark`. */
+const COLOUR_UTILITIES =
+  "bg|text|border|ring|fill|stroke|from|via|to|outline|decoration|shadow|accent|caret|divide|placeholder";
+
+function removedTokenPattern(name) {
+  // Matches an optional variant chain, then utility-token, then an optional
+  // opacity modifier: hover:bg-primary-dark, md:text-dark/50, border-light.
+  return new RegExp(`(?:^|[\\s"'\`:])(?:${COLOUR_UTILITIES})-${name}(?:\\/\\d+)?(?![\\w-])`, "g");
+}
+
 function loadAllowlist() {
   if (!existsSync(ALLOW_FILE)) return [];
   try {
@@ -64,6 +93,7 @@ function walkFiles(dir, out = []) {
 function main() {
   const allow = loadAllowlist();
   const findings = [];
+  const staleFindings = [];
 
   for (const file of walkFiles(SRC)) {
     const rel = relative(ROOT, file).split(sep).join("/");
@@ -85,7 +115,30 @@ function main() {
     });
   }
 
-  if (findings.length === 0) {
+  // Stale references to deleted tokens, checked across all of src including the
+  // grandfathered paths: a class that generates nothing is a bug everywhere.
+  for (const file of walkFiles(SRC)) {
+    const rel = relative(ROOT, file).split(sep).join("/");
+    if (rel === TOKEN_SOURCE) continue;
+
+    const lines = readFileSync(file, "utf8").split("\n");
+    lines.forEach((line, i) => {
+      if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+      for (const token of REMOVED_TOKENS) {
+        for (const match of line.matchAll(removedTokenPattern(token.name))) {
+          staleFindings.push({
+            rel,
+            line: i + 1,
+            column: match.index + 1,
+            token,
+            text: match[0].trim(),
+          });
+        }
+      }
+    });
+  }
+
+  if (findings.length === 0 && staleFindings.length === 0) {
     console.log("palette-lint: clean");
     return;
   }
@@ -98,7 +151,17 @@ function main() {
         `scripts/palette-allow.json with a reason.`,
     );
   }
-  console.error(`\npalette-lint: ${findings.length} raw hex colour${findings.length === 1 ? "" : "s"}.`);
+
+  for (const f of staleFindings) {
+    console.error(`${f.rel}:${f.line}:${f.column}  "${f.text}" references the removed token --color-${f.token.name}`);
+    console.error(
+      `  this class generates no CSS at all, so it renders no style rather than failing. ` +
+        `Removed in ${f.token.removedIn}. Use ${f.token.use}.`,
+    );
+  }
+
+  const total = findings.length + staleFindings.length;
+  console.error(`\npalette-lint: ${total} problem${total === 1 ? "" : "s"}.`);
   process.exit(1);
 }
 

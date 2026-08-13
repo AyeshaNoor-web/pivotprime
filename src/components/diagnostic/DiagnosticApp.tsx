@@ -13,63 +13,8 @@ import {
   buildStatements,
   shuffleWithinDomains,
 } from "@/lib/diagnostic/presentation";
+import { POOL } from "@/lib/diagnostic/statements";
 
-const POOL: Record<DomainId, string[]> = {
-  founder: [
-    "If the founder were uncontactable for two weeks, the business would continue without disruption.",
-    "Decisions below a defined value are made without needing the founder to approve them.",
-    "Client relationships are held by the business rather than by one person.",
-    "The founder spends most of their time on work that only they can do.",
-    "There is at least one person who could run day to day operations if the founder stepped back.",
-    "The founder has taken two or more consecutive weeks of leave in the last year without checking in daily.",
-    "Significant commercial and operational decisions have a named owner other than the founder.",
-  ],
-  commercial: [
-    "We know our profit margin by product, service or client, not just overall.",
-    "Our prices were set deliberately and have been reviewed in the last twelve months.",
-    "We know whether a job or contract is making money while it is running, not months afterwards.",
-    "Discounting is exceptional rather than routine.",
-    "Cash is collected on the agreed terms without significant chasing.",
-    "No single client represents more than a quarter of revenue.",
-    "Profit has grown at least as fast as revenue over the last two years.",
-  ],
-  process: [
-    "Our core processes are documented well enough that a new person could follow them.",
-    "Work is delivered on time without someone having to chase it.",
-    "What sales commits to is consistently what delivery can actually deliver.",
-    "Work continues to run normally when a key person is on leave.",
-    "Quality holds when volume increases.",
-    "Work rarely has to be redone or corrected after it has been completed.",
-    "A new hire becomes productive within a defined onboarding period rather than by absorbing it slowly.",
-  ],
-  tech: [
-    "Our systems reduce manual work rather than creating more of it.",
-    "Information moves between our tools without anyone re-entering it.",
-    "Nobody in the business spends significant time copying data between systems.",
-    "We actively use the software we pay for.",
-    "Our CRM reflects what is genuinely happening in sales and delivery.",
-    "Technology decisions are made against a defined problem rather than a feature we liked.",
-    "We could describe our core process precisely enough for someone to automate it.",
-  ],
-  people: [
-    "Every important outcome in the business has one clearly named owner.",
-    "The team has the capacity to absorb the growth we are planning.",
-    "Roles were designed around the work the business needs, not around the people who were available.",
-    "If you asked three leaders for the top three priorities, you would get the same answers.",
-    "Initiatives that are not working get stopped rather than quietly continuing.",
-    "People who leave go for opportunity rather than frustration.",
-    "Performance conversations happen on a defined rhythm rather than when something goes wrong.",
-  ],
-  data: [
-    "I can see how the business is performing this month without asking someone to prepare it.",
-    "When two people report the same number, they agree.",
-    "We have a small set of KPIs that leadership genuinely uses to make decisions.",
-    "We find out about problems from our own data before customers tell us.",
-    "Our forecasts have been reasonably accurate over the last three periods.",
-    "Reporting is produced automatically rather than assembled by hand each time.",
-    "We could answer a detailed board or investor question about performance within a day.",
-  ],
-};
 
 // Deep spec 8.2: one domain per screen, seven statements, six steps. Statements
 // are grouped into six contiguous blocks of seven in canonical domain order, and

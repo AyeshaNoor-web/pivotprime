@@ -1,4 +1,5 @@
 import { DOMAIN_ORDER, type DomainId } from "./domains";
+import { isAnchor } from "./statements";
 
 /**
  * Presentation order for the deep instrument.
@@ -27,6 +28,8 @@ export type Statement = {
   t: string;
   /** Stable, spec-derived. Never changes with presentation order. */
   id: string;
+  /** Shared with the short instrument, so the two can be compared. */
+  anchor: boolean;
 };
 
 export const PER_DOMAIN = 7;
@@ -35,7 +38,10 @@ export const PER_DOMAIN = 7;
 export function buildStatements(pool: Record<DomainId, string[]>): Statement[] {
   const out: Statement[] = [];
   for (const d of DOMAIN_ORDER) {
-    pool[d].forEach((t, i) => out.push({ d, t, id: `${d}-${i + 1}` }));
+    pool[d].forEach((t, i) => {
+      const id = `${d}-${i + 1}`;
+      out.push({ d, t, id, anchor: isAnchor(id) });
+    });
   }
   return out;
 }

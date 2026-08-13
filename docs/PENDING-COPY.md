@@ -126,6 +126,16 @@ strapline under the domain name:
 Note they were written against the old page order, so they do not map one to one
 onto the six domains as they now stand.
 
+### 3.1b One deep statement had drifted from the spec — **corrected**
+
+Deep spec statement 10 reads "What sales commits to is consistently what
+**operations** can actually deliver." The repo had "what **delivery** can
+actually deliver", which also reads awkwardly against its own verb. Corrected to
+the spec wording while moving the pool into `src/lib/diagnostic/statements.ts`.
+
+Flagged because it is a change to an instrument statement, not to marketing copy.
+It is not an anchor, so no short-instrument comparison is affected.
+
 ### 3.2 Joint-constraint reporting is narrower than the spec — **logged**
 
 Deep spec §4.4 says "where two are within three points of each other, present
