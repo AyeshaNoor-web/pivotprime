@@ -99,7 +99,7 @@ export default function WhatWeDo() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-24 bg-[#093524] text-white px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-24 bg-forest text-white px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-8 leading-tight">
             Most consultants stop at strategy.<br/>
@@ -109,7 +109,7 @@ export default function WhatWeDo() {
             Businesses don’t need more ideas, they need results. With Pivot Prime you get real support, real momentum, and real results.
           </p>
 
-          <div className="bg-[#123e2d] border border-[#21533e] rounded-3xl p-10 md:p-16">
+          <div className="bg-white/5 border border-white/[0.14] rounded-3xl p-10 md:p-16">
             <h3 className="text-6xl md:text-8xl font-bold text-primary mb-4">90%</h3>
             <p className="text-xl font-medium mb-4">of senior executives say they miss goals due to poor execution*</p>
             <p className="text-sm text-gray-400">*Source: Robert S. Kaplan, David P. Norton, Balanced Scorecard</p>
@@ -288,7 +288,7 @@ export default function WhatWeDo() {
           </div>
         </div>
 
-        <div className="text-center bg-[#093524] text-white p-12 md:p-20 rounded-3xl">
+        <div className="text-center bg-forest text-white p-12 md:p-20 rounded-3xl">
           <h3 className="text-3xl md:text-5xl font-extrabold mb-10 leading-tight">
             Stop guessing what is holding growth back,<br/>
             start with a proper diagnosis.

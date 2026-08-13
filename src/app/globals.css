@@ -2,13 +2,26 @@
 
 @theme {
   --font-sans: var(--font-poppins);
-  
-  --color-primary: #009F50;
+
+  /* The approved brand palette is five values and only five. Confirmed against
+     the swatch plate at the top of the copy spec. Surfaces and borders on dark
+     are derived from these with white alpha, following the mockups, rather than
+     by adding new greens. Do not extend this list without a swatch to point at. */
+  --color-forest: #013325;
+  --color-neon: #00d76d;
+  --color-mid: #009f50;
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+
+  /* Alias retained because bg-primary and text-primary are used site-wide.
+     Same value as --color-mid. */
+  --color-primary: #009f50;
+
+  /* Pre-existing and off-palette. Only reached through hover states. Logged in
+     docs/PENDING-COPY.md section 4, not resolved as part of the six. */
   --color-primary-dark: #008744;
   --color-dark: #121212;
   --color-light: #f5f5f5;
-  --color-background: #ffffff;
-  --color-foreground: #000000;
 
   --animate-water-pan: water-pan 20s ease-in-out infinite alternate;
 }

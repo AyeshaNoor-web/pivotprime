@@ -1,0 +1,15 @@
+{
+  "_comment": "Raw hex colours that are correct as they stand. Each entry needs a reason. An entry here is a decision, not a snooze. The approved palette is five values defined in src/app/globals.css.",
+  "allow": [
+    {
+      "file": "src/components/WhatsappButton.tsx",
+      "hex": "#25D366",
+      "reason": "Meta's mandated WhatsApp brand green. The WhatsApp brand guidelines require this exact value on the mark, so it is deliberately not a Pivot Prime token and must not be changed to --color-neon."
+    },
+    {
+      "file": "src/app/diagnostic/page.tsx",
+      "hex": "#f7f9f8",
+      "reason": "The paper neutral declared by every approved mockup. It is the page surface behind DiagnosticApp, which is grandfathered, so this wrapper matches it. Remove this entry when the diagnostic component is tokenised."
+    }
+  ]
+}

@@ -16,7 +16,7 @@ export default function Home() {
             className="object-cover animate-water-pan"
             priority 
           />
-          <div className="absolute inset-0 bg-[#013325]/50" />
+          <div className="absolute inset-0 bg-forest/50" />
         </div>
         
         <div className="relative z-10 max-w-5xl mx-auto w-full text-white">
@@ -38,7 +38,7 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4 tracking-tight">
             We don’t just understand your challenges.
           </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-[#4FB968] mb-12">
+          <h3 className="text-3xl md:text-4xl font-medium text-mid mb-12">
             We fix what’s really holding your business back
           </h3>
           <p className="text-lg md:text-xl text-black font-medium leading-relaxed max-w-3xl mx-auto">
@@ -116,12 +116,12 @@ export default function Home() {
       </section>
 
       {/* Audiences Section */}
-      <section className="py-24 bg-[#093524] text-center px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-forest text-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
             You don’t have to figure it all<br />out alone
           </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-[#4FB968] mb-12 max-w-2xl mx-auto leading-tight">
+          <h3 className="text-3xl md:text-4xl font-medium text-neon mb-12 max-w-2xl mx-auto leading-tight">
             We are your operations, growth and execution partner.
           </h3>
           <p className="text-xl md:text-2xl text-white font-medium leading-relaxed mb-10 max-w-3xl mx-auto">
@@ -132,38 +132,38 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
-            <Link href="/for-founders" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-founders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
                 <Image src="/founder.svg" alt="Founder" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re a Founder and<br />everything still depends<br />on you.
               </p>
             </Link>
 
-            <Link href="/for-smes" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-smes" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
                 <Image src="/SME.svg" alt="SME" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re running an SME<br />that is growing but not<br />settled.
               </p>
             </Link>
             
-            <Link href="/for-corporate-leaders" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-corporate-leaders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
                 <Image src="/Strategy.svg" alt="Corporate Leader" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re a Corporate Leader<br />expected to deliver change<br />without any real support.
               </p>
             </Link>
             
-            <Link href="/for-pl-owners" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-pl-owners" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
                 <Image src="/growth.svg" alt="Corporate Owner" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re a Corporate Owner<br />responsible for aligning<br />execution at scale.
               </p>
             </Link>
@@ -197,7 +197,7 @@ export default function Home() {
         </div>
         
         {/* Logos Marquee */}
-        <div className="w-full mt-12 overflow-hidden bg-black py-10 border-y border-[#21352b]">
+        <div className="w-full mt-12 overflow-hidden bg-black py-10 border-y border-white/[0.14]">
           <div className="w-max flex items-center animate-[marquee_40s_linear_infinite]">
             {/* We render the sequence of logos twice to create the seamless infinite scroll effect */}
             {[...Array(2)].map((_, i) => (

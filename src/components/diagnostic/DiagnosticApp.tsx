@@ -236,7 +236,7 @@ export default function DiagnosticApp() {
           <Link href="/" className="inline-flex items-center gap-2 font-sans font-semibold text-[17px] tracking-tight text-white hover:text-white/80">
             <span className="grid grid-cols-4 gap-[2.5px]">
               {[...Array(12)].map((_, i) => (
-                <i key={i} className={`w-[3px] h-[3px] rounded-full ${i % 4 === 3 ? "bg-white/35" : "bg-[#22c55e]"}`} />
+                <i key={i} className={`w-[3px] h-[3px] rounded-full ${i % 4 === 3 ? "bg-white/35" : "bg-[#00d76d]"}`} />
               ))}
             </span>
             PivotPrime
@@ -246,7 +246,7 @@ export default function DiagnosticApp() {
           </div>
         </div>
         <div className="h-[3px] bg-white/10">
-          <div className="h-full bg-[#22c55e] transition-all duration-[450ms] ease-[cubic-bezier(.22,1,.36,1)]" style={{ width: `${progress}%` }} />
+          <div className="h-full bg-[#00d76d] transition-all duration-[450ms] ease-[cubic-bezier(.22,1,.36,1)]" style={{ width: `${progress}%` }} />
         </div>
       </div>
 
@@ -257,11 +257,11 @@ export default function DiagnosticApp() {
             <div className="absolute w-[60vw] h-[60vw] -right-[20vw] -top-[24vw] rounded-full bg-[radial-gradient(circle,rgba(34,197,94,0.2),transparent_62%)]" />
             
             <div className="max-w-4xl mx-auto px-4 md:px-10 relative z-10 w-full animate-fade-in">
-              <span className="block font-sans font-semibold text-[10.5px] tracking-[0.24em] uppercase text-[#22c55e]">
+              <span className="block font-sans font-semibold text-[10.5px] tracking-[0.24em] uppercase text-[#00d76d]">
                 The full instrument
               </span>
               <h1 className="text-[clamp(32px,5.2vw,54px)] font-bold tracking-tight mt-5 mb-0 font-sans leading-[1.14]">
-                Operational Constraint<br/><span className="text-[#22c55e]">Diagnostic.</span>
+                Operational Constraint<br/><span className="text-[#00d76d]">Diagnostic.</span>
               </h1>
               <p className="text-[#bfd8cd] mt-5 text-[17px] max-w-2xl">
                 Forty-two statements across six areas of the business, weighted for your size, producing a ranked view of what is limiting growth and the order in which to fix it.
@@ -269,15 +269,15 @@ export default function DiagnosticApp() {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-8">
                 <div className="bg-white/5 border border-white/15 rounded-xl p-4">
-                  <b className="block font-sans font-bold text-[22px] text-[#22c55e] tracking-tight">42</b>
+                  <b className="block font-sans font-bold text-[22px] text-[#00d76d] tracking-tight">42</b>
                   <span className="text-[12.5px] text-[#a9c8ba]">Statements across six areas</span>
                 </div>
                 <div className="bg-white/5 border border-white/15 rounded-xl p-4">
-                  <b className="block font-sans font-bold text-[22px] text-[#22c55e] tracking-tight">20 min</b>
+                  <b className="block font-sans font-bold text-[22px] text-[#00d76d] tracking-tight">20 min</b>
                   <span className="text-[12.5px] text-[#a9c8ba]">Six short sections</span>
                 </div>
                 <div className="bg-white/5 border border-white/15 rounded-xl p-4">
-                  <b className="block font-sans font-bold text-[22px] text-[#22c55e] tracking-tight">Ranked</b>
+                  <b className="block font-sans font-bold text-[22px] text-[#00d76d] tracking-tight">Ranked</b>
                   <span className="text-[12.5px] text-[#a9c8ba]">All six constraints, in order</span>
                 </div>
               </div>
@@ -285,23 +285,23 @@ export default function DiagnosticApp() {
               <form onSubmit={handleStart} className="mt-8 max-w-2xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <label className="block">
-                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#22c55e] mb-1.5">Business name</span>
-                    <input type="text" required value={meta.biz} onChange={(e) => setMeta({ ...meta, biz: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#22c55e]" placeholder="Business name" />
+                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#00d76d] mb-1.5">Business name</span>
+                    <input type="text" required value={meta.biz} onChange={(e) => setMeta({ ...meta, biz: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#00d76d]" placeholder="Business name" />
                   </label>
                   <label className="block">
-                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#22c55e] mb-1.5">Your name</span>
-                    <input type="text" required value={meta.who} onChange={(e) => setMeta({ ...meta, who: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#22c55e]" placeholder="Your name" />
+                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#00d76d] mb-1.5">Your name</span>
+                    <input type="text" required value={meta.who} onChange={(e) => setMeta({ ...meta, who: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#00d76d]" placeholder="Your name" />
                   </label>
                   <label className="block">
-                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#22c55e] mb-1.5">Your role</span>
-                    <select value={meta.role} onChange={(e) => setMeta({ ...meta, role: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#22c55e] [&>option]:text-black">
+                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#00d76d] mb-1.5">Your role</span>
+                    <select value={meta.role} onChange={(e) => setMeta({ ...meta, role: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#00d76d] [&>option]:text-black">
                       <option value="leadership">Founder or leadership team</option>
                       <option value="team">Team, manager or specialist</option>
                     </select>
                   </label>
                   <label className="block">
-                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#22c55e] mb-1.5">Size of business</span>
-                    <select value={meta.preset} onChange={(e) => setMeta({ ...meta, preset: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#22c55e] [&>option]:text-black">
+                    <span className="block font-sans font-semibold text-[11px] tracking-[0.14em] uppercase text-[#00d76d] mb-1.5">Size of business</span>
+                    <select value={meta.preset} onChange={(e) => setMeta({ ...meta, preset: e.target.value })} className="w-full font-sans text-[15.5px] text-white bg-white/5 border border-white/15 rounded-lg px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-[#00d76d] [&>option]:text-black">
                       {Object.entries(WEIGHTS).map(([k, v]) => (
                         <option key={k} value={k}>{v.label}</option>
                       ))}
@@ -310,7 +310,7 @@ export default function DiagnosticApp() {
                 </div>
                 
                 <div className="mt-7">
-                  <button type="submit" className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-[#22c55e] text-[#013325] rounded-full px-6 py-3.5 hover:bg-white hover:-translate-y-0.5 transition-all">
+                  <button type="submit" className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full px-6 py-3.5 hover:bg-white hover:-translate-y-0.5 transition-all">
                     Begin
                   </button>
                 </div>
@@ -387,7 +387,7 @@ export default function DiagnosticApp() {
                               <span className={`block cursor-pointer text-[13.5px] px-3.5 py-2 border rounded-full select-none transition-all
                                 ${a?.oi === oi 
                                   ? (o.na ? "bg-[#5e6f68] border-[#5e6f68] text-white" : o.dk ? "bg-[#af8943] border-[#af8943] text-white" : "bg-[#013325] border-[#013325] text-white") 
-                                  : "bg-white border-[#e3eae6] text-[#0c1a15] hover:border-[#009f50] peer-focus-visible:ring-2 peer-focus-visible:ring-[#22c55e]"
+                                  : "bg-white border-[#e3eae6] text-[#0c1a15] hover:border-[#009f50] peer-focus-visible:ring-2 peer-focus-visible:ring-[#00d76d]"
                                 }
                               `}>
                                 {o.t}
@@ -478,7 +478,7 @@ export default function DiagnosticApp() {
                 <div className="bg-[#013325] text-white rounded-xl p-8 md:p-10 flex gap-7 items-center flex-wrap mb-8 relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:24px_24px] opacity-50" />
                   
-                  <div className="font-sans font-bold text-[62px] leading-none text-[#22c55e] tracking-tight relative z-10">
+                  <div className="font-sans font-bold text-[62px] leading-none text-[#00d76d] tracking-tight relative z-10">
                     {r.overall !== null ? r.overall : "n/a"}
                     <em className="block not-italic font-semibold text-[10.5px] tracking-[0.18em] uppercase text-[#8fb3a4] mt-1.5">
                       out of 100
@@ -592,7 +592,7 @@ export default function DiagnosticApp() {
 
                 {c && (
                   <div className="bg-[#02291e] text-white rounded-xl p-8 mt-8 print:hidden">
-                    <span className="block font-sans font-semibold text-[10.5px] tracking-[0.24em] uppercase text-[#22c55e]">
+                    <span className="block font-sans font-semibold text-[10.5px] tracking-[0.24em] uppercase text-[#00d76d]">
                       What we would do
                     </span>
                     <h3 className="text-[21px] font-bold text-white mt-3 mb-2.5">
@@ -602,7 +602,7 @@ export default function DiagnosticApp() {
                       On these findings, that is the engagement the result actually justifies. Everything below it in the ranking gets easier once this one moves.
                     </p>
                     <div className="flex gap-3 flex-wrap">
-                      <a href="https://wa.me/971524401075" className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-[#22c55e] text-[#013325] rounded-full px-6 py-3.5 hover:bg-white hover:-translate-y-0.5 transition-all">
+                      <a href="https://wa.me/971524401075" className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full px-6 py-3.5 hover:bg-white hover:-translate-y-0.5 transition-all">
                         Talk to us on WhatsApp
                       </a>
                       <Link href="/services" className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-transparent border border-white/30 text-white rounded-full px-6 py-3.5 hover:border-white transition-all">

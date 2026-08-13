@@ -126,7 +126,9 @@ Your rule is spec wins, so I will keep the repo copy and take only layout from t
 
 **6.4 The two unspecified homepage sections** in §2 above — delete, or keep and place somewhere?
 
-**6.5 `pivotprime.html` (386 KB) and `scratch/generate_pages.py`** are committed at the repo root. They look like scraping artefacts from the original build. Remove them, or leave them?
+**6.5 `pivotprime.html` (386 KB) and `scratch/generate_pages.py`** were committed at the repo root. **Removed in `52e4098`.**
+
+`generate_pages.py` was not harmless scaffolding left behind. It is a live footgun: it opens `src/app/<route>/page.tsx` in write mode for eight routes and replaces each with a "This is a placeholder for the X page content. We are currently migrating content to the new Next.js platform" stub. One `python scratch/generate_pages.py` from the repo root would have destroyed all four persona pages, About, How We Work, Insights and Contact, with no prompt and no backup beyond git. It sat one command away from a day of lost work for anyone who ran it to see what it did. Deleting it was the fix; git history retains it.
 
 ---
 

@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint && node scripts/lint-copy.mjs",
+    "lint": "eslint && node scripts/lint-copy.mjs && node scripts/lint-palette.mjs",
     "lint:copy": "node scripts/lint-copy.mjs",
+    "lint:palette": "node scripts/lint-palette.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

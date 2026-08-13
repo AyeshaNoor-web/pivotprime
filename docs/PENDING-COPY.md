@@ -113,23 +113,53 @@ the spec describes.
 
 ---
 
-## 4. Colours with no approved mapping
+## 4. Colours
 
-See `docs/AUDIT.md` §4.2. Every hex used in the mockup-derived components traces
-back to an approved mockup. The values below appear only in the older hand-built
-pages, are absent from both the five-value brand palette and every mockup, and
-are not being guessed at.
+### 4.1 The six off-palette values — **resolved**
 
-| Hex | Uses | Where | Note |
-|---|---|---|---|
-| `#093524` | 11 | Homepage, About, all four personas, How We Work, Footer | The dark section background everywhere. Near `#013325` but visibly lighter |
-| `#4fb968` | 6 | Homepage sub-headings | Reads like an attempt at the neon that missed |
-| `#123e2d` | 5 | Homepage persona cards, How We Work | Card surface on dark |
-| `#21533e` | 5 | Homepage persona cards, How We Work | Card border on dark |
-| `#164b36` | 4 | Homepage persona cards | Card hover state |
-| `#21352b` | 1 | Homepage logo marquee | Divider rule |
+All six are resolved and applied. The palette stays at five.
 
-Retained deliberately and not up for mapping: `#25d366` is WhatsApp's own brand
-green on the floating button, and `#22c55e` on the deep diagnostic score is
-carried over from the approved mockup, though it looks like a Tailwind default
-that slipped in and is worth a second look.
+| Hex | Was | Now |
+|---|---|---|
+| `#093524` | Dark section background on 8 files | Collapsed to `#013325`. The two differ by 8 on red and 2 elsewhere, the same colour typed twice |
+| `#4fb968` | Homepage sub-headings | Replaced by context, not by value: `mid` on light, `neon` on dark, which is the mockups' own `.g` / `.ondark .g` rule |
+| `#123e2d` | Card surface on dark | `rgba(255,255,255,.05)`, derived from forest |
+| `#21533e` | Card border on dark | `rgba(255,255,255,.14)` |
+| `#164b36` | Card hover | `rgba(255,255,255,.08)` |
+| `#21352b` | Marquee divider | `rgba(255,255,255,.14)` |
+
+Spec 3.9 tags the persona cards KEEP. That covers the design intent of the
+cards, not the four hexes someone reached for to build them, so deriving the
+surfaces from the forest token sits inside the tag rather than against it.
+
+### 4.2 The mockups disagree with each other on the neon — **logged**
+
+`req/pivotprime-diagnostic-deep v2 mock up.html` declares `--neon:#22c55e`.
+Every other mockup declares `--neon:#00d76d`, and `#00d76d` is what the swatch
+plate in the copy spec shows. This is a mockup inconsistency, not a developer
+error: the deep diagnostic was built faithfully to a mockup that was itself off.
+
+**Standardised on `#00d76d` site-wide.** Worth telling whoever produced the
+mockups, so the next export does not reintroduce it.
+
+### 4.3 Deliberately off-palette — **enforced**
+
+`#25D366` on the floating WhatsApp button is Meta's mandated brand green. It is
+registered in `scripts/palette-allow.json` with the reason, and carries a comment
+at the usage site, so nobody "fixes" it to `--color-neon` in three months.
+
+### 4.4 Three leftovers not covered by the six — **open, low priority**
+
+These predate the rebuild, live only in `globals.css`, and were not part of the
+six resolved above, so they have not been touched.
+
+| Token | Hex | Reached through |
+|---|---|---|
+| `--color-primary-dark` | `#008744` | `hover:bg-primary-dark`, used site-wide on buttons |
+| `--color-dark` | `#121212` | No current usage found |
+| `--color-light` | `#f5f5f5` | No current usage found |
+
+`--color-primary-dark` is the live one: it is the hover state on every primary
+button. The mockups do hover with opacity rather than a second green, so the
+consistent fix is to drop the token and hover on alpha. Not done unasked,
+because it changes every button on the site.
