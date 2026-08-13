@@ -8,6 +8,11 @@ import {
   rankByWeightedDeficit,
   type DomainId,
 } from "@/lib/diagnostic/domains";
+import {
+  PER_DOMAIN,
+  buildStatements,
+  shuffleWithinDomains,
+} from "@/lib/diagnostic/presentation";
 
 const POOL: Record<DomainId, string[]> = {
   founder: [
@@ -66,22 +71,21 @@ const POOL: Record<DomainId, string[]> = {
   ],
 };
 
-const QUESTIONS: { d: DomainId; t: string }[] = [];
-for (let round = 0; round < 7; round++) {
-  ORDER.forEach((d) => QUESTIONS.push({ d, t: POOL[d][round] }));
-}
+// Deep spec 8.2: one domain per screen, seven statements, six steps. Statements
+// are grouped into six contiguous blocks of seven in canonical domain order, and
+// shuffled within each block per session, which protects against straight-lining
+// down a column of near-identical statements without breaking the specified
+// structure. See src/lib/diagnostic/presentation.ts.
+const BASE_STATEMENTS = buildStatements(POOL);
 
-const PER_PAGE = 7;
-const PAGES = Math.ceil(QUESTIONS.length / PER_PAGE);
+const PER_PAGE = PER_DOMAIN;
+const PAGES = ORDER.length;
 
-const PAGE_TITLES = [
-  "How the business runs today",
-  "Where the money actually goes",
-  "What happens under pressure",
-  "Who owns what",
-  "What the numbers tell you",
-  "What is holding the ceiling down",
-];
+// Section titles are the domain names from spec 7.1. The six thematic titles
+// that were here belonged to the interleaved layout, where a page genuinely had
+// no single subject. They are not copy from either document, so they are logged
+// in docs/PENDING-COPY.md rather than carried forward.
+const PAGE_TITLES = ORDER.map((d) => D[d]);
 
 const SCALE = [
   { v: 4, t: "Strongly agree" },
@@ -130,6 +134,15 @@ export default function DiagnosticApp() {
   const [textAnswers, setTextAnswers] = useState<string[]>(["", "", "", ""]);
   const [hint, setHint] = useState("");
 
+  // Presentation order, shuffled within each domain. Held as state and seeded
+  // with the canonical order so the server and the first client render agree:
+  // drawing from Math.random at module scope or in a useState initialiser would
+  // hydrate mismatched. The shuffle happens in handleStart rather than in an
+  // effect, which is both the correct moment, since step 0 is the intro screen
+  // and no statement has been shown or answered yet, and avoids a cascading
+  // render on mount.
+  const [questions, setQuestions] = useState(BASE_STATEMENTS);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [step]);
@@ -142,12 +155,13 @@ export default function DiagnosticApp() {
 
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
+    setQuestions(shuffleWithinDomains(BASE_STATEMENTS));
     setStep(1);
   };
 
   const handleNextPage = () => {
     const from = (step - 1) * PER_PAGE;
-    const to = Math.min(from + PER_PAGE, QUESTIONS.length);
+    const to = Math.min(from + PER_PAGE, questions.length);
     let missing: number | null = null;
     for (let i = from; i < to; i++) {
       if (!answers[i]) {
@@ -171,7 +185,7 @@ export default function DiagnosticApp() {
     const counts: Record<string, number> = {};
     ORDER.forEach((d) => { sums[d] = 0; counts[d] = 0; });
     
-    QUESTIONS.forEach((q, i) => {
+    questions.forEach((q, i) => {
       const a = answers[i];
       if (!a || a.na || a.v === null) return;
       sums[q.d] += a.v;
@@ -214,9 +228,17 @@ export default function DiagnosticApp() {
       band: r.band ? r.band.n : null,
       domains: r.rows,
       constraintRanking: r.ranked.map((x) => ({ domain: x.name, score: x.score, weight: Math.round(x.weight), weightedDeficit: x.deficit })),
-      answers: Object.fromEntries(Object.entries(answers).map(([k, v]) => [
-        `q${+k + 1}_${QUESTIONS[+k].d}`, v.na ? "n/a" : v.v
-      ])),
+      // Keyed by the stable, spec-derived statement id rather than by the
+      // position it happened to render at. Presentation order is randomised
+      // within each domain per session, so a positional key would label the
+      // same answer differently between two runs and quietly break both
+      // re-run comparison and the twelve short-instrument anchors.
+      answers: Object.fromEntries(
+        Object.entries(answers).map(([k, v]) => [
+          questions[+k].id,
+          v.na ? "n/a" : v.v,
+        ]),
+      ),
       freeText: Object.fromEntries(FREETEXT.map((q, i) => [q, textAnswers[i]]))
     };
     
@@ -326,8 +348,8 @@ export default function DiagnosticApp() {
         {step > 0 && step <= PAGES && (() => {
           const pi = step - 1;
           const from = pi * PER_PAGE;
-          const to = Math.min(from + PER_PAGE, QUESTIONS.length);
-          const currentQuestions = QUESTIONS.slice(from, to);
+          const to = Math.min(from + PER_PAGE, questions.length);
+          const currentQuestions = questions.slice(from, to);
 
           return (
             <main className="py-10 md:py-16 max-w-4xl mx-auto px-4 md:px-10">
@@ -347,7 +369,7 @@ export default function DiagnosticApp() {
                 </div>
                 
                 <p className="text-[#5e6f68] mb-7 max-w-2xl">
-                  Seven statements, drawn from across all six areas. Answer on instinct rather than deliberating.
+                  Seven statements on this one area. Answer on instinct rather than deliberating.
                 </p>
 
                 <div className="space-y-3">

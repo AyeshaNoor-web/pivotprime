@@ -87,21 +87,44 @@ Iram can veto the move without anyone rewriting copy.
 
 ## 3. Build deviations found in the existing code
 
-### 3.1 The deep diagnostic does not present one domain per screen — **needs a decision**
+### 3.1 The deep diagnostic screen structure — **resolved, built to spec**
 
 Deep spec §8.2 says "One domain per screen, seven statements visible together,
-with a progress indicator showing six steps."
+with a progress indicator showing six steps." The implementation interleaved
+instead, round-robining across all six domains so every page mixed all six.
 
-The existing implementation interleaves instead: it round-robins across the six
-domains seven times, then slices the 42 statements into six pages of seven. Every
-page therefore mixes all six domains, and the six page titles are thematic
-("How the business runs today", "Where the money actually goes") rather than
-domain names.
+**Built to spec.** Six domain-titled screens of seven statements each.
 
-This predates the rebuild and is a defensible choice, since grouping seven
-similar statements together invites straight-lining down one column. But it
-contradicts the spec, and the spec is the source of truth, so it is logged rather
-than kept quietly. Someone needs to pick.
+The straight-lining risk that the interleave was reaching for is handled without
+breaking §8.2: statement order is randomised **within** each domain screen, per
+session. Seven near-identical statements in a fixed column is what invites a
+straight run down one point of the scale, and shuffling inside the block removes
+that without moving a statement between domains.
+
+Scoring is unaffected. Statements now carry a stable, spec-derived id, so the
+exported answers key on identity rather than on the position a statement happened
+to render at. Re-run comparison holds and the twelve short-instrument anchors
+still map.
+
+### 3.1a The six discarded thematic page titles — **client, if wanted**
+
+The interleaved layout carried six thematic section titles. They belonged to a
+structure where a page genuinely had no single subject, and they appear in
+neither the website spec nor the diagnostic document, so they are not sanctioned
+copy. Section titles are now the domain names from spec §7.1.
+
+Recorded here in case Iram wants them back as section furniture, for example as a
+strapline under the domain name:
+
+1. How the business runs today
+2. Where the money actually goes
+3. What happens under pressure
+4. Who owns what
+5. What the numbers tell you
+6. What is holding the ceiling down
+
+Note they were written against the old page order, so they do not map one to one
+onto the six domains as they now stand.
 
 ### 3.2 Joint-constraint reporting is narrower than the spec — **logged**
 
