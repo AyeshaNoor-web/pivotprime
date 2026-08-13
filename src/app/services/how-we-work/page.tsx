@@ -204,7 +204,7 @@ export default function WhatWeDo() {
                 </p>
               </div>
               <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
-                BOOK DISCOVERY CALL
+                Book discovery call
               </Link>
             </div>
 
@@ -219,7 +219,7 @@ export default function WhatWeDo() {
                 </p>
               </div>
               <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
-                BOOK DISCOVERY CALL
+                Book discovery call
               </Link>
             </div>
           </div>
@@ -294,7 +294,7 @@ export default function WhatWeDo() {
             start with a proper diagnosis.
           </h3>
           <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-lg group">
-            BOOK YOUR FIRST CONVERSATION <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
+            Book your first conversation <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
       </section>

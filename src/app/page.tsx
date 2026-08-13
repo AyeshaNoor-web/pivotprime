@@ -27,7 +27,7 @@ export default function Home() {
             Your operations, execution & growth partner
           </p>
           <a href="https://wa.me/971524401075" className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-lg group">
-            GET IN TOUCH <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
+            Get in touch <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
           </a>
         </div>
       </section>
@@ -241,7 +241,7 @@ export default function Home() {
             </p>
           </div>
           <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 text-xs font-bold tracking-wider uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded shadow-lg group">
-            BOOK DISCOVERY CALL <span className="ml-2 font-normal text-lg leading-none group-hover:translate-x-1 transition-transform">→</span>
+            Book discovery call <span className="ml-2 font-normal text-lg leading-none group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
       </section>
