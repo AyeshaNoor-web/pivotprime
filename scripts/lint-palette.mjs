@@ -29,6 +29,14 @@ const ALLOW_FILE = join(ROOT, "scripts", "palette-allow.json");
 
 const TOKEN_SOURCE = "src/app/globals.css";
 
+/**
+ * WORK QUEUE, NOT A PERMANENT EXEMPTION.
+ *
+ * Removing a path from this list is the tokenisation step for that component:
+ * delete the line, run the guard, replace what it reports. The list is expected
+ * to shrink to empty. Do not add to it without a reason recorded in
+ * docs/PENDING-COPY.md.
+ */
 const GRANDFATHERED = ["src/components/services/", "src/components/diagnostic/"];
 
 const HEX = /#[0-9a-fA-F]{3,8}\b/g;

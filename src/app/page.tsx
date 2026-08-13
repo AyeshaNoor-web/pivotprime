@@ -26,7 +26,7 @@ export default function Home() {
           <p className="text-2xl md:text-3xl mb-12 font-medium">
             Your operations, execution & growth partner
           </p>
-          <a href="https://wa.me/971524401075" className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-lg group">
+          <a href="https://wa.me/971524401075" className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-lg group">
             GET IN TOUCH <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
           </a>
         </div>
@@ -240,7 +240,7 @@ export default function Home() {
               Then we work alongside you to fix it properly, so growth becomes stable, repeatable, and sustainable.
             </p>
           </div>
-          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 text-xs font-bold tracking-wider uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded shadow-lg group">
+          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 text-xs font-bold tracking-wider uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded shadow-lg group">
             BOOK DISCOVERY CALL <span className="ml-2 font-normal text-lg leading-none group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>

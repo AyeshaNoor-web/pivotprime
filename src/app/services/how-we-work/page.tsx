@@ -203,7 +203,7 @@ export default function WhatWeDo() {
                   Designed for founders, senior leaders, and managers navigating complex decisions and people dynamics.
                 </p>
               </div>
-              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow w-fit">
+              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
                 BOOK DISCOVERY CALL
               </Link>
             </div>
@@ -218,7 +218,7 @@ export default function WhatWeDo() {
                   When teams struggle to work well together, progress slows and effort is wasted.
                 </p>
               </div>
-              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow w-fit">
+              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
                 BOOK DISCOVERY CALL
               </Link>
             </div>
@@ -293,7 +293,7 @@ export default function WhatWeDo() {
             Stop guessing what is holding growth back,<br/>
             start with a proper diagnosis.
           </h3>
-          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-lg group">
+          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-lg group">
             BOOK YOUR FIRST CONVERSATION <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>

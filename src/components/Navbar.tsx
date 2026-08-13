@@ -58,7 +58,7 @@ export default function Navbar() {
               <Link href="/contact" className="text-gray-900 hover:text-primary font-bold text-sm tracking-wide uppercase transition-colors">
                 Contact Us
               </Link>
-              <a href="https://wa.me/971524401075" className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-sm">
+              <a href="https://wa.me/971524401075" className="ml-4 inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow-sm">
                 Book Discovery Call <span className="ml-2 font-normal text-lg leading-none">→</span>
               </a>
             </div>
@@ -103,7 +103,7 @@ export default function Navbar() {
               <Link href="/insights" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Prime Insights</Link>
               <Link href="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary hover:bg-gray-50">Contact Us</Link>
               <div className="pt-4 pb-2 px-3">
-                <a href="https://wa.me/971524401075" className="flex items-center justify-center w-full px-6 py-3 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-sm">
+                <a href="https://wa.me/971524401075" className="flex items-center justify-center w-full px-6 py-3 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow-sm">
                   Book Discovery Call <span className="ml-2 font-normal text-lg leading-none">→</span>
                 </a>
               </div>

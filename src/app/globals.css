@@ -17,11 +17,10 @@
      Same value as --color-mid. */
   --color-primary: #009f50;
 
-  /* Pre-existing and off-palette. Only reached through hover states. Logged in
-     docs/PENDING-COPY.md section 4, not resolved as part of the six. */
-  --color-primary-dark: #008744;
-  --color-dark: #121212;
-  --color-light: #f5f5f5;
+  /* There is no sixth green. Hover states use opacity on an existing token,
+     following the mockups: hover:bg-mid/90 on light, hover:bg-neon/90 on dark.
+     --color-primary-dark (#008744), --color-dark and --color-light were removed
+     rather than left as unguarded off-palette values. */
 
   --animate-water-pan: water-pan 20s ease-in-out infinite alternate;
 }

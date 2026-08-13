@@ -65,7 +65,7 @@ export default function Contact() {
                 <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">Message</label>
                 <textarea id="message" rows={5} className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white resize-none" placeholder="Tell us what you're working through..."></textarea>
               </div>
-              <button type="button" className="w-full py-4 px-8 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all uppercase tracking-wider">
+              <button type="button" className="w-full py-4 px-8 bg-primary hover:bg-mid/90 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all uppercase tracking-wider">
                 Send Message
               </button>
             </form>
