@@ -1,6 +1,43 @@
 import type { NextConfig } from "next";
 
 /**
+ * Fail loudly rather than degrade quietly.
+ *
+ * When NEXT_PUBLIC_WHATSAPP_NUMBER is missing, every WhatsApp call to action
+ * falls back to /contact and relabels itself. That fallback exists so a missing
+ * variable never produces a broken wa.me link, but it is a downgrade: WhatsApp
+ * is the default business channel in this market and spec 2.2 makes it the
+ * primary CTA. A production deploy that silently ships without it would lose the
+ * main conversion path with nothing in the logs to say so.
+ *
+ * This runs during `next build` and `next dev`, because next.config.ts is
+ * evaluated on both.
+ */
+function warnOnMissingWhatsAppNumber() {
+  if (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER) return;
+
+  const rule = "=".repeat(72);
+  console.warn(
+    [
+      "",
+      rule,
+      "  WARNING  NEXT_PUBLIC_WHATSAPP_NUMBER is not set.",
+      "",
+      "  Every WhatsApp call to action will fall back to /contact and relabel",
+      "  itself from 'Talk to us on WhatsApp' to 'Talk to us'. The site will",
+      "  work, but the primary conversion path in spec 2.2 is not shipping.",
+      "",
+      "  Set it in .env.local for development, or in the project environment",
+      "  before deploying. Format: international, digits only, no plus.",
+      rule,
+      "",
+    ].join("\n"),
+  );
+}
+
+warnOnMissingWhatsAppNumber();
+
+/**
  * Permanent redirects from the old WordPress information architecture to the
  * one specified in spec 2.1.
  *
