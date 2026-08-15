@@ -133,20 +133,22 @@ it is the term searched in this market. The H1 stays "Fractional Leadership" as
 permanent redirect from `/services/fractional-leadership` means either link
 resolves. Iram to be told, not to be waited on.
 
-### 2.2 The Chief of Staff anchor — **logged, decided**
+### 2.2 The Chief of Staff anchor — **resolved, built**
 
 §4.2 instructs "build the three anchors: `#coo`, `#chief-of-staff` and `#cfo`",
-then eleven lines later labels the seat `#cos`.
+then eleven lines later labels the same seat `#cos`.
 
-**Decided:** `#chief-of-staff` is canonical, with `#cos` to be aliased so any
-link already sent out still lands.
+**Built.** `#chief-of-staff` is canonical. `#cos` is aliased, along with
+`#fractional-coo` and `#fractional-cfo`, so a link written from either reading of
+the spec lands on the right seat. Resolution lives in `src/lib/seat-anchors.ts`
+as a pure function with tests.
 
-**Not yet implemented.** None of the three seat anchors exist on
-`/services/fractional-coo` today, so neither the canonical fragment nor the alias
-resolves. Spec 4.2 calls these anchors load-bearing, since the persona pages and
-the homepage services card link straight into a specific seat. This belongs to
-the stage one audit pass over the existing service pages, which is where it is
-tracked rather than assumed done.
+The seats are an interactive tab set, so the fragment selects the seat rather
+than only scrolling to it: `/services/fractional-coo#cfo` opens the CFO seat when
+opened cold, and selecting a seat rewrites the fragment so the URL is shareable.
+
+Iram may still want to know the spec says two different things, since the same
+inconsistency will be in any link she has already sent out.
 
 ### 2.3 Persona headlines: spec against mockup — **client**
 
