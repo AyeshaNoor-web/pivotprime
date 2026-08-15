@@ -103,17 +103,21 @@ export const SERVICES_EYEBROW = "Our services";
 export const SERVICES_HEADING = "What do we actually do";
 
 /**
- * TODO(client): spec 3.4 card 6.
+ * Spec 3.4 card 6.
  *
- * The spec reads in full: "CARD 6 / START WITH THE DIAGNOSTIC / (TEXT AS PER
- * CARD SHOWN)". The card it refers to is one of the reference images, so there
- * is no transcribable copy in the document. Renders as nothing until the text
- * arrives rather than being invented.
+ * The spec reads "START WITH THE DIAGNOSTIC (TEXT AS PER CARD SHOWN)". The card
+ * it points at is one of the embedded reference images, in which the copy is
+ * legible, so this is transcribed from the document rather than written.
  *
- * Tracked in docs/PENDING-COPY.md item 1.11.
+ * The card exists only to sell the diagnostic, so it renders only when the
+ * diagnostic does. It is not substituted with a contact CTA: unlike the hero
+ * button, every line of it describes the instrument by duration and output, so
+ * there is nothing here a contact form could honour.
  */
-export const DIAGNOSTIC_CARD: { title: string; body: string | null; href: string } = {
+export const DIAGNOSTIC_CARD = {
+  eyebrow: "Not sure",
   title: "Start with the diagnostic",
-  body: null,
+  body: "Four minutes, six areas, one named constraint. It will tell you which of the five you actually need.",
+  ctaLabel: "Take the diagnostic",
   href: "/diagnostic",
 };

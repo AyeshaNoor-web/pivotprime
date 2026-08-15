@@ -80,3 +80,72 @@ export const CLIENT_LOGOS = [
  * all. Tracked in docs/PENDING-COPY.md item 1.14.
  */
 export const LOGOS_NEED_ALT_TEXT = true;
+
+// 3.3 RESULTS
+export const RESULTS = {
+  heading: "This is what our team has delivered",
+  standfirst: "We do not measure success in slide decks. We measure what changed.",
+};
+
+export type Metric = {
+  /** Null where the figure is not yet supplied. Spec 3.4 card 6: "Do not launch
+   *  this card with a placeholder." A card with no figure is not rendered. */
+  figure: number | null;
+  suffix: string;
+  label: string;
+  context: string;
+};
+
+/**
+ * The six metric cards, spec 3.3.
+ *
+ * The five figures below are the exact values in v1.7.1, which tightened the
+ * earlier ranges into single numbers. They carry an "IRAM TO CONFIRM ... against
+ * the master table in Section 9" instruction, and section 9 still records a
+ * direct contradiction on operational waste, so these are built as specified and
+ * await sign-off before launch. Tracked as items 1.3 and 1.4.
+ *
+ * TODO(client): metric 6 has no figure. Spec 3.3 marks it "SAIF TO SUPPLY" and
+ * is explicit: "Do not launch this card with a placeholder." It is therefore
+ * filtered out entirely rather than shown with an XX, and appears the moment the
+ * number lands. Tracked as item 1.2.
+ */
+export const METRICS: Metric[] = [
+  {
+    figure: 53,
+    suffix: "%",
+    label: "Faster execution across teams",
+    context: "Decision rights, operating rhythm and delivery ownership rebuilt.",
+  },
+  {
+    figure: 62,
+    suffix: "%",
+    label: "Reduction in duplicated work, rework and inefficiency",
+    context:
+      "Processes mapped end to end and redesigned around how the work actually flows.",
+  },
+  {
+    figure: 16,
+    suffix: "%",
+    label: "Increase in customer retention",
+    context: "Service cancellation drivers identified and addressed.",
+  },
+  {
+    figure: 27,
+    suffix: "%",
+    label: "Increase in profit",
+    context: "Pricing, margin and commercial model redesigned.",
+  },
+  {
+    figure: 67,
+    suffix: "%",
+    label: "Faster transaction processing",
+    context: "End to end customer and transaction workflows mapped and rebuilt.",
+  },
+  {
+    figure: null,
+    suffix: "",
+    label: "Bespoke software and automation builds delivered",
+    context: "Custom systems, CRMs, dashboards and automations built for clients.",
+  },
+];

@@ -4,7 +4,9 @@ import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
 import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
 import { HERO_CTA } from "@/content/cta";
-import { CLIENT_LOGOS, HERO, PROOF } from "@/content/homepage";
+import { CLIENT_LOGOS, HERO, METRICS, PROOF, RESULTS } from "@/content/homepage";
+import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
+import ServiceCards from "@/components/ServiceCards";
 
 export default function Home() {
   return (
@@ -125,86 +127,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Challenges Section */}
-      <section className="py-24 bg-white text-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4 tracking-tight">
-            We don’t just understand your challenges.
-          </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-mid mb-12">
-            We fix what’s really holding your business back
-          </h3>
-          <p className="text-lg md:text-xl text-black font-medium leading-relaxed max-w-3xl mx-auto">
-            Even the best-run businesses hit hidden bottlenecks in operations, culture, and execution. At Pivot Prime, we work alongside you to diagnose what’s slowing the business down, then help you fix it, properly.
-          </p>
+      {/* 3.3 Results. NEW. Sits immediately under the proof bar, before the
+          services: after "we build it" the visitor's next thought is "prove it".
+          Figures are green and count up on scroll; labels and context are in the
+          standard body colour. Spec 3.3. */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <header className="mb-16 max-w-3xl">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              {RESULTS.heading}
+            </h2>
+            <p className="mt-4 text-lg text-neutral-600 md:text-xl">{RESULTS.standfirst}</p>
+          </header>
+
+          {/* Cards with no figure are filtered out rather than shown with a
+              placeholder. Spec 3.3 on metric 6: "Do not launch this card with a
+              placeholder." The copy is written and the card appears the moment
+              the number lands. */}
+          <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            {METRICS.filter((m) => m.figure !== null).map((metric) => (
+              <li key={metric.label} className="min-w-0 [&>*]:max-w-full">
+                <FadeUp>
+                <div className="mb-3 text-5xl font-bold text-mid md:text-6xl">
+                  <CountUp end={metric.figure as number} />
+                  {metric.suffix}
+                </div>
+                <h3 className="mb-2 font-bold text-foreground">{metric.label}</h3>
+                <p className="leading-relaxed text-neutral-600">{metric.context}</p>
+                </FadeUp>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* Patterns Section */}
-      <section className="py-20 bg-white px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-extrabold text-black mb-12 tracking-tight">
-            These are the patterns we<br />see before growth stalls.
-          </h2>
-          <div className="text-xl md:text-2xl leading-relaxed space-y-4">
-            <p>
-              <span className="text-primary font-bold">Everything still depends on the founder</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-400 italic font-light">Profit margins are thin, or disappearing</span> <span className="text-gray-400 mx-2">•</span>
+      {/* 3.4 What do we actually do. NEW. The hero's secondary CTA anchors here. */}
+      <section id="services" className="scroll-mt-28 bg-white px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <header className="mb-14 max-w-3xl">
+            <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-mid uppercase">
+              {SERVICES_EYEBROW}
             </p>
-            <p>
-              <span className="text-gray-600 font-light">We have a strategy, but execution all over the place</span> <span className="text-gray-400 mx-2">•</span> <span className="text-black font-bold">Revenue is stuck, year on year</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-gray-400 italic font-light">We want to scale, but don&apos;t know how</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-400 italic font-light">Operations feel messy and inefficient</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-primary font-bold">Legacy processes drain time and money</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-600 font-light">The team is stretched, misaligned or burned out</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-black font-bold">We keep losing customers</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-          </div>
-        </div>
-      </section>
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              {SERVICES_HEADING}
+            </h2>
+          </header>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-white text-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-black mb-20 tracking-tight">
-          This is what we have delivered for our clients
-        </h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-20 gap-x-8">
-          <FadeUp delay={100} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">~<CountUp end={2} /> days</div>
-            <div className="text-base text-gray-500 font-medium px-4">freed for founders and<br />leaders, per week</div>
-          </FadeUp>
-          <FadeUp delay={200} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={40} />-<CountUp end={60} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">reduction in<br />duplicated work,<br />rework, and<br />inefficiencies.</div>
-          </FadeUp>
-          <FadeUp delay={300} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={20} />-<CountUp end={35} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">revenue growth</div>
-          </FadeUp>
-          <FadeUp delay={400} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={10} />-<CountUp end={15} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">increase in customer<br />retention</div>
-          </FadeUp>
-          
-          <FadeUp delay={500} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={30} />-<CountUp end={50} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">faster execution<br />across teams</div>
-          </FadeUp>
-          <FadeUp delay={600} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={2} />-<CountUp end={4} />x</div>
-            <div className="text-base text-gray-500 font-medium px-4">higher quality leads</div>
-          </FadeUp>
-          <FadeUp delay={700} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={43} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">fewer mis-hires and<br />faster confidence in<br />new hires</div>
-          </FadeUp>
-          <FadeUp delay={800} className="flex flex-col items-center min-w-0 [&>*]:max-w-full">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-4 leading-tight break-words">Aligned &<br />Accountable</div>
-            <div className="text-base text-gray-500 font-medium px-4">Team Culture</div>
-          </FadeUp>
+          <ServiceCards />
         </div>
       </section>
 
