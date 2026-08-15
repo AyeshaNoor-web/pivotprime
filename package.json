@@ -10,7 +10,8 @@
     "lint:copy": "node scripts/lint-copy.mjs",
     "lint:palette": "node scripts/lint-palette.mjs",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "check:overflow": "node scripts/check-overflow.mjs"
   },
   "dependencies": {
     "next": "16.3.0",
@@ -24,6 +25,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
+    "playwright-core": "^1.62.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"
