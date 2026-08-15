@@ -1,3 +1,4 @@
+import { WHATSAPP_URL } from "@/lib/flags";
 
 
 export default function Contact() {
@@ -44,7 +45,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">WhatsApp / Call</p>
-                  <a href="https://wa.me/971524401075" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-black hover:text-primary transition-colors">+971 52 440 1075</a>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-black hover:text-primary transition-colors">+971 52 440 1075</a>
                 </div>
               </div>
             </div>

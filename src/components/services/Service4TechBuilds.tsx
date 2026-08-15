@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
 
 
 export default function Service4TechBuilds() {
@@ -97,7 +98,7 @@ export default function Service4TechBuilds() {
             Priced on the build itself, the systems it has to connect to, and whether you want us to run it afterwards.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
               Talk to us on WhatsApp
             </a>
           </div>
@@ -235,7 +236,7 @@ export default function Service4TechBuilds() {
               Either works. The only technology work we take on is the kind pointed at a real problem.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
                 Talk to us on WhatsApp
               </a>
             </div>

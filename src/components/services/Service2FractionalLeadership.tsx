@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/flags";
+import { JOURNEY_CTA } from "@/content/cta";
 
 export default function Service2FractionalLeadership() {
   const [activeSeat, setActiveSeat] = useState(0);
@@ -99,7 +101,7 @@ export default function Service2FractionalLeadership() {
             Priced on the days a month, the seniority of the seat, and how much of the delivery team sits underneath it. We agree all three before anything is quoted.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
               Talk to us on WhatsApp
             </a>
           </div>
@@ -270,11 +272,11 @@ export default function Service2FractionalLeadership() {
               The diagnostic will tell you in four minutes, before anyone quotes you anything.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
                 Talk to us on WhatsApp
               </a>
-              <Link href="/diagnostic" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
-                Take the 4-minute diagnostic
+              <Link href={JOURNEY_CTA.href} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
+                {JOURNEY_CTA.label}
               </Link>
             </div>
           </div>

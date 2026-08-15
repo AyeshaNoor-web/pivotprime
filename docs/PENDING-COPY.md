@@ -45,10 +45,49 @@ The split into a public 12-question instrument at `/diagnostic` and an unlisted
 deep one at `/diagnostic/deep` is later-phase work, so `/diagnostic/deep` does
 not exist and 404s on its own account rather than by the flag.
 
+### 0.4 The CTA substitution — **needs a decision, not blocking**
+
+The spec makes the diagnostic the destination of the secondary CTA everywhere:
+the hero, the homepage close, and the routing blocks on the service and persona
+pages. With the diagnostic gated, those CTAs would lead to a 404.
+
+For stage one they point at `/contact`. Both labels are the spec's own wording,
+nothing is invented:
+
+| Phase | Label | Destination | Spec source |
+|---|---|---|---|
+| Phase two | Take the 4-minute diagnostic | `/diagnostic` | 2.2, secondary CTA |
+| **Stage one** | **Talk to us** | **`/contact`** | 2.2, header button |
+
+Both live in `src/content/cta.ts` as `JOURNEY_CTA`, selected by the flag, so
+every consumer follows automatically. Reverting is not an edit at all: turn the
+flag on and the diagnostic label and destination come back.
+
+**The judgement call, flagged rather than assumed.** The brief said to keep the
+spec's secondary CTA wording. Read literally that would ship a button reading
+"Take the 4-minute diagnostic" that lands on a contact form, promising an
+instrument that does not exist and delivering a form instead. That is a worse
+defect than the substitution it is meant to avoid, so the label moves with the
+destination, using the spec's other CTA wording rather than new copy. Say if you
+want the literal reading instead: it is one line in `cta.ts`.
+
+### 0.5 WhatsApp
+
+In scope for stage one and unchanged in intent. The floating button appears on
+every page and each service page carries two inline WhatsApp CTAs, which were
+already present rather than added.
+
+The number now comes from `NEXT_PUBLIC_WHATSAPP_NUMBER` rather than being
+hardcoded in eleven places. When it is unset, every WhatsApp CTA degrades to
+`/contact` rather than producing a broken `wa.me` link, and the label falls back
+from "Talk to us on WhatsApp" to "Talk to us" so it does not promise a channel
+it cannot open.
+
+
 ---
 
 Everything the build is waiting on, and every deviation logged rather than
-silently taken. Nothing here blocks Step 1.
+silently taken. Nothing here blocks stage one.
 
 Items marked **client** need Iram. Items marked **Saif** are ours. Items marked
 **logged** are decided and recorded so they can be reversed cheaply.
@@ -99,8 +138,15 @@ resolves. Iram to be told, not to be waited on.
 §4.2 instructs "build the three anchors: `#coo`, `#chief-of-staff` and `#cfo`",
 then eleven lines later labels the seat `#cos`.
 
-**Decided:** `#chief-of-staff` is canonical. `#cos` is handled as a client-side
-hash alias that rewrites on load, so any link already sent out still lands.
+**Decided:** `#chief-of-staff` is canonical, with `#cos` to be aliased so any
+link already sent out still lands.
+
+**Not yet implemented.** None of the three seat anchors exist on
+`/services/fractional-coo` today, so neither the canonical fragment nor the alias
+resolves. Spec 4.2 calls these anchors load-bearing, since the persona pages and
+the homepage services card link straight into a specific seat. This belongs to
+the stage one audit pass over the existing service pages, which is where it is
+tracked rather than assumed done.
 
 ### 2.3 Persona headlines: spec against mockup — **client**
 

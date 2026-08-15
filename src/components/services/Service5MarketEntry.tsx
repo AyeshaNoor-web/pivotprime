@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
 
 
 export default function Service5MarketEntry() {
@@ -48,7 +49,7 @@ export default function Service5MarketEntry() {
             Priced on the entity structure, whether the products need regulatory approval, and how much of the operation we build rather than advise on.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
               Talk to us on WhatsApp
             </a>
           </div>
@@ -188,7 +189,7 @@ export default function Service5MarketEntry() {
               If the model says it will not, we would rather tell you before you spend the money than after.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
                 Talk to us on WhatsApp
               </a>
             </div>

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { NAVIGATION, PRIMARY_CTA, WHATSAPP_URL, type NavItem } from "@/content/navigation";
+import { NAVIGATION, type NavItem } from "@/content/navigation";
+import { HEADER_CTA } from "@/content/cta";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -113,12 +114,12 @@ export default function Navbar() {
             <div className="hidden lg:flex lg:items-center lg:gap-x-5">
               {NAVIGATION.map(renderDesktopItem)}
               <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={HEADER_CTA.href}
+                target={HEADER_CTA.external ? "_blank" : undefined}
+                rel={HEADER_CTA.external ? "noopener noreferrer" : undefined}
                 className="ml-2 inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-bold tracking-wide text-white uppercase shadow-sm transition-colors hover:bg-mid/90 focus-visible:ring-2 focus-visible:ring-mid focus-visible:ring-offset-2 focus-visible:outline-none"
               >
-                {PRIMARY_CTA}
+                {HEADER_CTA.label}
                 <span aria-hidden="true" className="ml-2 text-lg leading-none">
                   →
                 </span>
@@ -207,13 +208,13 @@ export default function Navbar() {
 
               <div className="px-3 pt-4 pb-2">
                 <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={HEADER_CTA.href}
+                  target={HEADER_CTA.external ? "_blank" : undefined}
+                  rel={HEADER_CTA.external ? "noopener noreferrer" : undefined}
                   onClick={closeAll}
                   className="flex w-full items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-bold tracking-wide text-white uppercase shadow-sm transition-colors hover:bg-mid/90"
                 >
-                  {PRIMARY_CTA}
+                  {HEADER_CTA.label}
                   <span aria-hidden="true" className="ml-2 text-lg leading-none">
                     →
                   </span>

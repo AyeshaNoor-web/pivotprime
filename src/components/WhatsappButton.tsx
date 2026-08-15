@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
 
 export default function WhatsappButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,7 +29,7 @@ export default function WhatsappButton() {
     // guidelines require this exact value on the WhatsApp mark.
     // Registered in scripts/palette-allow.json for the same reason.
     <a
-      href="https://wa.me/971524401075"
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
       className={`fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-500 ease-in-out ${

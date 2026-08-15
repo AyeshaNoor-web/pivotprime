@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/flags";
+import { JOURNEY_CTA } from "@/content/cta";
 
 export default function Service1ClarityAudit() {
   const [mapState, setMapState] = useState<0 | 1>(0); // 0 = Messy, 1 = Clean
@@ -57,7 +59,7 @@ export default function Service1ClarityAudit() {
             Scope depends on the size of the business, how many functions are in review, and how many people we interview.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
               Talk to us on WhatsApp
             </a>
           </div>
@@ -246,11 +248,11 @@ export default function Service1ClarityAudit() {
               We will not commit to owning outcomes in a business we have not properly diagnosed.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
                 Talk to us on WhatsApp
               </a>
-              <Link href="/diagnostic" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
-                Take the 4-minute diagnostic
+              <Link href={JOURNEY_CTA.href} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
+                {JOURNEY_CTA.label}
               </Link>
             </div>
           </div>

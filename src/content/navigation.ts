@@ -62,15 +62,9 @@ export const FOOTER_LINKS: NavLink[] = [
   { label: "Privacy", href: "/privacy" },
 ];
 
-/**
- * Spec 2.2: every conversation CTA opens WhatsApp, which is the default business
- * channel in this market. The header button reads "Talk to us".
- *
- * TODO(client): spec 2.2 asks for "the homepage pre-fill" but never states the
- * message. Linking without pre-filled text until Iram supplies the wording,
- * which opens the chat empty rather than putting words in a prospect's mouth.
- * Tracked in docs/PENDING-COPY.md item 1.13.
- */
-export const WHATSAPP_URL = "https://wa.me/971524401075";
-export const PRIMARY_CTA = "Talk to us";
-export const SECONDARY_CTA = "Take the 4-minute diagnostic";
+// Calls to action live in src/content/cta.ts, which is the single place the
+// stage one substitution is expressed. Nothing here should hold a CTA label or
+// a WhatsApp number.
+//
+// Note there is deliberately no diagnostic entry in either list above: stage one
+// does not ship it, and spec 2.1 does not put it in the navigation in any case.

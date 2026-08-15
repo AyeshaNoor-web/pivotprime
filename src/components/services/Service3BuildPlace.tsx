@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
 
 
 export default function Service3BuildPlace() {
@@ -58,7 +59,7 @@ export default function Service3BuildPlace() {
             Sourced, vetted and managed by us. They report to us rather than to you, so you are not carrying the recruitment risk or the performance management.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
               Talk to us on WhatsApp
             </a>
           </div>
@@ -195,7 +196,7 @@ export default function Service3BuildPlace() {
               Neither one is accountable for whether it worked. That is the gap this service exists to close.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
                 Talk to us on WhatsApp
               </a>
             </div>
