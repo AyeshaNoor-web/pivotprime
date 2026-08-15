@@ -1,12 +1,37 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/flags";
 import { JOURNEY_CTA } from "@/content/cta";
+import { SEAT_IDS, seatIndexFromHash } from "@/lib/seat-anchors";
+
+// The URL fragment is an external mutable source. useSyncExternalStore is the
+// supported way to read one without a hydration mismatch: the server snapshot is
+// always empty, and React re-reads on the client after hydration. Reading
+// location.hash during render, or syncing it with setState inside an effect,
+// would either mismatch or trigger the cascading render the lint rule flags.
+const subscribeToHash = (onChange: () => void) => {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+};
+const getHash = () => window.location.hash;
+const getServerHash = () => "";
 
 export default function Service2FractionalLeadership() {
-  const [activeSeat, setActiveSeat] = useState(0);
+  // Which seat is open is derived from the fragment rather than held
+  // separately, so /services/fractional-coo#cfo opens the CFO seat when opened
+  // cold, and selecting a seat makes the URL shareable. Spec 4.2 calls these
+  // anchors load-bearing: persona pages and the homepage card link into a seat.
+  const hash = useSyncExternalStore(subscribeToHash, getHash, getServerHash);
+  const activeSeat = seatIndexFromHash(hash);
+
+  const selectSeat = (index: number) => {
+    // replaceState rather than assigning location.hash: assignment pushes a
+    // history entry per click and makes the browser jump to the element.
+    window.history.replaceState(null, "", `#${SEAT_IDS[index]}`);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  };
   const [isVisible, setIsVisible] = useState(false);
   const curveRef = useRef<HTMLDivElement>(null);
 
@@ -191,10 +216,13 @@ export default function Service2FractionalLeadership() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6">
             {SEATS.map((seat, i) => (
-              <div
+              <button
                 key={i}
-                onClick={() => setActiveSeat(i)}
-                className={`border rounded-xl p-5 cursor-pointer transition-all duration-200 ${
+                type="button"
+                id={SEAT_IDS[i]}
+                onClick={() => selectSeat(i)}
+                aria-pressed={activeSeat === i}
+                className={`border rounded-xl p-5 text-left cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009f50] focus-visible:ring-offset-2 ${
                   activeSeat === i
                     ? "border-[#013325] bg-[#013325] text-white shadow-lg -translate-y-1"
                     : "border-[#e3eae6] bg-white text-[#0c1a15] hover:border-[#cfe3d8] hover:-translate-y-1 hover:shadow-md"
@@ -204,7 +232,7 @@ export default function Service2FractionalLeadership() {
                 <p className={`text-[13.5px] m-0 ${activeSeat === i ? "text-[#bfd8cd]" : "text-[#5e6f68]"}`}>
                   {seat.short}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
 
