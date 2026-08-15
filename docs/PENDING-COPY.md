@@ -1,5 +1,52 @@
 # Pending copy and open decisions
 
+---
+
+## 0. Stage one scope and the diagnostic flag
+
+Stage one ships the site itself. The diagnostic, its report, the email delivery
+of that report and the database are a later phase.
+
+### 0.1 The flag
+
+`NEXT_PUBLIC_ENABLE_DIAGNOSTIC`, defined in `src/lib/flags.ts`, **defaults to
+false**. While false:
+
+- `/diagnostic` returns `notFound()`, so the route 404s
+- the page declares `robots: { index: false, follow: false }`
+- the route is excluded from `/sitemap.xml`
+- neither the navigation nor the footer carries a diagnostic entry
+
+It is `NEXT_PUBLIC_` because it is read in page modules evaluated during the
+build and in client components, so it has to be inlined rather than read from the
+server environment. That also means **flipping it requires a rebuild**, not just
+a restart.
+
+An unset or misspelt variable keeps the diagnostic off. The failure mode of a
+typo is a hidden feature rather than an unfinished one exposed to the public.
+
+### 0.2 Where the work is kept
+
+**Nothing was reverted.** The diagnostic work stays in the tree, gated. The full
+record is on **`feature/diagnostic-phase-2`**, branched from `3518f02`, which
+carries:
+
+- the deep instrument rebuilt to one domain per screen (spec 8.2)
+- the corrected domain order and explicit tie-breaking
+- stable, spec-derived statement ids and the twelve anchor ids
+- the scoring, presentation and statement modules with 24 tests
+
+Ongoing diagnostic work belongs on that branch, not on `revamp/spec-v1.7.1`.
+
+### 0.3 What is not built yet
+
+The instrument currently at `/diagnostic` is the **deep 42-statement version**.
+The split into a public 12-question instrument at `/diagnostic` and an unlisted
+deep one at `/diagnostic/deep` is later-phase work, so `/diagnostic/deep` does
+not exist and 404s on its own account rather than by the flag.
+
+---
+
 Everything the build is waiting on, and every deviation logged rather than
 silently taken. Nothing here blocks Step 1.
 
