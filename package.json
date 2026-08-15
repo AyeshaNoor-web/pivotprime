@@ -11,7 +11,9 @@
     "lint:palette": "node scripts/lint-palette.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check:overflow": "node scripts/check-overflow.mjs"
+    "check:overflow": "node scripts/check-overflow.mjs",
+    "check:content": "node scripts/check-content.mjs",
+    "check": "node scripts/check-overflow.mjs && node scripts/check-content.mjs"
   },
   "dependencies": {
     "next": "16.3.0",

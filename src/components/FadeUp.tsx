@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRevealOnScroll } from "@/lib/use-reveal-on-scroll";
 
 /**
  * A subtle fade and rise on scroll. Spec 8.3, which asks for short duration and
@@ -23,44 +23,13 @@ export default function FadeUp({
   delay?: number;
   className?: string;
 }) {
-  const [hidden, setHidden] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    // Spec 8.3: all animation stops for users who have motion sensitivity
-    // enabled. Nothing is hidden, so nothing needs revealing.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Already on screen: never hide it, or it flashes out and back in.
-    if (node.getBoundingClientRect().top < window.innerHeight) return;
-
-    setHidden(true);
-
-    let timer: ReturnType<typeof setTimeout>;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        timer = setTimeout(() => setHidden(false), delay);
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(node);
-    return () => {
-      observer.disconnect();
-      clearTimeout(timer);
-    };
-  }, [delay]);
+  const [ref, revealed] = useRevealOnScroll<HTMLDivElement>(delay);
 
   return (
     <div
       ref={ref}
       className={`transition-all duration-700 ease-out ${
-        hidden ? "translate-y-6 opacity-0" : "translate-y-0 opacity-100"
+        revealed ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
       } ${className}`}
     >
       {children}

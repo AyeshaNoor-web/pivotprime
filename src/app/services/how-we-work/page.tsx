@@ -7,9 +7,10 @@ export default function WhatWeDo() {
       
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center py-16 md:py-24">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-6 tracking-tight leading-tight">
-          It’s about doing what works
+        <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-4 tracking-tight leading-tight">
+          How we work
         </h1>
+        <p className="text-2xl md:text-3xl text-mid font-semibold mb-6">It’s about doing what works</p>
         <p className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed">
           At Pivot Prime, we help uncover what’s blocking progress, we align your teams and we turn strategy in to real results. <span className="text-primary font-bold">Without the fluff.</span>
         </p>
@@ -286,6 +287,22 @@ export default function WhatWeDo() {
             <p className="text-gray-600 mb-6 text-sm">A business that runs with clarity and control delivers stronger financial performance, and gives leaders confidence that effort and decisions are producing real outcomes.</p>
             <p className="font-bold text-sm"><span className="text-primary">Outcome:</span> Long term momentum, confidence, and a sustained strategic edge.</p>
           </div>
+        </div>
+
+        {/* Spec 4.6 routing block, at the end of the Pathway. */}
+        <div className="mx-auto mb-12 max-w-3xl rounded-xl border border-forest/10 bg-forest/[0.04] p-8 text-center">
+          <h3 className="mb-3 text-2xl font-bold text-forest">Where this starts</h3>
+          <p className="mb-6 leading-relaxed text-neutral-600">
+            Almost every engagement begins with an Operational Clarity Audit, because we will not
+            take responsibility for outcomes in a business we have not properly diagnosed.
+          </p>
+          <Link
+            href="/services/operational-clarity-audit"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90"
+          >
+            See what the audit covers
+            <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+          </Link>
         </div>
 
         <div className="text-center bg-forest text-white p-12 md:p-20 rounded-3xl">

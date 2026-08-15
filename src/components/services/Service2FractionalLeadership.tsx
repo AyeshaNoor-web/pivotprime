@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
+import { useRevealOnScroll } from "@/lib/use-reveal-on-scroll";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/flags";
 import { JOURNEY_CTA } from "@/content/cta";
@@ -32,26 +33,11 @@ export default function Service2FractionalLeadership() {
     window.history.replaceState(null, "", `#${SEAT_IDS[index]}`);
     window.dispatchEvent(new HashChangeEvent("hashchange"));
   };
-  const [isVisible, setIsVisible] = useState(false);
-  const curveRef = useRef<HTMLDivElement>(null);
+  // Shared so the reveal never hides content from a crawler or from a
+  // visitor who has reduced motion enabled. See the hook for why.
+  const [curveRef, isVisible] = useRevealOnScroll<HTMLDivElement>();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 }
-    );
 
-    if (curveRef.current) {
-      observer.observe(curveRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const SEATS = [
     {

@@ -1,30 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useRevealOnScroll } from "@/lib/use-reveal-on-scroll";
 import { WHATSAPP_URL } from "@/lib/flags";
 
 
 export default function Service3BuildPlace() {
-  const [isVisible, setIsVisible] = useState(false);
-  const benchRef = useRef<HTMLDivElement>(null);
+  // Shared so the reveal never hides content from a crawler or from a
+  // visitor who has reduced motion enabled. See the hook for why.
+  const [benchRef, isVisible] = useRevealOnScroll<HTMLDivElement>();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
 
-    if (benchRef.current) {
-      observer.observe(benchRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const slots = [
     { left: 16, top: 20, b: "Project manager", s: "drives delivery" },
