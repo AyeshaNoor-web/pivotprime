@@ -2,38 +2,126 @@ import Image from "next/image";
 import Link from "next/link";
 import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
-import { WHATSAPP_URL } from "@/lib/flags";
+import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
+import { HERO_CTA } from "@/content/cta";
+import { CLIENT_LOGOS, HERO, PROOF } from "@/content/homepage";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 flex items-center min-h-[85vh]">
+      {/* 3.1 Hero. REPLACE. Background is kept: spec says it works and it stays. */}
+      <section className="relative flex min-h-[85vh] items-center px-4 pt-32 pb-24 sm:px-6 md:pt-48 md:pb-32 lg:px-8">
         {/* overflow-hidden contains the water-pan animation, which scales the
             image to 1.08. Without it the scaled image is wider than the
             viewport and the whole document scrolls sideways, at every
             breakpoint including desktop. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image 
-            src="/home-banner.jpg" 
-            alt="Hero background" 
-            fill 
-            className="object-cover animate-water-pan"
-            priority 
+          <Image
+            src="/home-banner.jpg"
+            alt=""
+            fill
+            aria-hidden="true"
+            className="animate-water-pan object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-forest/50" />
         </div>
-        
-        <div className="relative z-10 max-w-5xl mx-auto w-full text-white">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-tight max-w-4xl font-sans">
-            For businesses ready to operate in their prime state.
+
+        {/* Wider than the old max-w-5xl: the annotation on 3.1 asks for text to
+            run as far across the screen as it reasonably can. */}
+        <div className="relative z-10 mx-auto w-full max-w-6xl text-white">
+          <h1 className="mb-6 max-w-5xl text-4xl leading-tight font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            {HERO.heading}
           </h1>
-          <p className="text-2xl md:text-3xl mb-12 font-medium">
-            Your operations, execution & growth partner
+
+          {/* Set noticeably larger than the paragraph beneath it. Spec 3.1:
+              this sentence is doing the most work on the page. */}
+          <p className="mb-6 max-w-4xl text-2xl leading-snug font-semibold sm:text-3xl md:text-4xl">
+            {HERO.lead}
           </p>
-          <a href={WHATSAPP_URL} className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-lg group">
-            Get in touch <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
-          </a>
+
+          <p className="mb-10 max-w-3xl text-base leading-relaxed text-white/85 md:text-lg">
+            {HERO.body}
+          </p>
+
+          {/* No WhatsApp CTA here, deliberately. Spec 3.1: "Nobody gets in touch
+              before they know what is on offer." The conversation CTAs appear
+              further down once the visitor has seen the services and the proof. */}
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <Link
+              href={HERO_CTA.href}
+              className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-4 text-sm font-bold tracking-wide text-white uppercase shadow-lg transition-colors hover:bg-neon/90 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {HERO_CTA.label}
+            </Link>
+
+            {/* Visually secondary, and an in-page anchor rather than a
+                navigation. Spec 3.1. */}
+            <a
+              href={HERO.secondaryHref}
+              className="inline-flex items-center justify-center rounded-md border border-white/40 px-7 py-4 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:border-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+            >
+              {HERO.secondaryLabel}
+            </a>
+          </div>
+
+          {/* Only rendered when the diagnostic is live: it names a four-minute
+              assessment and an immediate score, neither of which stage one
+              ships. */}
+          {DIAGNOSTIC_ENABLED && (
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/75">
+              {HERO.diagnosticExplainer}
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* 3.2 Proof bar. MOVE: the logo rows sat buried inside a later section
+          and belong directly under the hero. */}
+      <section className="border-b border-neutral-100 bg-white py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="mx-auto max-w-3xl text-center text-base font-medium text-neutral-600 md:text-lg">
+            {PROOF.trusted}
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-center text-sm text-neutral-500">
+            {PROOF.featuredPrefix}
+            {PROOF.publications.map((pub, i) => (
+              <span key={pub.href}>
+                <a
+                  href={pub.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={pub.title}
+                  className="font-semibold text-mid underline underline-offset-2 hover:text-forest"
+                >
+                  {pub.name}
+                </a>
+                {i === 0 ? " and " : "."}
+              </span>
+            ))}
+          </p>
+        </div>
+
+        {/* Keeps scrolling on desktop and mobile, per spec 3.2: the movement
+            holds attention and is one of the few animations doing a job.
+            overflow-hidden clips the track so it cannot widen the document. */}
+        <div className="mt-10 w-full overflow-hidden">
+          <div className="flex w-max animate-[marquee_40s_linear_infinite] items-center motion-reduce:animate-none">
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex items-center space-x-12 px-6" aria-hidden={copy === 1}>
+                {CLIENT_LOGOS.map((logo) => (
+                  <Image
+                    key={`${copy}-${logo.src}`}
+                    src={logo.src}
+                    alt={copy === 1 ? "" : logo.alt}
+                    width={180}
+                    height={80}
+                    className="h-14 w-auto rounded-lg object-contain opacity-70 transition-opacity hover:opacity-100 md:h-16"
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -201,25 +289,6 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Logos Marquee */}
-        <div className="w-full mt-12 overflow-hidden bg-black py-10 border-y border-white/[0.14]">
-          <div className="w-max flex items-center animate-[marquee_40s_linear_infinite]">
-            {/* We render the sequence of logos twice to create the seamless infinite scroll effect */}
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center space-x-12 px-6">
-                <Image src="/logos/logo-text-block-2.jpg" alt="logo-text-block-2" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/clogo3a.jpg" alt="clogo3a" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/Frame-17.jpg" alt="Frame 17" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/insurancehub-with-bg-white.jpg" alt="insurancehub" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/stydio-with-bg.jpg" alt="stydio" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/instagram.jpg" alt="instagram" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/man-cave-with-bg.jpg" alt="man cave" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/bop-foundation-with-bg-white.jpg" alt="bop foundation" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/nivishe.jpg" alt="nivishe" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Break Through Section */}

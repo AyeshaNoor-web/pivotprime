@@ -6,7 +6,6 @@ import {
   DOMAIN_NAMES as D,
   DOMAIN_ORDER as ORDER,
   rankByWeightedDeficit,
-  type DomainId,
 } from "@/lib/diagnostic/domains";
 import {
   PER_DOMAIN,

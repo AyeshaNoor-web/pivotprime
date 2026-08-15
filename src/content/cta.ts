@@ -66,3 +66,17 @@ export const HEADER_CTA: Cta = {
   href: WHATSAPP_URL,
   external: HAS_WHATSAPP,
 };
+
+/**
+ * The hero's primary CTA, spec 3.1.
+ *
+ * The label is kept in both phases, unlike JOURNEY_CTA. "Find out what is
+ * holding your business back" is an invitation rather than a promise of a
+ * specific instrument, so a contact form honours it. What must not survive the
+ * substitution is the explainer beneath it, which names a four-minute assessment
+ * and a scored result. That is rendered only when the diagnostic is live.
+ */
+export const HERO_CTA: Cta = {
+  label: "Find out what is holding your business back",
+  href: DIAGNOSTIC_ENABLED ? "/diagnostic" : "/contact",
+};

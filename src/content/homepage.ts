@@ -1,0 +1,82 @@
+/**
+ * Homepage copy, spec section 3.
+ *
+ * Verbatim. Spec section 1: green-bordered blocks are final website copy, "use
+ * them verbatim, do not paraphrase, re-punctuate, re-capitalise or tighten
+ * them". Where the spec gives no copy for a section, the slot stays empty with a
+ * TODO(client) note rather than being filled with connective writing.
+ *
+ * Section order is fixed by spec 3 and the page must render in it.
+ */
+
+// 3.1 HERO
+export const HERO = {
+  heading: "The consultancy that actually executes",
+  /** Set noticeably larger than the paragraph beneath it. Spec 3.1: "That
+   *  sentence is doing the most work on the page, so give it room." */
+  lead: "Most consultants recommend the fix. We build it.",
+  body: "We combine fractional C-suite leadership with hands-on execution capability. We find what is holding your business back, then bring the people, systems and technology to fix it.",
+  primaryLabel: "Find out what is holding your business back",
+  secondaryLabel: "See what we actually do",
+  secondaryHref: "#services",
+  /**
+   * Shown only when the diagnostic is live. It describes an instrument by name
+   * and duration, so it must not appear while the primary CTA routes to the
+   * contact page instead.
+   */
+  diagnosticExplainer:
+    "A four-minute assessment across six areas of the business. It scores where you are strongest and weakest, and names the one constraint holding back the rest. You get the result immediately.",
+};
+
+// 3.2 PROOF BAR
+export const PROOF = {
+  trusted:
+    "Trusted by businesses across insurance, wellness, retail, fragrance, fintech and consumer goods.",
+  /**
+   * Spec 3.2 says to link the two publication names to the two articles. The
+   * URLs were carried as hyperlinks in the document rather than written out in
+   * the body text.
+   */
+  featuredPrefix: "As featured in ",
+  publications: [
+    {
+      name: "West Asia Watch",
+      href: "https://westasiawatch.com/interviews/iram-kauser-on-building-businesses-in-the-uae/",
+      title: "From Strategy to Execution: Iram Kauser on Building Businesses That Scale in the UAE",
+    },
+    {
+      name: "Arabian Mirror",
+      href: "https://thearabianmirror.com/the-most-influential-business-leaders-to-watch-in-2026/",
+      title: "The Most Influential Business Leaders To Watch In 2026",
+    },
+  ],
+};
+
+/**
+ * The client logo rows in the proof bar. Kept from the existing build, which
+ * spec 3.2 tags MOVE rather than REPLACE: the copy and treatment carry over, the
+ * markup is rebuilt.
+ *
+ * Alt text names the client rather than describing the file, per spec 4.5.
+ */
+export const CLIENT_LOGOS = [
+  { src: "/logos/logo-text-block-2.jpg", alt: "Client logo" },
+  { src: "/logos/clogo3a.jpg", alt: "Client logo" },
+  { src: "/logos/Frame-17.jpg", alt: "Client logo" },
+  { src: "/logos/insurancehub-with-bg-white.jpg", alt: "Insurance Hub" },
+  { src: "/logos/stydio-with-bg.jpg", alt: "Stydio" },
+  { src: "/logos/instagram.jpg", alt: "Client logo" },
+  { src: "/logos/man-cave-with-bg.jpg", alt: "Man Cave" },
+  { src: "/logos/bop-foundation-with-bg-white.jpg", alt: "Birds of Paradise Foundation" },
+  { src: "/logos/nivishe.jpg", alt: "Nivishe" },
+];
+
+/**
+ * TODO(client): five of the nine logo files are unidentifiable from their
+ * filenames, so their alt text is a generic "Client logo". Spec 4.5 asks for
+ * descriptive alt text naming what the image actually is. Iram to confirm which
+ * client each of logo-text-block-2, clogo3a, Frame-17 and instagram belongs to,
+ * alongside the spec 10 decision 1 sign-off on which clients may be named at
+ * all. Tracked in docs/PENDING-COPY.md item 1.14.
+ */
+export const LOGOS_NEED_ALT_TEXT = true;

@@ -110,10 +110,11 @@ client names.
 | 1.6 | Which team members appear, with photographs and one-line credentials | 6.3, 10 #2 | client | About team layer |
 | 1.7 | Which clients may be named, confirmed in writing | 3.8, 10 #1 | client | Case studies, logo bar |
 | 1.8 | Privacy policy legal sign-off by a UAE-qualified adviser | 2.7 | client | `/privacy`, both diagnostics, all three API routes |
-| 1.9 | Founder portrait at full resolution, plus the two article URLs for the proof bar | 8.1, 10 #8 | client | Homepage 3.7, About 6.1, proof bar |
+| 1.9 | Founder portrait at full resolution. **The two article URLs are no longer outstanding**: they were carried as hyperlinks in the docx and were only missing from my plain-text conversion. Both are now wired into the proof bar | 8.1, 10 #8 | client | Homepage 3.7, About 6.1 |
 | 1.10 | CRM, dashboard and Scentmatic assets, client data blurred | 8.1, 10 #8 | **Saif** | Technology Builds |
 | 1.11 | Homepage services card 6 body. The spec reads "START WITH THE DIAGNOSTIC (TEXT AS PER CARD SHOWN)" and the card it refers to is an image, so there is no transcribable copy | 3.4 | client | Homepage 3.4, `/services` |
 | 1.12 | RAKEZ activity scope confirmation for selling software as a standalone product | 10 #7 | client | Technology Builds going live |
+| 1.14 | Alt text for four client logos. `logo-text-block-2`, `clogo3a`, `Frame-17` and `instagram` are unidentifiable from their filenames and currently carry a generic "Client logo". Spec 4.5 asks for descriptive alt text. Needed alongside the 10 #1 sign-off on which clients may be named | 4.5, 10 #1 | client | Nothing, the images render |
 | 1.13 | The WhatsApp pre-fill message. Spec 2.2 says to point the header button "at WhatsApp with the homepage pre-fill" but never states the wording. Linking without pre-filled text until it arrives, which opens the chat empty rather than putting words in a prospect's mouth | 2.2 | client | Nothing, the CTA works without it |
 
 ---
