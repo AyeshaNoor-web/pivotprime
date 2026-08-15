@@ -106,16 +106,43 @@ client names.
 | 1.2 | Homepage result card 6: a count of bespoke builds shipped, or manual hours removed per month | 3.3, 10 #4 | **Saif** | Homepage results band |
 | 1.3 | Confirmation of result cards 4 and 5 against the master table | 3.3, 10 #4 | client | Homepage results band |
 | 1.4 | Master results table sign-off. Operational waste is published as both "40 to 60% reduction" and "10 to 40% reduction". These cannot both be true and the spec calls it a direct contradiction | 9, 10 #5 | client | Homepage, About, case studies |
-| 1.5 | Final wording for the contingent fee section. No percentage or formula is to be published | 3.10, 10 #3 | client | Homepage 3.10 |
+| 1.5 | **Confirmation**, not copy. Spec 3.10 gives the block in full; the instruction is "Iram to confirm final wording before this section goes live". The section is therefore built with the spec copy and needs sign-off before launch rather than before build. No percentage or formula is published | 3.10, 10 #3 | client | Launch, not build |
 | 1.6 | Which team members appear, with photographs and one-line credentials | 6.3, 10 #2 | client | About team layer |
 | 1.7 | Which clients may be named, confirmed in writing | 3.8, 10 #1 | client | Case studies, logo bar |
 | 1.8 | Privacy policy legal sign-off by a UAE-qualified adviser | 2.7 | client | `/privacy`, both diagnostics, all three API routes |
 | 1.9 | Founder portrait at full resolution. **The two article URLs are no longer outstanding**: they were carried as hyperlinks in the docx and were only missing from my plain-text conversion. Both are now wired into the proof bar | 8.1, 10 #8 | client | Homepage 3.7, About 6.1 |
 | 1.10 | CRM, dashboard and Scentmatic assets, client data blurred | 8.1, 10 #8 | **Saif** | Technology Builds |
-| 1.11 | Homepage services card 6 body. The spec reads "START WITH THE DIAGNOSTIC (TEXT AS PER CARD SHOWN)" and the card it refers to is an image, so there is no transcribable copy | 3.4 | client | Homepage 3.4, `/services` |
+| 1.11 | ~~Homepage services card 6 body~~ **Cleared.** "(TEXT AS PER CARD SHOWN)" points at a reference image in which the card copy is legible, so it was transcribable after all. Now in `src/content/services.ts`. The card is gated with the diagnostic flag, since it exists only to sell the instrument | 3.4 | — | Nothing |
 | 1.12 | RAKEZ activity scope confirmation for selling software as a standalone product | 10 #7 | client | Technology Builds going live |
 | 1.14 | Alt text for four client logos. `logo-text-block-2`, `clogo3a`, `Frame-17` and `instagram` are unidentifiable from their filenames and currently carry a generic "Client logo". Spec 4.5 asks for descriptive alt text. Needed alongside the 10 #1 sign-off on which clients may be named | 4.5, 10 #1 | client | Nothing, the images render |
 | 1.13 | The WhatsApp pre-fill message. Spec 2.2 says to point the header button "at WhatsApp with the homepage pre-fill" but never states the wording. Linking without pre-filled text until it arrives, which opens the chat empty rather than putting words in a prospect's mouth | 2.2 | client | Nothing, the CTA works without it |
+
+---
+
+## 1a. Sweep against the source document
+
+Two items above were logged as missing when they were only missing from my
+plain-text conversion of the spec. Every remaining item has now been re-checked
+against the pandoc output and the 48 embedded reference images.
+
+**Cleared, never actually owed:**
+
+- The two article URLs (was part of 1.9). Carried as hyperlinks in the docx.
+- Homepage services card 6 (1.11). Legible in the reference image the spec
+  points at.
+
+**Reclassified:**
+
+- The contingent fee section (1.5). The copy exists in full; what is owed is
+  sign-off before launch, not text before build.
+
+**Confirmed genuinely outstanding.** Each carries an explicit instruction in the
+document itself, so these are real: 1.1 and the deep questions ("IRAM TO WRITE"),
+1.2 ("SAIF TO SUPPLY metric 6"), 1.3 ("IRAM TO CONFIRM the five ranges"), 1.4,
+1.6, 1.7, 1.8, 1.9 portrait, 1.10, 1.12, 1.13, 1.14.
+
+The document contains exactly two hyperlinks in total, both now used, so no
+further link artefacts are hiding in it.
 
 ---
 
