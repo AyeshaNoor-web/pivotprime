@@ -1,70 +1,170 @@
 #!/usr/bin/env node
 /**
- * Served-HTML content check.
+ * Spec conformance check against the served HTML.
  *
  * Fetches each route's raw HTML, with no browser and no JavaScript, and asserts
- * that the copy which defines the page is actually in it.
+ * that the copy the spec requires is actually in it.
  *
- * This exists because of a defect that no amount of looking at the site in a
- * browser would have found. CountUp initialised its state to zero, so every
- * result figure on the homepage was the string "0" in the server-rendered HTML.
- * The page looked perfect and served a crawler a set of zero per cent
- * improvements, on the one page whose entire job is credibility.
+ * This exists because of a defect no amount of looking at the site would have
+ * found. CountUp initialised its state to zero, so every result figure on the
+ * homepage was the string "0" in the server-rendered HTML. The page looked
+ * perfect and served crawlers a set of zero per cent improvements, on the one
+ * page whose entire job is credibility.
  *
  * Spec 4.5: "Server-side render or pre-render the content. If the copy only
  * appears after JavaScript runs, it is working against you."
  *
- * A plain fetch is the right tool. Using a browser would run the JavaScript and
- * hide exactly the failure being tested for.
+ * A plain fetch is the right tool. A browser would run the JavaScript and hide
+ * the exact failure being tested for.
+ *
+ * Every assertion names the spec clause it enforces, so a failure reads as
+ * "this page violates spec 5.1" rather than "this string is missing". That makes
+ * this file the single place a copy revision lands.
  *
  * Usage:
  *   node scripts/check-content.mjs [baseUrl]
+ *   CHECK_BASE_URL=http://localhost:3987 node scripts/check-content.mjs
  */
 
 const BASE = process.argv[2] ?? process.env.CHECK_BASE_URL ?? "http://localhost:3000";
 
 /**
- * Each route names the copy that must survive without JavaScript: the headline,
- * any figure that is itself the content, and the primary call to action.
+ * `text` is matched against the tag-stripped page, so a phrase split across
+ * elements still matches. `html` is matched raw, for attributes such as anchor
+ * ids and for figures where the surrounding tags disambiguate.
  */
 const EXPECTATIONS = [
   {
     route: "/",
-    must: [
-      "The consultancy that actually executes",
-      "Most consultants recommend the fix. We build it.",
-      "Find out what is holding your business back",
-      "This is what our team has delivered",
-      // The results figures. These were all "0" before the CountUp fix.
-      ">53<",
-      ">62<",
-      ">16<",
-      ">27<",
-      ">67<",
-      "What do we actually do",
-      "From AED 15,000",
-      "Trusted by businesses across insurance",
+    assert: [
+      { spec: "3.1", text: "The consultancy that actually executes", why: "hero H1" },
+      { spec: "3.1", text: "Most consultants recommend the fix. We build it.", why: "hero lead" },
+      { spec: "3.1", text: "Find out what is holding your business back", why: "hero primary CTA" },
+      { spec: "3.1", text: "See what we actually do", why: "hero secondary CTA" },
+      { spec: "3.2", text: "Trusted by businesses across insurance", why: "proof bar" },
+      { spec: "3.2", html: "westasiawatch.com", why: "publication link" },
+      { spec: "3.2", html: "thearabianmirror.com", why: "publication link" },
+      { spec: "3.3", text: "This is what our team has delivered", why: "results heading" },
+      { spec: "3.3", text: "We do not measure success in slide decks", why: "results standfirst" },
+      // The figures are the content. All five were "0" before the CountUp fix.
+      { spec: "3.3", html: ">53<", why: "faster execution figure" },
+      { spec: "3.3", html: ">62<", why: "duplicated work figure" },
+      { spec: "3.3", html: ">16<", why: "retention figure" },
+      { spec: "3.3", html: ">27<", why: "profit figure" },
+      { spec: "3.3", html: ">67<", why: "transaction processing figure" },
+      { spec: "3.4", text: "What do we actually do", why: "services heading" },
+      { spec: "3.4", html: 'id="services"', why: "the hero secondary CTA anchors here" },
+      { spec: "pricing rule", text: "From AED 15,000", why: "the only price on the site" },
     ],
   },
-  { route: "/services", must: ["What do we actually do", "From AED 15,000", "Operational Clarity Audit"] },
-  { route: "/services/operational-clarity-audit", must: ["Operational Clarity Audit", "From AED 15,000"] },
-  { route: "/services/fractional-coo", must: ["Fractional Leadership", 'id="coo"', 'id="chief-of-staff"', 'id="cfo"'] },
-  { route: "/services/build-and-place", must: ["Build and Place"] },
-  { route: "/services/technology-builds", must: ["Technology Builds"] },
-  { route: "/services/uae-market-entry", must: ["UAE Market Entry"] },
-  { route: "/services/how-we-work", must: ["How we"] },
-  { route: "/about", must: ['id="team"', 'id="case-studies"', "How we staff an engagement"] },
-  { route: "/for-founders", must: ["You"] },
-  { route: "/contact", must: ["conversation"] },
-  { route: "/privacy", must: ["Privacy policy", "What we collect"] },
+
+  // SERVICE PAGES, spec 4.
+  {
+    route: "/services",
+    assert: [
+      { spec: "4", text: "What do we actually do", why: "parent reuses the 3.4 section" },
+      { spec: "4", text: "Operational Clarity Audit", why: "audit listed first" },
+    ],
+  },
+  {
+    route: "/services/operational-clarity-audit",
+    assert: [
+      { spec: "4.1", text: "Operational Clarity Audit", why: "hero" },
+      { spec: "4.1", text: "From AED 15,000", why: "the audit floor" },
+      { spec: "4.1", text: "Typically 12 to 20 working days", why: "hero duration" },
+    ],
+  },
+  {
+    route: "/services/fractional-coo",
+    assert: [
+      { spec: "4.2", text: "Fractional Leadership", why: "H1 stays as 4.2 wrote it" },
+      { spec: "4.2", html: 'id="coo"', why: "seat anchor, load-bearing" },
+      { spec: "4.2", html: 'id="chief-of-staff"', why: "seat anchor, load-bearing" },
+      { spec: "4.2", html: 'id="cfo"', why: "seat anchor, load-bearing" },
+    ],
+  },
+  { route: "/services/build-and-place", assert: [{ spec: "4.3", text: "Build and Place", why: "hero" }] },
+  { route: "/services/technology-builds", assert: [{ spec: "4.4", text: "Technology Builds", why: "hero" }] },
+  { route: "/services/uae-market-entry", assert: [{ spec: "4.5", text: "UAE Market Entry", why: "hero" }] },
+  {
+    route: "/services/how-we-work",
+    assert: [
+      { spec: "4.6", text: "How we work", why: "H1 renamed from 'How we support you'" },
+      { spec: "4.6", text: "Where this starts", why: "routing block at the end of the Pathway" },
+      { spec: "4.6", text: "See what the audit covers", why: "routing block CTA" },
+    ],
+  },
+
+  // PERSONA PAGES, spec 5. Hero copy is KEEP; the sub-line under each block is
+  // FIX and must name a real service.
+  {
+    route: "/for-founders",
+    assert: [
+      { spec: "5.1", text: "Through an Operational Clarity Audit. From AED 15,000.", why: "block 1 sub-line" },
+      { spec: "5.1", text: "Through hiring support, role design and Build and Place.", why: "block 2 sub-line" },
+      { spec: "5.1", text: "Through a Fractional COO retainer. Scoped per engagement.", why: "block 3 sub-line" },
+      { spec: "5.1", text: "Most founders start with the audit", why: "routing block" },
+    ],
+  },
+  {
+    route: "/for-smes",
+    assert: [
+      { spec: "5.2", text: "Through an Operational Clarity Audit. From AED 15,000.", why: "block 1 sub-line" },
+      { spec: "5.2", text: "Part of an Operational Clarity Audit, or scoped on its own.", why: "block 2 sub-line" },
+      { spec: "5.2", text: "Through a Fractional COO retainer. Scoped per engagement.", why: "block 3 sub-line" },
+      { spec: "5.2", text: "contribution margin, delivery effort, variability and risk", why: "added margin paragraph" },
+      { spec: "5.2", text: "Most SMEs start with the audit", why: "routing block" },
+    ],
+  },
+  {
+    route: "/for-corporate-leaders",
+    assert: [
+      { spec: "5.3", text: "Through Build and Place. Scoped per engagement.", why: "blocks 1 and 2 sub-line" },
+      { spec: "5.3", text: "Through a Fractional COO retainer, monthly or ad hoc.", why: "block 3 sub-line" },
+      { spec: "5.3", text: "You do not need to hire for everything", why: "routing block" },
+      { spec: "5.3", text: "How we staff an engagement", why: "routing block CTA" },
+    ],
+  },
+  {
+    route: "/for-pl-owners",
+    assert: [
+      { spec: "5.4", text: "Through an extended Operational Clarity Audit.", why: "block 1 sub-line" },
+      { spec: "5.4", text: "a variant of the COO retainer", why: "block 2 sub-line" },
+      { spec: "5.4", text: "Through Build and Place and Technology Builds.", why: "block 3 sub-line" },
+      { spec: "2.5", text: "This is a 2 to 12 week reset", why: "typographical correction" },
+    ],
+  },
+
+  {
+    route: "/about",
+    assert: [
+      { spec: "6.3", html: 'id="team"', why: "anchor target for /about#team" },
+      { spec: "6", html: 'id="case-studies"', why: "anchor target for /about#case-studies" },
+      { spec: "6.3", text: "How we staff an engagement", why: "team layer one heading" },
+    ],
+  },
+  {
+    route: "/contact",
+    assert: [{ spec: "2.3", text: "hello@pivotprime.ae", why: "form routes to this inbox" }],
+  },
+  {
+    route: "/privacy",
+    assert: [
+      { spec: "2.7", text: "Privacy policy", why: "page exists" },
+      { spec: "2.7", text: "What we collect", why: "policy section" },
+    ],
+  },
 ];
 
-/**
- * Copy that must NOT appear, because it belongs to a gated phase. Catches the
- * opposite failure: shipping something the flag was meant to hide.
- */
+/** Copy that must NOT appear, because it belongs to a gated phase. */
 const FORBIDDEN = [
-  { route: "/", never: ["four-minute assessment", "Start with the diagnostic"], why: "diagnostic is gated" },
+  {
+    route: "/",
+    assert: [
+      { spec: "stage one", text: "four-minute assessment", why: "diagnostic explainer is gated" },
+      { spec: "stage one", text: "Start with the diagnostic", why: "services card 6 is gated" },
+    ],
+  },
 ];
 
 /** Strips tags so a phrase split across elements still matches. */
@@ -75,69 +175,70 @@ const textOf = (html) =>
     .replace(/&#x27;|&#39;/g, "'")
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
+    .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ");
 
 async function main() {
   const failures = [];
   let assertions = 0;
 
-  for (const { route, must } of EXPECTATIONS) {
-    let html;
+  const fetchPage = async (route) => {
     try {
       const res = await fetch(`${BASE}${route}`);
       if (!res.ok) {
         failures.push({ route, kind: "status", detail: res.status });
-        continue;
+        return null;
       }
-      html = await res.text();
+      return { route, html: await res.text() };
     } catch (err) {
       failures.push({ route, kind: "unreachable", detail: err.message });
-      continue;
+      return null;
     }
+  };
 
-    const text = textOf(html);
-    for (const phrase of must) {
+  const check = (page, list, mustBePresent) => {
+    const text = textOf(page.html);
+    for (const a of list) {
       assertions += 1;
-      // Attribute assertions are checked against raw HTML, copy against text.
-      const haystack = phrase.startsWith("id=") || phrase.startsWith(">") ? html : text;
-      if (!haystack.includes(phrase)) {
-        failures.push({ route, kind: "missing", detail: phrase });
+      const needle = a.text ?? a.html;
+      const found = (a.html ? page.html : text).includes(needle);
+      if (found !== mustBePresent) {
+        failures.push({ route: page.route, spec: a.spec, why: a.why, needle, mustBePresent });
       }
     }
+  };
+
+  for (const { route, assert } of EXPECTATIONS) {
+    const page = await fetchPage(route);
+    if (page) check(page, assert, true);
   }
-
-  for (const { route, never, why } of FORBIDDEN) {
-    const res = await fetch(`${BASE}${route}`).catch(() => null);
-    if (!res || !res.ok) continue;
-    const text = textOf(await res.text());
-    for (const phrase of never) {
-      assertions += 1;
-      if (text.includes(phrase)) {
-        failures.push({ route, kind: "leaked", detail: phrase, why });
-      }
-    }
+  for (const { route, assert } of FORBIDDEN) {
+    const page = await fetchPage(route);
+    if (page) check(page, assert, false);
   }
 
   if (failures.length === 0) {
-    console.log(`content-check: clean (${assertions} assertions with JavaScript off)`);
+    console.log(`content-check: clean (${assertions} spec assertions with JavaScript off)`);
     return;
   }
 
   for (const f of failures) {
-    if (f.kind === "missing") {
-      console.error(`${f.route}  missing from the server-rendered HTML: ${JSON.stringify(f.detail)}`);
-      console.error("  this copy only exists after JavaScript runs, which spec 4.5 rules out.");
-      console.error("  usually state initialised to a blank or zero value rather than the real content.");
-    } else if (f.kind === "leaked") {
-      console.error(`${f.route}  should not be present: ${JSON.stringify(f.detail)} (${f.why})`);
-    } else if (f.kind === "status") {
+    if (f.kind === "status") {
       console.error(`${f.route}  returned ${f.detail}`);
-    } else {
+    } else if (f.kind === "unreachable") {
       console.error(`${f.route}  unreachable: ${f.detail}. Is the server running at ${BASE}?`);
+    } else if (f.mustBePresent) {
+      console.error(`${f.route}  violates spec ${f.spec}  (${f.why})`);
+      console.error(`  expected in the server-rendered HTML: ${JSON.stringify(f.needle)}`);
+    } else {
+      console.error(`${f.route}  leaks gated content, spec ${f.spec}  (${f.why})`);
+      console.error(`  must not be present: ${JSON.stringify(f.needle)}`);
     }
   }
 
-  console.error(`\ncontent-check: ${failures.length} problem${failures.length === 1 ? "" : "s"}.`);
+  console.error(
+    `\ncontent-check: ${failures.length} problem${failures.length === 1 ? "" : "s"} across ${assertions} assertions.`,
+  );
   process.exit(1);
 }
 

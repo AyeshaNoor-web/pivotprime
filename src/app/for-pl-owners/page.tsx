@@ -29,7 +29,7 @@ export default function ForCorporateOwners() {
           {/* Section 1 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Competitive Focus & Advantage Reset</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through a deep dive diagnostic.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through an extended Operational Clarity Audit.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -56,7 +56,7 @@ export default function ForCorporateOwners() {
           {/* Section 2 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Executive Leverage & Strategy Carry-Through</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through fractional Chief of Staff support.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through fractional Chief of Staff support, a variant of the COO retainer.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -83,7 +83,7 @@ export default function ForCorporateOwners() {
           {/* Section 3 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Scaled Execution & Intelligent Modernisation</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through targeted operational and AI enablement.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through Build and Place and Technology Builds.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -104,6 +104,26 @@ export default function ForCorporateOwners() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* Spec 5 routing block: each persona page points at the service the
+          findings actually justify. */}
+      <section className="px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-4 max-w-4xl rounded-xl border border-forest/10 bg-forest/[0.04] p-8 text-center">
+          <p className="mb-6 text-lg leading-relaxed text-neutral-700">
+            The outcome is a small number of moves that materially shift trajectory, rather than a long list of initiatives that compete with each other.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/services/build-and-place" className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90">
+              How we staff an engagement
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+            </Link>
+            <Link href="/services/technology-builds" className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90">
+              See what tech we can build
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -22,7 +22,7 @@ export default function ForSMEs() {
           {/* Section 1 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Predictable profit and cash flow</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through a profit and operations audit.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through an Operational Clarity Audit. From AED 15,000.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -46,7 +46,15 @@ export default function ForSMEs() {
           {/* Section 2 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Pricing that makes sense</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through pricing and margin architecture.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through pricing and margin architecture. Part of an Operational Clarity Audit, or scoped on its own.</h3>
+            {/* Spec 5.2: "the clearest place on the whole site where the
+                actuarial background is directly relevant, and it is currently
+                being left on the table." */}
+            <p className="mb-8 leading-relaxed text-neutral-600">
+              We look at contribution margin, delivery effort, variability and risk across every
+              client, product and contract, then design pricing logic you can defend, rather than
+              pricing that was set once and never revisited.
+            </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -73,7 +81,7 @@ export default function ForSMEs() {
           {/* Section 3 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Operations that can scale</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through an operational reset.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through a Fractional COO retainer. Scoped per engagement.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -97,6 +105,22 @@ export default function ForSMEs() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* Spec 5 routing block: each persona page points at the service the
+          findings actually justify. */}
+      <section className="px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-4 max-w-4xl rounded-xl border border-forest/10 bg-forest/[0.04] p-8 text-center">
+          <p className="mb-6 text-lg leading-relaxed text-neutral-700">
+            Most SMEs start with the audit, because margin instability almost never comes from where the business assumes it does.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/services/operational-clarity-audit" className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90">
+              See what the audit covers
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+            </Link>
+          </div>
         </div>
       </section>
 

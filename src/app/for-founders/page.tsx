@@ -22,7 +22,7 @@ export default function ForFounders() {
           {/* Section 1 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">A business that doesn&apos;t depend on you</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through a deep dive diagnostic.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through an Operational Clarity Audit. From AED 15,000.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -43,7 +43,7 @@ export default function ForFounders() {
           {/* Section 2 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">People you can trust to carry the work</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through hiring support and role clarity.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through hiring support, role design and Build and Place.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -67,7 +67,7 @@ export default function ForFounders() {
           {/* Section 3 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Growth without more chaos</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through an operational reset.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through a Fractional COO retainer. Scoped per engagement.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -88,6 +88,22 @@ export default function ForFounders() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* Spec 5 routing block: each persona page points at the service the
+          findings actually justify. */}
+      <section className="px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-4 max-w-4xl rounded-xl border border-forest/10 bg-forest/[0.04] p-8 text-center">
+          <p className="mb-6 text-lg leading-relaxed text-neutral-700">
+            Most founders start with the audit, because it is the cheapest way to find out whether the problem is the process, the people, or the founder.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/services/operational-clarity-audit" className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90">
+              See what the audit covers
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+            </Link>
+          </div>
         </div>
       </section>
 
