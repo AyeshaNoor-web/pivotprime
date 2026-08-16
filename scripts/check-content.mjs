@@ -173,7 +173,27 @@ const EXPECTATIONS = [
   },
 ];
 
-/** Copy that must NOT appear, because it belongs to a gated phase. */
+/**
+ * Copy that must NOT appear.
+ *
+ * A forbidden assertion is only meaningful if it fires when the content IS
+ * present, otherwise it is a green check on a string the page could never
+ * render, which is worse than no check at all. That is not hypothetical: the
+ * relocation assertion below originally read "We have sat in the system" while
+ * the homepage rendered the contraction "We've", so it passed while the section
+ * was still there and duplicated.
+ *
+ * Two rules follow. Match on an invariant substring, never on a full sentence
+ * whose contractions, punctuation or capitalisation could differ. And validate
+ * the assertion by making the content appear:
+ *
+ *   NEXT_PUBLIC_ENABLE_DIAGNOSTIC=true npm run build
+ *   NEXT_PUBLIC_ENABLE_DIAGNOSTIC=true npx next start
+ *   node scripts/check-content.mjs
+ *
+ * Every gated assertion must fail under that build. If one passes, it is dead
+ * weight and needs a better needle.
+ */
 const FORBIDDEN = [
   {
     route: "/",
@@ -183,6 +203,43 @@ const FORBIDDEN = [
       { spec: "3", text: "sat in the system", why: "relocated to /about, must not remain on the homepage. Matched on the invariant substring: the homepage rendered the contraction \"We've\" while the relocated copy reads \"We have\", and an assertion on either full form passes while the section is still there" },
       { spec: "3", text: "understand your challenges", why: "relocated to /about, matched on the invariant substring" },
     ],
+  },
+];
+
+/**
+ * Expected H2 sequence per page, in document order.
+ *
+ * Presence checks cannot catch duplication or misordering. A section left behind
+ * during a move still satisfies every assertion about the page it moved to, and
+ * the page it moved from. This is the check that catches that directly rather
+ * than by luck.
+ *
+ * Entries are substrings, so copy can be revised without rewriting the sequence,
+ * but the count and the order are exact.
+ */
+const HEADING_ORDER = [
+  {
+    route: "/",
+    spec: "3",
+    h2: [
+      "This is what our team has delivered", // 3.3
+      "What do we actually do", // 3.4
+      "These are the patterns before growth stalls", // 3.5
+      "Knowing what is wrong is hard", // 3.6
+      "Pivot Prime is led by a Mathematician", // 3.7
+      "What we have achieved", // 3.8
+      "You don", // 3.9, contraction differs by apostrophe encoding
+      "Most consultants are paid for the recommendation", // 3.10
+      "Find out what is actually holding the business back", // 3.11
+    ],
+  },
+  {
+    route: "/services",
+    spec: "4",
+    // The page heading is the H1 here; the shared card component renders service
+    // names as H3, so there are no H2s. Spec 4.5 requires headings nested
+    // properly with no level skipped for visual reasons.
+    h2: [],
   },
 ];
 
@@ -236,13 +293,56 @@ async function main() {
     if (page) check(page, assert, false);
   }
 
+  // Structural: exactly one H1, and the H2 sequence in document order.
+  for (const { route, spec, h2 } of HEADING_ORDER) {
+    const page = await fetchPage(route);
+    if (!page) continue;
+
+    assertions += 1;
+    const h1Count = [...page.html.matchAll(/<h1[\s>]/g)].length;
+    if (h1Count !== 1) {
+      failures.push({ route, kind: "structure", spec: "4.5", detail: `expected exactly one H1, found ${h1Count}` });
+    }
+
+    const found = [...page.html.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/g)].map((m) =>
+      textOf(m[1]).trim(),
+    );
+
+    assertions += 1;
+    if (found.length !== h2.length) {
+      failures.push({
+        route,
+        kind: "structure",
+        spec,
+        detail: `expected ${h2.length} H2 headings, found ${found.length}`,
+        found,
+      });
+      continue;
+    }
+
+    h2.forEach((expected, i) => {
+      assertions += 1;
+      if (!found[i].includes(expected)) {
+        failures.push({
+          route,
+          kind: "structure",
+          spec,
+          detail: `H2 ${i + 1} should contain ${JSON.stringify(expected)}, found ${JSON.stringify(found[i])}`,
+        });
+      }
+    });
+  }
+
   if (failures.length === 0) {
     console.log(`content-check: clean (${assertions} spec assertions with JavaScript off)`);
     return;
   }
 
   for (const f of failures) {
-    if (f.kind === "status") {
+    if (f.kind === "structure") {
+      console.error(`${f.route}  structural, spec ${f.spec}: ${f.detail}`);
+      if (f.found) f.found.forEach((h, i) => console.error(`    ${i + 1}. ${h}`));
+    } else if (f.kind === "status") {
       console.error(`${f.route}  returned ${f.detail}`);
     } else if (f.kind === "unreachable") {
       console.error(`${f.route}  unreachable: ${f.detail}. Is the server running at ${BASE}?`);
