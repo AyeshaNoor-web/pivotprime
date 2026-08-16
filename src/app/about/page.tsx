@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PEOPLE, ROLES, TEAM_ANCHOR, TEAM_INTRO } from "@/content/team";
 import CaseStudies from "@/components/CaseStudies";
 import { RELOCATED_TO_ABOUT } from "@/content/homepage";
+import { WHY_WE_EXIST } from "@/content/about";
 
 
 export default function WhoWeAre() {
@@ -25,6 +26,42 @@ export default function WhoWeAre() {
         <p className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed max-w-4xl mx-auto">
           Pivot Prime exists because we have lived both sides. We understand what it takes to move work forward when plans meet pressure, people, and reality.
         </p>
+      </section>
+
+      {/* 6.1 Why Pivot Prime exists. NEW, and placed at the very top,
+          immediately under the H1 and before "From pressure to Prime State",
+          as the spec requires. */}
+      <section className="px-4 pb-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-8 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            {WHY_WE_EXIST.heading}
+          </h2>
+          <div className="space-y-5">
+            {WHY_WE_EXIST.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-neutral-600 md:text-lg">
+                {paragraph}
+              </p>
+            ))}
+            <p className="leading-relaxed text-neutral-600 md:text-lg">
+              <Link
+                href={WHY_WE_EXIST.founderSentence.nameHref}
+                className="font-semibold text-mid underline underline-offset-2 hover:text-forest"
+              >
+                {WHY_WE_EXIST.founderSentence.name}
+              </Link>
+              {WHY_WE_EXIST.founderSentence.rest}
+            </p>
+          </div>
+          <a
+            href={WHY_WE_EXIST.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center rounded-md border border-forest/20 px-6 py-3 text-sm font-bold text-forest uppercase transition-colors hover:bg-forest/[0.04]"
+          >
+            {WHY_WE_EXIST.ctaLabel}
+            <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+          </a>
+        </div>
       </section>
 
       {/* Relocated from the homepage. Neither section appears anywhere in the

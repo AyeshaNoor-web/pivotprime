@@ -10,6 +10,16 @@
       "file": "src/app/diagnostic/page.tsx",
       "hex": "#f7f9f8",
       "reason": "The paper neutral declared by every approved mockup. It is the page surface behind DiagnosticApp, which is grandfathered, so this wrapper matches it. Remove this entry when the diagnostic component is tokenised."
+    },
+    {
+      "file": "src/app/api/enquiry/route.ts",
+      "hex": "#009f50",
+      "reason": "Inline styles in a transactional email. Email clients do not support CSS custom properties, so a token cannot be used here and the literal hex is the only option. This is the mid green from the approved palette; keep it in step if the token changes."
+    },
+    {
+      "file": "src/app/api/enquiry/route.ts",
+      "hex": "#5e6f68",
+      "reason": "Inline styles in a transactional email, same constraint as above. The muted grey used for quoted text throughout the approved mockups."
     }
   ]
 }

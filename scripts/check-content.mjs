@@ -162,7 +162,27 @@ const EXPECTATIONS = [
   },
   {
     route: "/contact",
-    assert: [{ spec: "2.3", text: "hello@pivotprime.ae", why: "form routes to this inbox" }],
+    assert: [
+      { spec: "2.3", text: "hello@pivotprime.ae", why: "form routes to this inbox" },
+      // The form must post natively, so it works with JavaScript off. The
+      // previous button was type="button" with no handler and did nothing at all.
+      { spec: "2.3", html: 'action="/api/enquiry"', why: "posts without JavaScript" },
+      { spec: "2.3", html: 'method="post"', why: "posts without JavaScript" },
+      { spec: "2.2", text: "WhatsApp", why: "visible fallback beside the form" },
+    ],
+  },
+  {
+    route: "/insights",
+    assert: [{ spec: "2.1", text: "Insights", why: "renamed from Prime Insights" }],
+  },
+  {
+    route: "/about",
+    assert: [
+      { spec: "6.1", text: "Why Pivot Prime exists", why: "new section at the top of the page" },
+      { spec: "6.1", text: "in the gap between what leadership decides and what actually gets delivered", why: "6.1 opening" },
+      { spec: "6.1", html: 'href="/about#team"', why: "Iram Kauser links to the team section" },
+      { spec: "6.2", text: "We understand human behaviour", why: "four capabilities kept" },
+    ],
   },
   {
     route: "/privacy",
