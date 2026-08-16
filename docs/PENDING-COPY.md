@@ -185,10 +185,18 @@ reproduce here:
   render correctly here.
 - **11.3** carousels clipping their second card. There is no carousel component
   in this codebase.
-- **11.4** the patterns list reading as a formatting fault. The alternation was
-  deliberate markup here, and 3.5 replaces the section outright.
+- **11.4** the patterns list reading as a formatting fault. **Superseded**
+  rather than merely absent: 3.5 rewrites the section outright, so the list it
+  describes no longer exists to be misformatted.
 - **11.5** confirmations from the captures, including the hero button reading
-  GET IN TOUCH. Superseded by the 3.1 rebuild.
+  GET IN TOUCH. **Superseded** by the 3.1 rebuild, which replaces that button.
+
+**Two categories, not one.** 11.1, 11.2 and 11.3 are *non-reproducing*: the fault
+described does not exist in this codebase, but the sections do, so they stay on
+the pre-launch QA list. 11.4 and 11.5 are *superseded*: a later clause replaces
+the thing being complained about, so there is nothing left to check. The same
+distinction applies in 2.5, where correction 4 is superseded by 3.5 rather than
+being live-site only.
 
 **How to treat section 11 instead.** It is a pre-launch QA checklist to run
 against the new build once the homepage is finished, not a defect list against
@@ -311,21 +319,21 @@ the spec wording while moving the pool into `src/lib/diagnostic/statements.ts`.
 Flagged because it is a change to an instrument statement, not to marketing copy.
 It is not an anchor, so no short-instrument comparison is affected.
 
-### 3.3 The patterns animation is a sequential reveal, not typing — **logged**
+### 3.3 The patterns animation — **for Iram**
 
-Spec 3.5 asks for each pattern to "type onto the screen, hold long enough to be
-read, then the next one follows".
+The spec asks for each pattern to type onto the screen. It has been built so the
+patterns **reveal one after another, with the reading rhythm intact and pausing
+when you hover**, rather than being typed out letter by letter.
 
-A true typing effect builds each string a character at a time, which means the
-full sentence is not in the DOM until the animation reaches the end of it. All
-ten patterns, the entire content of the section, would be absent from the
-server-rendered HTML and from any reader without JavaScript. That is the same
-defect as the results band shipping zeroes, and spec 4.5 rules it out.
+The reason is search. A typed effect only puts each sentence on the page as it
+finishes typing it, which means all ten patterns are missing from what Google
+reads. This way the words are present for search engines and for anyone whose
+browser blocks animation, and the section still reveals itself line by line as
+you scroll to it.
 
-**Built as a sequential reveal.** Every pattern is rendered in full at all times
-and they fade in one after another, pausing on hover as 3.5 asks. The reading
-experience the spec describes is preserved, the content survives without
-JavaScript, and reduced motion shows the complete list at once.
+If it does not feel right once you see it, that is a conversation rather than a
+fault, and there are other ways to get closer to the original idea without
+hiding the copy.
 
 ### 3.4 The patterns treatment: 3.5 and 11.4 contradict each other — **logged**
 

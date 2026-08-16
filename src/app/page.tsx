@@ -3,8 +3,19 @@ import Link from "next/link";
 import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
 import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
-import { CONTACT_CTA, HERO_CTA } from "@/content/cta";
-import { ACCOUNTABLE, CLIENT_LOGOS, FOUNDER, HERO, METRICS, PATTERNS, PROOF, RESULTS } from "@/content/homepage";
+import { CONTACT_CTA, HERO_CTA, JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
+import {
+  ACCOUNTABLE,
+  CLIENT_LOGOS,
+  CLOSE,
+  FOUNDER,
+  HERO,
+  HOW_WE_ARE_PAID,
+  METRICS,
+  PATTERNS,
+  PROOF,
+  RESULTS,
+} from "@/content/homepage";
 import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
 import ServiceCards from "@/components/ServiceCards";
 import PatternsList from "@/components/PatternsList";
@@ -337,59 +348,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sat in the System Section */}
-      <section className="py-24 bg-black text-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
-            We&apos;ve sat in the system.
+      {/* 3.10 How we are paid. NEW. Built from the spec's own block. No
+          percentage or formula is published, as 3.10 requires. Awaiting Iram's
+          confirmation of the wording before launch, not before build. */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            {HOW_WE_ARE_PAID.heading}
           </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-primary mb-12">
-            Now we help reshape it.
-          </h3>
-          <div className="space-y-6 text-lg md:text-xl text-white font-medium max-w-3xl mx-auto">
-            <p>
-              We&apos;ve worked inside some of the world&apos;s largest organisations and we&apos;ve also sat across the table from them.
-            </p>
-            <p>
-              We know what strategy looks like on paper and we know what actually happens when it meets people, processes, and pressure.
-            </p>
-            <p>
-              Today, we work with ambitious businesses at different stages.
-            </p>
-            <p>
-              Our role is simple. We help you cut through complexity, align strategy with execution, and build operations that actually support growth.
-            </p>
+          <p className="mb-8 text-xl font-semibold text-mid md:text-2xl">{HOW_WE_ARE_PAID.lead}</p>
+          <div className="space-y-5">
+            {HOW_WE_ARE_PAID.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-neutral-600 md:text-lg">
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
-        
       </section>
 
-      {/* Break Through Section */}
-      <section className="relative py-32 px-4 sm:px-6 lg:px-8 text-center bg-black min-h-[60vh] flex items-center">
-        {/* Background faces image from the live site */}
-        <div className="absolute inset-0 z-0" style={{ backgroundImage: 'url("/Group-1577708851-min.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        
-        {/* Dark overlay to make text readable */}
-        <div className="absolute inset-0 z-0 bg-black/20" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight leading-tight">
-            We help leaders and teams<br />break through for good.
+      {/* 3.11 Close. REPLACE. The existing background is kept, per the spec. */}
+      <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-black px-4 py-32 sm:px-6 lg:px-8">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url("/Group-1577708851-min.jpg")' }}
+        />
+        <div aria-hidden="true" className="absolute inset-0 z-0 bg-forest/70" />
+
+        <div className="relative z-10 mx-auto w-full max-w-4xl text-center text-white">
+          <h2 className="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
+            {CLOSE.heading}
           </h2>
-          <h3 className="text-2xl md:text-3xl font-medium text-primary mb-12">
-            When strategy and execution finally line up, growth follows.
-          </h3>
-          <div className="space-y-6 text-lg md:text-xl text-white font-medium max-w-3xl mx-auto mb-12">
-            <p>
-              At Pivot Prime, we focus on what actually gets in the way. We look at how decisions are made, how work flows, and where accountability breaks down.
-            </p>
-            <p>
-              Then we work alongside you to fix it properly, so growth becomes stable, repeatable, and sustainable.
-            </p>
+
+          {/* Gated: the sentence promises a scored view in four minutes, which
+              the contact page cannot honour. No substitute is invented, because
+              the spec provides none. */}
+          {DIAGNOSTIC_ENABLED && (
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/85">{CLOSE.standfirst}</p>
+          )}
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href={JOURNEY_CTA.href}
+              className="inline-flex items-center justify-center rounded-md bg-neon px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {JOURNEY_CTA.label}
+            </Link>
+            <a
+              href={WHATSAPP_CTA.href}
+              target={WHATSAPP_CTA.external ? "_blank" : undefined}
+              rel={WHATSAPP_CTA.external ? "noopener noreferrer" : undefined}
+              className="inline-flex items-center justify-center rounded-md border border-white/50 px-7 py-4 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:border-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+            >
+              {WHATSAPP_CTA.label}
+            </a>
           </div>
-          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 text-xs font-bold tracking-wider uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded shadow-lg group">
-            Book discovery call <span className="ml-2 font-normal text-lg leading-none group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
         </div>
       </section>
 

@@ -65,6 +65,10 @@ const EXPECTATIONS = [
       { spec: "3.8", text: "What we have achieved", why: "case studies heading" },
       { spec: "3.8", text: "67% faster transaction processing", why: "case study 1 result" },
       { spec: "3.8", text: "13% increase in member retention", why: "case study 3, proves all three are served" },
+      { spec: "3.9", text: "You don", why: "persona cards retained, tagged KEEP" },
+      { spec: "3.10", text: "Most consultants are paid for the recommendation", why: "how we are paid heading" },
+      { spec: "3.10", text: "We are paid partly on whether the numbers move.", why: "how we are paid lead" },
+      { spec: "3.11", text: "Find out what is actually holding the business back", why: "close heading" },
     ],
   },
 
@@ -152,6 +156,8 @@ const EXPECTATIONS = [
       { spec: "6", html: 'id="case-studies"', why: "anchor target for /about#case-studies" },
       { spec: "6.3", text: "How we staff an engagement", why: "team layer one heading" },
       { spec: "6", text: "13% increase in member retention", why: "case studies also render here" },
+      { spec: "2.4 decision", text: "We have sat in the system.", why: "orphan relocated from the homepage, not deleted" },
+      { spec: "2.4 decision", text: "We do not just understand your challenges.", why: "orphan relocated from the homepage, not deleted" },
     ],
   },
   {
@@ -174,6 +180,8 @@ const FORBIDDEN = [
     assert: [
       { spec: "stage one", text: "four-minute assessment", why: "diagnostic explainer is gated" },
       { spec: "stage one", text: "Start with the diagnostic", why: "services card 6 is gated" },
+      { spec: "3", text: "sat in the system", why: "relocated to /about, must not remain on the homepage. Matched on the invariant substring: the homepage rendered the contraction \"We've\" while the relocated copy reads \"We have\", and an assertion on either full form passes while the section is still there" },
+      { spec: "3", text: "understand your challenges", why: "relocated to /about, matched on the invariant substring" },
     ],
   },
 ];

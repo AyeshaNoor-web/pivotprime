@@ -204,3 +204,62 @@ export const FOUNDER = {
    */
   portrait: null as { src: string; alt: string } | null,
 };
+
+// 3.10 HOW WE ARE PAID
+export const HOW_WE_ARE_PAID = {
+  heading: "Most consultants are paid for the recommendation",
+  lead: "We are paid partly on whether the numbers move.",
+  body: [
+    "Before anything changes we baseline it: how long each step takes, pass and fail rates, man hours per function, cost per transaction. Then we agree which of those numbers has to move and by when, and a meaningful part of our fee sits on the other side of them moving.",
+    "It is a discipline rather than a sales device. You cannot bill on outcomes unless you were serious about measuring in the first place.",
+  ],
+  // Spec 3.10: "Do not publish a specific percentage or a formula here." None is
+  // published. The section is built from the spec's own block and awaits Iram's
+  // confirmation before launch, not before build. Item 1.5.
+};
+
+// 3.11 CLOSE
+export const CLOSE = {
+  heading: "Find out what is actually holding the business back",
+  /**
+   * Rendered only when the diagnostic is live. The sentence promises "a scored
+   * view of your biggest constraint in four minutes", which the contact page
+   * cannot honour, so it is gated rather than reworded. No stage-one substitute
+   * is invented: the spec provides none, and the heading and the two CTAs carry
+   * the section without it.
+   */
+  standfirst:
+    "Two ways to start. Take the diagnostic and get a scored view of your biggest constraint in four minutes, or message us and we will walk through it together.",
+};
+
+/**
+ * The two homepage sections with no place in the spec's 3.1 to 3.12 order,
+ * relocated to /about rather than deleted.
+ *
+ * Neither appears anywhere in the running order, so leaving them on the homepage
+ * would contradict the spec and deleting them would discard copy the spec never
+ * asked to lose. "We have sat in the system" in particular reads as authority
+ * copy on the About page rather than as homepage filler.
+ *
+ * Recorded in docs/PENDING-COPY.md section 2.4 so the move can be vetoed without
+ * anyone having to rewrite anything.
+ */
+export const RELOCATED_TO_ABOUT = [
+  {
+    heading: "We do not just understand your challenges.",
+    standfirst: "We fix what is really holding your business back",
+    body: [
+      "Even the best-run businesses hit hidden bottlenecks in operations, culture, and execution. At Pivot Prime, we work alongside you to diagnose what is slowing the business down, then help you fix it, properly.",
+    ],
+  },
+  {
+    heading: "We have sat in the system.",
+    standfirst: "Now we help reshape it.",
+    body: [
+      "We have worked inside some of the world's largest organisations and we have also sat across the table from them.",
+      "We know what strategy looks like on paper and we know what actually happens when it meets people, processes, and pressure.",
+      "Today, we work with ambitious businesses at different stages.",
+      "Our role is simple. We help you cut through complexity, align strategy with execution, and build operations that actually support growth.",
+    ],
+  },
+];

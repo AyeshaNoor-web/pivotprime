@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PEOPLE, ROLES, TEAM_ANCHOR, TEAM_INTRO } from "@/content/team";
 import CaseStudies from "@/components/CaseStudies";
+import { RELOCATED_TO_ABOUT } from "@/content/homepage";
 
 
 export default function WhoWeAre() {
@@ -25,6 +26,34 @@ export default function WhoWeAre() {
           Pivot Prime exists because we have lived both sides. We understand what it takes to move work forward when plans meet pressure, people, and reality.
         </p>
       </section>
+
+      {/* Relocated from the homepage. Neither section appears anywhere in the
+          spec's 3.1 to 3.12 running order, so leaving them there would
+          contradict the spec and deleting them would discard copy the spec never
+          asked to lose. "We have sat in the system" reads as authority copy
+          here rather than as homepage filler. Recorded in
+          docs/PENDING-COPY.md 2.4 so the move can be vetoed without anyone
+          rewriting anything. */}
+      {RELOCATED_TO_ABOUT.map((section) => (
+        <section key={section.heading} className="px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="mb-3 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              {section.heading}
+            </h2>
+            <p className="mb-8 text-2xl font-medium text-mid md:text-3xl">{section.standfirst}</p>
+            <div className="space-y-5">
+              {section.body.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 40)}
+                  className="leading-relaxed text-neutral-600 md:text-lg"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* Four Pillars Summary */}
       <section className="py-24 bg-gray-50 text-center">
