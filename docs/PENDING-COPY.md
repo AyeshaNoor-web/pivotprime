@@ -174,6 +174,14 @@ what let the persona pages ship the spec's own working notes as live copy.
 Demote it to H2." That heading does not exist on the Corporate Leaders page in
 this codebase at all.
 
+### Section 6.2
+
+"Delete the section below." The image it points at shows a section headed
+"Growth rarely follows a clean plan / Neither does execution", with the four
+capability cards inside it. That wrapper does not exist in this codebase. The
+four capabilities themselves do, and 6.2 tags those KEEP, so nothing is deleted
+here and nothing is missing.
+
 ### Section 11, visual defects
 
 The spec is explicit that these were "found by capturing the live pages". None

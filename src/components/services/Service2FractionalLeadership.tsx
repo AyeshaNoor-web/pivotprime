@@ -222,29 +222,40 @@ export default function Service2FractionalLeadership() {
             ))}
           </div>
 
+          {/* All three panels are rendered and the inactive ones hidden, rather
+              than rendering only the active seat. Two thirds of this page's
+              substantive copy, the Chief of Staff and CFO coverage, was absent
+              from the server-rendered HTML because it only existed once a
+              visitor clicked. Spec 4.5: content must not depend on JavaScript
+              having run. The `hidden` attribute keeps it in the document and out
+              of the accessibility tree, so the tab behaviour is unchanged. */}
           <div className="mt-8 pt-8 border-t border-[#e3eae6]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 animate-fade-in">
-              <div>
-                <div className="font-sans font-semibold text-[10.5px] tracking-[0.2em] uppercase text-[#af8943] mb-4">
-                  {SEATS[activeSeat].h}
+            {SEATS.map((seat, si) => (
+              <div
+                key={si}
+                hidden={activeSeat !== si}
+                className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 animate-fade-in"
+              >
+                <div>
+                  <div className="font-sans font-semibold text-[10.5px] tracking-[0.2em] uppercase text-[#af8943] mb-4">
+                    {seat.h}
+                  </div>
+                  <p className="text-[#5e6f68]">{seat.n}</p>
                 </div>
-                <p className="text-[#5e6f68]">
-                  {SEATS[activeSeat].n}
-                </p>
+                <div>
+                  <ul className="space-y-3">
+                    {seat.l.map((item, i) => (
+                      <li key={i} className="flex gap-3 items-start text-[15.5px] text-[#0c1a15]">
+                        <div className="w-[17px] h-[17px] rounded-full bg-[#009f50] flex-shrink-0 mt-1 flex items-center justify-center">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" className="w-[11px] h-[11px]"><path d="M20 6 9 17l-5-5"/></svg>
+                        </div>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div>
-                <ul className="space-y-3">
-                  {SEATS[activeSeat].l.map((item, i) => (
-                    <li key={i} className="flex gap-3 items-start text-[15.5px] text-[#0c1a15]">
-                      <div className="w-[17px] h-[17px] rounded-full bg-[#009f50] flex-shrink-0 mt-1 flex items-center justify-center">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" className="w-2.5 h-2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                      </div>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
