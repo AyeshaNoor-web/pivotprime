@@ -146,6 +146,57 @@ further link artefacts are hiding in it.
 
 ---
 
+## 1b. Spec instructions that describe the live WordPress site, not this build
+
+Iram wrote parts of the spec against what she could see on pivotprime.ae. Those
+instructions cannot be actioned here, because the fault they describe does not
+exist in this codebase. This list is the answer to "why was this not done", and
+it exists so the question can be answered without re-deriving it during review.
+
+Each was checked by looking for the **corrected** text, not by confirming the
+faulty text was absent. Those are different questions, and conflating them is
+what let the persona pages ship the spec's own working notes as live copy.
+
+### Section 2.5, typographical corrections
+
+| # | Correction | Status here |
+|---|---|---|
+| 1 | "2-12 week rest" to "2 to 12 week reset" | **Applied.** The faulty version was live in this repo |
+| 2 | "intergrated execution roadmap" to "integrated" | **Live-site only.** Neither spelling appears anywhere in this codebase, so there is no sentence to correct |
+| 3 | "The team is stretched. misaligned, or burned out" | **Applied**, and the corrected wording is carried into the rebuilt 3.5 patterns list |
+| 4 | "Legacy processes drain time and money." trailing stop | **Superseded.** Spec 3.5 rewrites the patterns list and that pattern is not in it, so the sentence no longer exists to punctuate |
+| 5 | "This is where most SME's start" to "SMEs" | **Live-site only.** Neither version appears in this codebase |
+| 6 | "We understand human behavior" to "behaviour" | **Applied.** The faulty version was live in this repo |
+
+### Section 5.3
+
+"The 'What We Offer' heading is an H1 on this page and an H2 on the other three.
+Demote it to H2." That heading does not exist on the Corporate Leaders page in
+this codebase at all.
+
+### Section 11, visual defects
+
+The spec is explicit that these were "found by capturing the live pages". None
+reproduce here:
+
+- **11.1** card headings breaking mid-word. No `word-break` or `overflow-wrap`
+  rule forces breaks inside words in this codebase.
+- **11.2** case studies two and three not rendering on the About page. All three
+  render correctly here.
+- **11.3** carousels clipping their second card. There is no carousel component
+  in this codebase.
+- **11.4** the patterns list reading as a formatting fault. The alternation was
+  deliberate markup here, and 3.5 replaces the section outright.
+- **11.5** confirmations from the captures, including the hero button reading
+  GET IN TOUCH. Superseded by the 3.1 rebuild.
+
+**How to treat section 11 instead.** It is a pre-launch QA checklist to run
+against the new build once the homepage is finished, not a defect list against
+this repo. Several of the faults it describes are ones a rebuild can reintroduce,
+which is what `npm run check:overflow` and `npm run check:content` now guard.
+
+---
+
 ## 2. Spec contradictions, logged and worked around
 
 ### 2.1 The fractional service slug — **logged, decided**
