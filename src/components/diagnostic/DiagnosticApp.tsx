@@ -14,6 +14,7 @@ import {
 } from "@/lib/diagnostic/presentation";
 import { POOL } from "@/lib/diagnostic/statements";
 import { WHATSAPP_URL } from "@/lib/flags";
+import { WHATSAPP_CTA } from "@/content/cta";
 
 
 // Deep spec 8.2: one domain per screen, seven statements, six steps. Statements
@@ -570,7 +571,7 @@ export default function DiagnosticApp() {
                     </p>
                     <div className="flex gap-3 flex-wrap">
                       <a href={WHATSAPP_URL} className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full px-6 py-3.5 hover:bg-white hover:-translate-y-0.5 transition-all">
-                        Talk to us on WhatsApp
+                        {WHATSAPP_CTA.label}
                       </a>
                       <Link href="/services" className="inline-flex items-center gap-2 font-sans font-semibold text-[15px] bg-transparent border border-white/30 text-white rounded-full px-6 py-3.5 hover:border-white transition-all">
                         See what the audit covers

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/flags";
-import { JOURNEY_CTA } from "@/content/cta";
+import { JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
 
 export default function Service1ClarityAudit() {
   const [mapState, setMapState] = useState<0 | 1>(0); // 0 = Messy, 1 = Clean
@@ -60,7 +60,7 @@ export default function Service1ClarityAudit() {
           </p>
           <div className="mt-8">
             <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-              Talk to us on WhatsApp
+              {WHATSAPP_CTA.label}
             </a>
           </div>
         </div>
@@ -249,7 +249,7 @@ export default function Service1ClarityAudit() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-                Talk to us on WhatsApp
+                {WHATSAPP_CTA.label}
               </a>
               <Link href={JOURNEY_CTA.href} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
                 {JOURNEY_CTA.label}

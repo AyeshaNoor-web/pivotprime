@@ -104,3 +104,62 @@ export function useSequentialReveal<T extends Element>(
 
   return [ref, visible, setPaused];
 }
+
+/**
+ * Count a figure up from zero when it scrolls into view.
+ *
+ * Lives here rather than in the component for the same reason as the other two:
+ * the below-the-fold check and the prefers-reduced-motion check are identical in
+ * all three, and a bug fixed in one copy would diverge from the others. It also
+ * keeps every setState out of a component effect body, which the React lint rule
+ * rejects.
+ *
+ * The final value is the initial state, so the figure is what renders on the
+ * server and what a reader without JavaScript sees. The figure is the content:
+ * starting at zero put "0%" in the server-rendered HTML for every result on the
+ * homepage.
+ *
+ * Returns [ref, value].
+ */
+export function useCountUp<T extends Element>(
+  end: number,
+  duration = 2000,
+): [React.RefObject<T | null>, number] {
+  const ref = useRef<T>(null);
+  const [value, setValue] = useState(end);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (node.getBoundingClientRect().top < window.innerHeight) return;
+
+    setValue(0);
+
+    let frame = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+
+        const started = performance.now();
+        const step = (now: number) => {
+          const progress = Math.min(1, (now - started) / duration);
+          setValue(Math.round(end * progress));
+          if (progress < 1) frame = requestAnimationFrame(step);
+        };
+        frame = requestAnimationFrame(step);
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [end, duration]);
+
+  return [ref, value];
+}
