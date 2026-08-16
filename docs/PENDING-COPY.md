@@ -311,6 +311,48 @@ the spec wording while moving the pool into `src/lib/diagnostic/statements.ts`.
 Flagged because it is a change to an instrument statement, not to marketing copy.
 It is not an anchor, so no short-instrument comparison is affected.
 
+### 3.3 The patterns animation is a sequential reveal, not typing — **logged**
+
+Spec 3.5 asks for each pattern to "type onto the screen, hold long enough to be
+read, then the next one follows".
+
+A true typing effect builds each string a character at a time, which means the
+full sentence is not in the DOM until the animation reaches the end of it. All
+ten patterns, the entire content of the section, would be absent from the
+server-rendered HTML and from any reader without JavaScript. That is the same
+defect as the results band shipping zeroes, and spec 4.5 rules it out.
+
+**Built as a sequential reveal.** Every pattern is rendered in full at all times
+and they fade in one after another, pausing on hover as 3.5 asks. The reading
+experience the spec describes is preserved, the content survives without
+JavaScript, and reduced motion shows the complete list at once.
+
+### 3.4 The patterns treatment: 3.5 and 11.4 contradict each other — **logged**
+
+Spec 3.5 says the alternation between bold green and grey italic "stays. It is
+the visual rhythm of the section." Spec 11.4 says the opposite: "Set every item
+in the same weight and colour. The alternation currently reads as half the list
+having failed to load."
+
+Resolved towards the v1.7.1 annotation, which is the most recent instruction and
+addresses both: "Main heading black, eyebrow bright green and then the sentences
+can be a mix of all the greens including the darkest green." The items are one
+weight in a mix of palette greens, so there is rhythm without the grey italic
+that 11.4 objects to.
+
+### 3.5 Case studies are stacked, not a carousel — **logged**
+
+Spec 3.8 says "Keep all three case studies and the existing carousel", then
+immediately "try to make them scroll better and look better if we can, I think
+currently they look ugly", with a blunter annotation in v1.7.1. Spec 11.3
+separately records that the site's carousels clip their second card and read as
+a rendering error.
+
+**Stacked.** Nothing is hidden behind an interaction, nothing clips, and all
+three studies are in the server-rendered HTML rather than one being visible and
+two waiting on JavaScript. The same component renders them on the homepage and
+on /about, so the two cannot drift.
+
 ### 3.2 Joint-constraint reporting is narrower than the spec — **logged**
 
 Deep spec §4.4 says "where two are within three points of each other, present

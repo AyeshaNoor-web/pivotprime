@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PEOPLE, ROLES, TEAM_ANCHOR, TEAM_INTRO } from "@/content/team";
+import CaseStudies from "@/components/CaseStudies";
 
 
 export default function WhoWeAre() {
@@ -125,127 +126,12 @@ export default function WhoWeAre() {
         </div>
       </section>
 
-      {/* Case Studies Section */}
-      <section className="py-24 bg-gray-50" id="case-studies">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-6">Case Studies</h2>
-            <p className="text-xl md:text-2xl text-gray-600">Real problems, real execution, real results.</p>
-          </div>
-
-          <div className="space-y-16">
-            
-            {/* Case Study 1 */}
-            <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100">
-              <div className="flex flex-col md:flex-row gap-12">
-                <div className="md:w-1/3">
-                  <div className="text-primary font-bold tracking-widest uppercase mb-4 text-sm">Case Study 1</div>
-                  <h3 className="text-3xl font-extrabold mb-6">Financial Services Company</h3>
-                </div>
-                <div className="md:w-2/3 space-y-10">
-                  <div>
-                    <h4 className="text-xl font-bold mb-3">The Challenge:</h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      Customer onboarding and policy processing were slow and inconsistent. Teams lacked visibility into workload, cost per client, and profitability at a client and transaction level. KYC timelines were unpredictable, creating customer frustration and internal pressure. Leadership could not clearly see where time and cost were being lost.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-3">The Pivot:</h4>
-                    <p className="text-gray-600 leading-relaxed mb-3">We rebuilt operations with discipline and data at the centre.</p>
-                    <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                      <li>Mapped end-to-end customer and transaction workflows</li>
-                      <li>Reduced duplication and rework across compliance and operations</li>
-                      <li>Offshored selected onboarding activities to reduce bottlenecks and cost</li>
-                      <li>Built real-time dashboards tracking cost per client, transaction time, CAC, and LTV</li>
-                    </ul>
-                  </div>
-                  <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
-                    <h4 className="text-xl font-bold mb-3 text-primary">The Results:</h4>
-                    <ul className="space-y-3 font-medium text-black">
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> 67% faster transaction processing per customer</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> KYC completion time reduced from an average of 10 days to 3 days</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> 25% reduction in operational waste across onboarding and processing</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> 2–3 FTE roles removed from high-cost locations</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Case Study 2 */}
-            <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100">
-              <div className="flex flex-col md:flex-row gap-12">
-                <div className="md:w-1/3">
-                  <div className="text-primary font-bold tracking-widest uppercase mb-4 text-sm">Case Study 2</div>
-                  <h3 className="text-3xl font-extrabold mb-6">Founder-Led Business</h3>
-                </div>
-                <div className="md:w-2/3 space-y-10">
-                  <div>
-                    <h4 className="text-xl font-bold mb-3">The Challenge:</h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      The founder was deeply involved in every decision. While the business was growing, progress felt heavy. Most of the week was spent on admin, approvals, and rework, leaving little time for direction, partnerships, or growth initiatives. The team had skills but lacked confidence. Delegation existed in theory, but decisions still flowed back to the founder.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-3">The Pivot:</h4>
-                    <p className="text-gray-600 leading-relaxed mb-3">We focused on founder load release through structure and behaviour.</p>
-                    <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                      <li>Translated the founder&apos;s vision into clear decision standards and success criteria.</li>
-                      <li>Defined which decisions stayed with the founder and which should never escalate.</li>
-                      <li>Redesigned roles around ownership and judgement, not just task delivery.</li>
-                      <li>Introduced simple operating rhythms to reduce ad-hoc interruptions and constant checking.</li>
-                    </ul>
-                  </div>
-                  <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
-                    <h4 className="text-xl font-bold mb-3 text-primary">The Results:</h4>
-                    <ul className="space-y-3 font-medium text-black">
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> Up to 2 days a week returned to the founder by removing admin work and decision drag</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> Fewer escalations and faster team decisions</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> Greater confidence in delegation without loss of quality or control</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Case Study 3 */}
-            <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100">
-              <div className="flex flex-col md:flex-row gap-12">
-                <div className="md:w-1/3">
-                  <div className="text-primary font-bold tracking-widest uppercase mb-4 text-sm">Case Study 3</div>
-                  <h3 className="text-3xl font-extrabold mb-6">Fitness & Wellness Company (UAE)</h3>
-                </div>
-                <div className="md:w-2/3 space-y-10">
-                  <div>
-                    <h4 className="text-xl font-bold mb-3">The Challenge:</h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      The business had strong demand and a loyal core community, but member churn was rising. Leadership could not clearly see why members were leaving, and teams were focused on selling new memberships rather than retaining existing ones. Effort was high, but results were uneven.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-3">The Pivot:</h4>
-                    <p className="text-gray-600 leading-relaxed mb-3">We rebuilt retention around experience, behaviour, and ownership.</p>
-                    <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                      <li>Identified the moments that mattered most to members, including onboarding, class atmosphere, music, and post-class follow-up.</li>
-                      <li>Shifted the focus from transactions to community and identity, reinforcing progress and belonging.</li>
-                      <li>Aligned team incentives to retention behaviours rather than sign-ups alone.</li>
-                      <li>Introduced simple dashboards tracking attendance patterns, engagement drop-off, and early churn signals.</li>
-                    </ul>
-                  </div>
-                  <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
-                    <h4 className="text-xl font-bold mb-3 text-primary">The Results:</h4>
-                    <ul className="space-y-3 font-medium text-black">
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> 13% increase in member retention</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> 17% improvement in profit margin through reduced churn and better utilisation</li>
-                      <li className="flex items-start"><span className="text-primary mr-3 font-bold text-xl">✓</span> Clear visibility on why members stayed, allowing teams to act before churn occurred</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+      {/* Section 6 keeps the case studies on /about behind the #case-studies
+          anchor. Same source as the homepage 3.8 section so the two cannot
+          drift. */}
+      <section className="bg-gray-50 py-24" id="case-studies">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <CaseStudies />
         </div>
       </section>
 

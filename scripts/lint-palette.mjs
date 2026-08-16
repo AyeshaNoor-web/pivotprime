@@ -39,7 +39,9 @@ const TOKEN_SOURCE = "src/app/globals.css";
  */
 const GRANDFATHERED = ["src/components/services/", "src/components/diagnostic/"];
 
-const HEX = /#[0-9a-fA-F]{3,8}\b/g;
+// Negative lookbehind for &, so HTML entities are not mistaken for colours.
+// &#10003; is a checkmark, not #10003.
+const HEX = /(?<!&)#[0-9a-fA-F]{3,8}\b/g;
 
 /**
  * Tokens that have been removed from @theme.

@@ -149,3 +149,58 @@ export const METRICS: Metric[] = [
     context: "Custom systems, CRMs, dashboards and automations built for clients.",
   },
 ];
+
+// 3.5 THE PATTERNS
+export const PATTERNS = {
+  heading: "These are the patterns before growth stalls",
+  eyebrow: "Recognise any of these",
+  items: [
+    "Sales sells things operations cannot deliver",
+    "Quality slips whenever volume rises",
+    "Prices have not moved in two years while costs have",
+    "Everything still depends on the founder",
+    "The business runs on WhatsApp and spreadsheets",
+    "The CRM is a contact list",
+    "Profit margins are thin or disappearing",
+    "You have a strategy, but execution is all over the place",
+    "The team is stretched, misaligned or burned out",
+    "You keep losing customers",
+  ],
+};
+
+// 3.6 ONE ACCOUNTABLE PARTY
+export const ACCOUNTABLE = {
+  heading: "Knowing what is wrong is hard. Being the one who has to fix it is harder.",
+  body: [
+    "Most engagements end with a report. The findings are correct, everyone agrees, and the work goes back onto a team already at capacity.",
+    "So we finish it. We place a project manager, a fractional CFO, an engineer or a marketer inside your business. Sourced, vetted and managed by us. They report to us, not to you.",
+    "No visa, no end-of-service liability, no permanent salary for a temporary problem.",
+    "One contract, one invoice, one accountable party. For exactly as long as you need it.",
+  ],
+  pullQuote:
+    "A consultant tells you what to do. A recruiter finds you someone. Neither one is accountable for whether it worked.",
+  ctaLabel: "Talk to our team",
+};
+
+// 3.7 THE PERSON BEHIND IT
+export const FOUNDER = {
+  heading: "Pivot Prime is led by a Mathematician, and that changes how the work gets done.",
+  body: [
+    "Iram Kauser is one of roughly 75,000 qualified actuaries worldwide. She spent sixteen years in senior operating roles at AIG, MetLife and Gallagher across the UK, the Middle East and Africa: Chief of Staff to a regional CEO across more than 150 staff, and pricing and portfolio strategy for a multi-line book worth more than $120 million.",
+    "People will tell you a process is fine, or that the real problem is headcount. A numbers-led approach takes the emotion out of it. We measure how long each step actually takes, the pass and fail rates, the man hours per function and the cost per transaction, before anyone argues about what to change.",
+  ],
+  ctaLabel: "Meet the team",
+  ctaHref: "/about#team",
+  /**
+   * TODO(client): the portrait. Spec 8.1 asks for "the seated portrait from the
+   * Arabian Mirror feature. Full resolution, not a crop from the article", and
+   * 3.7 notes "Iram will supply the file at full resolution".
+   *
+   * Until it arrives the section renders as a single column rather than showing
+   * a placeholder or a stock image. Spec 8.2 is explicit that nothing is better
+   * than stock here: "A visitor who has just read that Iram is one of 75,000
+   * actuaries worldwide then sees stock photography, and the two undo each
+   * other." Tracked as item 1.9.
+   */
+  portrait: null as { src: string; alt: string } | null,
+};

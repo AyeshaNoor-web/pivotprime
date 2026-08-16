@@ -56,3 +56,51 @@ export function useRevealOnScroll<T extends Element>(
 
   return [ref, revealed];
 }
+
+/**
+ * Sequential reveal, for a list whose items appear one after another.
+ *
+ * Same contract as useRevealOnScroll and for the same reason: every item is
+ * counted as visible by default, so the server-rendered HTML is complete and a
+ * reader without JavaScript, or with reduced motion enabled, gets the whole list
+ * at once. The sequence only exists as an enhancement.
+ *
+ * Returns [ref, visibleCount, setPaused]. Pausing holds the sequence where it
+ * is, which spec 3.5 asks for on hover.
+ */
+export function useSequentialReveal<T extends Element>(
+  total: number,
+  intervalMs = 900,
+): [React.RefObject<T | null>, number, (paused: boolean) => void] {
+  const ref = useRef<T>(null);
+  const [visible, setVisible] = useState(total);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (node.getBoundingClientRect().top < window.innerHeight) return;
+
+    setVisible(0);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        setVisible(1);
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (paused || visible === 0 || visible >= total) return;
+    const timer = setTimeout(() => setVisible((n) => n + 1), intervalMs);
+    return () => clearTimeout(timer);
+  }, [visible, paused, total, intervalMs]);
+
+  return [ref, visible, setPaused];
+}

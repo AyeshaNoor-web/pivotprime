@@ -3,10 +3,12 @@ import Link from "next/link";
 import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
 import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
-import { HERO_CTA } from "@/content/cta";
-import { CLIENT_LOGOS, HERO, METRICS, PROOF, RESULTS } from "@/content/homepage";
+import { CONTACT_CTA, HERO_CTA } from "@/content/cta";
+import { ACCOUNTABLE, CLIENT_LOGOS, FOUNDER, HERO, METRICS, PATTERNS, PROOF, RESULTS } from "@/content/homepage";
 import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
 import ServiceCards from "@/components/ServiceCards";
+import PatternsList from "@/components/PatternsList";
+import CaseStudies from "@/components/CaseStudies";
 
 export default function Home() {
   return (
@@ -174,6 +176,108 @@ export default function Home() {
           </header>
 
           <ServiceCards />
+        </div>
+      </section>
+
+      {/* 3.5 The patterns. MOVED below the services: having just read what
+          Pivot Prime sells, the visitor now recognises their own symptom and
+          knows which service it points to. Spec 3.5. */}
+      <section className="bg-white px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-neon uppercase">
+            {PATTERNS.eyebrow}
+          </p>
+          <h2 className="mb-10 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            {PATTERNS.heading}
+          </h2>
+          <PatternsList />
+        </div>
+      </section>
+
+      {/* 3.6 One accountable party. NEW. Full width, dark green. Makes the
+          argument for placing people rather than recommending, which is what
+          separates Pivot Prime from an advisory firm and from a solo fractional
+          operator. Spec 3.6. */}
+      <section className="bg-forest px-4 py-24 text-white sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-8 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
+            {ACCOUNTABLE.heading}
+          </h2>
+          <div className="space-y-5">
+            {ACCOUNTABLE.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-white/85 md:text-lg">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          <blockquote className="mt-12 border-l-2 border-neon pl-6 text-xl leading-snug font-semibold text-white md:text-2xl lg:text-3xl">
+            {ACCOUNTABLE.pullQuote}
+          </blockquote>
+
+          <div className="mt-10">
+            <Link
+              href={CONTACT_CTA.href}
+              className="inline-flex items-center justify-center rounded-md bg-neon px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {ACCOUNTABLE.ctaLabel}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3.7 The person behind it. NEW. Two columns on desktop with the portrait
+          right; on mobile the photo comes first, per the annotation. The
+          portrait has not been supplied, so this renders single-column rather
+          than with stock imagery: spec 8.2 says nothing is better than stock
+          here. Spec 3.7. */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div
+          className={`mx-auto max-w-6xl ${FOUNDER.portrait ? "grid items-center gap-12 md:grid-cols-2" : "max-w-4xl"}`}
+        >
+          {FOUNDER.portrait && (
+            <div className="order-first md:order-last">
+              <Image
+                src={FOUNDER.portrait.src}
+                alt={FOUNDER.portrait.alt}
+                width={720}
+                height={900}
+                className="w-full rounded-2xl object-cover"
+              />
+            </div>
+          )}
+
+          <div>
+            <h2 className="mb-8 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              {FOUNDER.heading}
+            </h2>
+            <div className="space-y-5">
+              {FOUNDER.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="leading-relaxed text-neutral-600">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <Link
+              href={FOUNDER.ctaHref}
+              className="mt-8 inline-flex items-center text-sm font-bold text-forest uppercase hover:text-mid"
+            >
+              {FOUNDER.ctaLabel}
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">
+                &rarr;
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3.8 Case studies. KEEP. Placement is confirmed by the spec: directly
+          after the founder section and before the personas, so the founder
+          section establishes who is behind the work, the case studies prove it,
+          and the personas then ask the visitor to place themselves. */}
+      <section className="bg-white px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <CaseStudies />
         </div>
       </section>
 
