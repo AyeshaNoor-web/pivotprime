@@ -3,6 +3,8 @@
 import { useRevealOnScroll } from "@/lib/use-reveal-on-scroll";
 import { WHATSAPP_URL } from "@/lib/flags";
 import { WHATSAPP_CTA } from "@/content/cta";
+import { BUILD_AND_PLACE } from "@/content/services-detail";
+import { CopyCards, CopyProse } from "./SpecCopyBlocks";
 
 
 export default function Service3BuildPlace() {
@@ -12,12 +14,18 @@ export default function Service3BuildPlace() {
 
 
 
+  // The descriptor line under each node used to read "drives delivery", "owns
+  // the numbers" and so on. Those were the designer's compression of spec 4.3's
+  // five card paragraphs, which are now on the page in full below. Carrying both
+  // would print the same idea twice, so the diagram keeps the role name that
+  // identifies the node and drops the caption. Decision recorded in
+  // docs/PENDING-COPY.md.
   const slots = [
-    { left: 16, top: 20, b: "Project manager", s: "drives delivery" },
-    { left: 84, top: 20, b: "Fractional CFO", s: "owns the numbers" },
-    { left: 12, top: 80, b: "Engineer", s: "builds the automation" },
-    { left: 50, top: 92, b: "Marketing", s: "takes it to market" },
-    { left: 88, top: 80, b: "Web and digital", s: "rebuilds the shopfront" }
+    { left: 16, top: 20, b: "Project manager" },
+    { left: 84, top: 20, b: "Fractional CFO" },
+    { left: 12, top: 80, b: "Engineer" },
+    { left: 50, top: 92, b: "Marketing" },
+    { left: 88, top: 80, b: "Web and digital" },
   ];
 
   return (
@@ -115,9 +123,6 @@ export default function Service3BuildPlace() {
                     <b className={`block font-sans font-semibold text-[12.5px] transition-colors duration-500 ${isVisible ? "text-[#013325]" : "text-[#5e6f68]"}`} style={{ transitionDelay: `${isVisible ? delay : 0}ms` }}>
                       {s.b}
                     </b>
-                    <span className={`text-[10.5px] transition-colors duration-500 ${isVisible ? "text-[#009f50]" : "text-[#9db0a8]"}`} style={{ transitionDelay: `${isVisible ? delay : 0}ms` }}>
-                      {s.s}
-                    </span>
                   </div>
                 );
               })}
@@ -189,6 +194,33 @@ export default function Service3BuildPlace() {
           </div>
         </div>
       </section>
+
+      {/* Spec 4.3, restored. The designed diagram above carried these five
+          seats as two-word captions; spec section 1 requires the green-block
+          copy verbatim, and a caption is not a compression of a paragraph. The
+          diagram is kept and its descriptor lines removed, so the same words do
+          not appear twice on the page. See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={BUILD_AND_PLACE.whyHeading} paragraphs={BUILD_AND_PLACE.why} />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyCards heading={BUILD_AND_PLACE.rolesHeading} cards={BUILD_AND_PLACE.cards} />
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse
+            heading={BUILD_AND_PLACE.pricedHeading}
+            paragraphs={[BUILD_AND_PLACE.priced, BUILD_AND_PLACE.scopeLine]}
+          />
+        </div>
+      </section>
+
     </div>
   );
 }

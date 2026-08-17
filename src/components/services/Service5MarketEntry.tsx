@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { WHATSAPP_URL } from "@/lib/flags";
 import { WHATSAPP_CTA } from "@/content/cta";
+import { MARKET_ENTRY } from "@/content/services-detail";
+import { CopyList, CopyProse } from "./SpecCopyBlocks";
 
 
 export default function Service5MarketEntry() {
@@ -197,6 +199,32 @@ export default function Service5MarketEntry() {
           </div>
         </div>
       </section>
+
+      {/* Spec 4.5, restored. The designed page compressed THE MISCONCEPTION to
+          a single clause and dropped most of WHAT WE BUILD and the CLOSE. The
+          design above is kept; this carries the copy the spec sets verbatim.
+          See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse
+            heading={MARKET_ENTRY.misconceptionHeading}
+            paragraphs={MARKET_ENTRY.misconception}
+          />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyList heading={MARKET_ENTRY.buildHeading} items={MARKET_ENTRY.build} />
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={MARKET_ENTRY.closeHeading} paragraphs={[MARKET_ENTRY.close]} />
+        </div>
+      </section>
+
     </div>
   );
 }
