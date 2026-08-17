@@ -50,6 +50,69 @@ const isMarker = (block) =>
 
 const isButton = (block) => /^BUTTON:/i.test(block);
 
+/**
+ * Instruction text the spec embeds inside a copy block. Spec section 1 keeps
+ * instruction and copy apart, but a few blocks carry a note inline, and matching
+ * on it reports correct pages as missing copy.
+ */
+const stripInstructions = (block) =>
+  block
+    .replace(/^HEADING,[^-]*-\s*/i, "")
+    .replace(/\(TEXT AS PER CARD SHOWN\)/i, "")
+    .replace(/\(have this linked to [^)]*\)/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+/**
+ * Blocks that are deliberately not on the page yet.
+ *
+ * Every entry names the condition that makes it appear, not only the reason it
+ * is absent today. Without that this list rots into permanent exemptions: an
+ * item whose trigger is never written down is one nobody ever removes.
+ *
+ * CLIENT-FACING. Anything here waiting on Iram must also be in
+ * docs/PENDING-COPY.md, because that is the list she is given. The `tracked`
+ * field is the cross-reference, and "n/a" means the trigger is ours rather than
+ * hers.
+ */
+const EXPECTED_ABSENT = [
+  {
+    section: "3.3",
+    match: "Bespoke software and automation builds delivered",
+    why: 'metric 6 has no figure, and spec 3.3 says "Do not launch this card with a placeholder"',
+    appearsWhen: "the count of bespoke builds shipped is supplied",
+    tracked: "PENDING-COPY item 1.2",
+  },
+  {
+    section: "3.3",
+    match: "Custom systems, CRMs, dashboards and automations",
+    why: "metric 6 context, same card",
+    appearsWhen: "the count of bespoke builds shipped is supplied",
+    tracked: "PENDING-COPY item 1.2",
+  },
+  {
+    section: "3.11",
+    match: "Two ways to start. Take the diagnostic",
+    why: "promises a scored view in four minutes, which the contact page cannot honour",
+    appearsWhen: "NEXT_PUBLIC_ENABLE_DIAGNOSTIC is true and the diagnostic ships",
+    tracked: "PENDING-COPY 0.1 and 0.4",
+  },
+];
+
+/**
+ * Blocks that ARE on the page but not as one contiguous string, because the
+ * design splits them across elements. Distinct from EXPECTED_ABSENT: nothing is
+ * pending and no condition will change them. Kept apart so the phase-gated list
+ * stays a list of things somebody owes.
+ */
+const RENDERED_SPLIT = [
+  {
+    section: "6.3",
+    match: "Iram Kauser, Founder and CEO",
+    why: "the name is a heading and the role is the line beneath it, both present",
+  },
+];
+
 const normalise = (s) =>
   s
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -60,6 +123,10 @@ const normalise = (s) =>
     .replace(/&nbsp;/g, " ")
     .replace(/[–—]/g, "-")
     .replace(/\s+/g, " ")
+    // <CountUp/> renders the figure and its suffix in separate elements, so
+    // stripping tags leaves "53 %" where the spec says "53%". This has to run
+    // after the tags are gone, not before, or there is no space to close up.
+    .replace(/(\d)\s+%/g, "$1%")
     .toLowerCase();
 
 /** A block counts as present if a distinctive run of it appears in the page. */
@@ -79,7 +146,9 @@ async function main() {
   let totalChecked = 0;
 
   for (const [section, route] of Object.entries(SECTION_ROUTES)) {
-    const blocks = (spec[section] ?? []).filter((b) => !isMarker(b) && !isButton(b));
+    const blocks = (spec[section] ?? [])
+      .map(stripInstructions)
+      .filter((b) => b && !isMarker(b) && !isButton(b));
     if (blocks.length === 0) {
       console.log(`${section.padEnd(5)} no copy blocks parsed, check the section number`);
       continue;
@@ -95,14 +164,32 @@ async function main() {
     }
     const html = pages.get(route);
 
-    const missing = blocks.filter((b) => !isPresent(html, b));
+    const absent = blocks.filter((b) => !isPresent(html, b));
+    const deliberate = [];
+    const missing = [];
+    for (const block of absent) {
+      const gated = EXPECTED_ABSENT.find((e) => e.section === section && block.startsWith(e.match));
+      const split = RENDERED_SPLIT.find((e) => e.section === section && block.startsWith(e.match));
+      if (gated) deliberate.push({ block, why: `${gated.why}. Appears when ${gated.appearsWhen}. ${gated.tracked}` });
+      else if (split) deliberate.push({ block, why: `${split.why}, so this is a matching artefact rather than an absence` });
+      else missing.push(block);
+    }
+
     totalChecked += blocks.length;
     totalMissing += missing.length;
 
-    const status = missing.length === 0 ? "complete" : `${missing.length} of ${blocks.length} missing`;
+    const status =
+      missing.length === 0
+        ? deliberate.length
+          ? `complete, ${deliberate.length} deliberately absent`
+          : "complete"
+        : `${missing.length} of ${blocks.length} missing`;
     console.log(`\n${section.padEnd(5)} ${route.padEnd(38)} ${status}`);
     for (const block of missing) {
       console.log(`        - ${block.slice(0, 96)}${block.length > 96 ? "…" : ""}`);
+    }
+    for (const d of deliberate) {
+      console.log(`        ~ ${d.block.slice(0, 60)}…  (${d.why})`);
     }
   }
 

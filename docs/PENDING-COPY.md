@@ -71,6 +71,22 @@ defect than the substitution it is meant to avoid, so the label moves with the
 destination, using the spec's other CTA wording rather than new copy. Say if you
 want the literal reading instead: it is one line in `cta.ts`.
 
+### 0.6 One sentence gated on the homepage close
+
+Spec 3.11 gives the close a supporting line: "Two ways to start. Take the
+diagnostic and get a scored view of your biggest constraint in four minutes, or
+message us and we will walk through it together."
+
+**Not shown in stage one.** It names the instrument by duration and output, which
+the contact page cannot honour, and the spec offers no stage-one alternative. The
+heading and the two buttons carry the section without it. Nothing is owed by the
+client and nothing needs writing: it appears exactly as written the moment the
+diagnostic ships.
+
+Found by cross-checking the audit's gated list against this document, which is
+the point of keeping the two in step: the sentence was gated in code and recorded
+nowhere Iram would see it.
+
 ### 0.5 WhatsApp
 
 In scope for stage one and unchanged in intent. The floating button appears on

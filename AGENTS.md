@@ -53,3 +53,25 @@ next person looking.
 **Before claiming consolidation**, grep for every consumer. `npm run check`
 covers heading structure and served copy, but nothing automatically verifies that
 a shared module is the only source.
+
+## The first output of a new measurement is not evidence yet
+
+Run it, then check what it says against something you already know. A new tool is
+as capable of being wrong as the thing it replaced, and it is more persuasive
+because it looks objective.
+
+This has happened four times on this branch, and the fourth is the instructive
+one, because the tool built to solve the problem reproduced it:
+
+- "Verified at 360" while the viewport measured 369.
+- A forbidden assertion matching `"We have sat in the system"` where the page
+  rendered the contraction, so it passed while the section was still there.
+- A commit describing a component as shared while one consumer was never wired.
+- `audit-spec-copy.mjs`, built specifically to stop hand-typed needles producing
+  false results, reported 92 missing copy blocks on its first run. The real
+  figure was 53. It was comparing pandoc's bullet prefixes and `{.mark}` spans
+  literally. Then, once fixed, it reported 11 more that were also not defects:
+  eight were its own artefacts and three were deliberate.
+
+Before reporting a number a tool produced, find one case in it you can verify by
+hand. If that case is wrong, the number is wrong.
