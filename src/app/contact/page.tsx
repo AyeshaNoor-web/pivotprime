@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
 import EnquiryForm from "@/components/EnquiryForm";
 
-export const metadata: Metadata = {
-  title: "Contact | Pivot Prime",
-  description:
-    "Tell us what you are working through and we will follow up within one working day. WhatsApp is the fastest way to reach us.",
-};
+export const metadata: Metadata = pageMetadata("contact");
 
 import { WHATSAPP_URL } from "@/lib/flags";
 

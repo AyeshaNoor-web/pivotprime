@@ -3,6 +3,10 @@ import { PEOPLE, ROLES, TEAM_ANCHOR, TEAM_INTRO } from "@/content/team";
 import CaseStudies from "@/components/CaseStudies";
 import { RELOCATED_TO_ABOUT } from "@/content/homepage";
 import { WHY_WE_EXIST } from "@/content/about";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
+
+export const metadata: Metadata = pageMetadata("about");
 
 
 export default function WhoWeAre() {

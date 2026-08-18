@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
 import {
   PRIVACY_INTRO,
   PRIVACY_SECTIONS,
@@ -10,10 +11,10 @@ import {
 // address and returns a report, which is processing of personal data under the
 // UAE Personal Data Protection Law.
 export const metadata: Metadata = {
-  title: "Privacy policy | Pivot Prime",
-  description:
-    "What Pivot Prime collects, why we collect it, how long we keep it, and what you can ask us to do about it.",
-  // Not indexed until the text is signed off by a UAE-qualified adviser.
+  ...pageMetadata("privacy"),
+  // Not indexed until a UAE-qualified adviser has signed off the text. Migrating
+  // this page onto the shared metadata helper dropped this override; restored
+  // and kept explicit so it survives the next refactor.
   robots: PRIVACY_SIGNED_OFF ? undefined : { index: false, follow: true },
 };
 

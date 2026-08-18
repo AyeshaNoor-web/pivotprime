@@ -158,6 +158,10 @@ const EXPECTATIONS = [
       { spec: "6", text: "13% increase in member retention", why: "case studies also render here" },
       { spec: "2.4 decision", text: "We have sat in the system.", why: "orphan relocated from the homepage, not deleted" },
       { spec: "2.4 decision", text: "We do not just understand your challenges.", why: "orphan relocated from the homepage, not deleted" },
+      { spec: "6.1", text: "Why Pivot Prime exists", why: "new section at the top of the page" },
+      { spec: "6.1", text: "in the gap between what leadership decides and what actually gets delivered", why: "6.1 opening" },
+      { spec: "6.1", html: 'href="/about#team"', why: "Iram Kauser links to the team section" },
+      { spec: "6.2", text: "We understand human behaviour", why: "four capabilities kept" },
     ],
   },
   {
@@ -174,15 +178,6 @@ const EXPECTATIONS = [
   {
     route: "/insights",
     assert: [{ spec: "2.1", text: "Insights", why: "renamed from Prime Insights" }],
-  },
-  {
-    route: "/about",
-    assert: [
-      { spec: "6.1", text: "Why Pivot Prime exists", why: "new section at the top of the page" },
-      { spec: "6.1", text: "in the gap between what leadership decides and what actually gets delivered", why: "6.1 opening" },
-      { spec: "6.1", html: 'href="/about#team"', why: "Iram Kauser links to the team section" },
-      { spec: "6.2", text: "We understand human behaviour", why: "four capabilities kept" },
-    ],
   },
   {
     route: "/privacy",
@@ -225,6 +220,12 @@ const EXPECTATIONS = [
  *
  * These count panels rather than checking their copy, so reverting to
  * one-at-a-time rendering fails even if the copy is otherwise intact.
+ */
+/*
+ * DiagnosticApp is deliberately not listed. Its step-by-step flow is a form
+ * wizard rather than a set of content panels: showing every step at once would
+ * break the instrument, and a visitor is meant to reach each one in turn. It is
+ * also gated off in stage one. Its absence here is a decision, not an oversight.
  */
 const PANEL_SETS = [
   {
@@ -341,6 +342,40 @@ async function main() {
   for (const { route, assert } of FORBIDDEN) {
     const page = await fetchPage(route);
     if (page) check(page, assert, false);
+  }
+
+  // SEO, spec 4.5: a unique title and description on every page, a canonical,
+  // and Open Graph tags so a link shared on LinkedIn or WhatsApp renders.
+  {
+    const titles = new Map();
+    for (const { route } of EXPECTATIONS) {
+      const page = await fetchPage(route);
+      if (!page) continue;
+
+      assertions += 3;
+      const title = page.html.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+      const description = page.html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? "";
+
+      if (!title) failures.push({ route, kind: "structure", spec: "4.5", detail: "no <title>" });
+      if (!description)
+        failures.push({ route, kind: "structure", spec: "4.5", detail: "no meta description" });
+      if (!page.html.includes('rel="canonical"'))
+        failures.push({ route, kind: "structure", spec: "4.5", detail: "no canonical link" });
+      if (!page.html.includes('property="og:title"'))
+        failures.push({ route, kind: "structure", spec: "4.5", detail: "no Open Graph title" });
+
+      // A shared title or description means two pages compete for the same
+      // words, which matters most across the five service pages.
+      if (title && titles.has(title)) {
+        failures.push({
+          route,
+          kind: "structure",
+          spec: "4.5",
+          detail: `title is not unique, shared with ${titles.get(title)}`,
+        });
+      }
+      titles.set(title, route);
+    }
   }
 
   // Every panel of a tab set or toggle, including the inactive ones.

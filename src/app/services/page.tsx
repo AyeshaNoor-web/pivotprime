@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
 import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
 import ServiceCards from "@/components/ServiceCards";
 
@@ -6,11 +7,7 @@ import ServiceCards from "@/components/ServiceCards";
 // copy and a link each. Order is deliberate: the audit first because it is the
 // entry point and the only priced offer, the retainer second because it is the
 // destination. Do not alphabetise.
-export const metadata: Metadata = {
-  title: "Services | Pivot Prime",
-  description:
-    "Operational audits, fractional leadership, embedded delivery teams, technology builds and UAE market entry. We find what is holding your business back, then fix it.",
-};
+export const metadata: Metadata = pageMetadata("services");
 
 export default function ServicesPage() {
   return (

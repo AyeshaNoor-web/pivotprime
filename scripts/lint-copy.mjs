@@ -49,7 +49,9 @@ const RULES = [
     id: "aed-format",
     test: (text) => [
       ...text.matchAll(/AED\s*[\d,]*k?|\b\d+k\b(?=\s*(?:AED|dirham))/gi),
-    ].filter((m) => m[0].trim() !== AUDIT_FLOOR),
+      // Trailing punctuation belongs to the sentence, not to the figure:
+      // "From AED 15,000, typically 12 to 20 days" is correctly formatted.
+    ].filter((m) => m[0].replace(/[.,;:]+$/, "").trim() !== AUDIT_FLOOR),
     message: `the only price on the site is the audit floor, written exactly "${AUDIT_FLOOR}" (spec section 1 and the pricing rule)`,
   },
 ];

@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
 
 // Spec 2.1 renames Prime Insights to Insights. Stage one scope item 5 is "a
 // simple listing of existing posts, no new editorial features". There are no
 // posts yet and the spec supplies no copy for this page, so it states that
 // plainly rather than inventing an editorial promise.
-export const metadata: Metadata = {
-  title: "Insights | Pivot Prime",
-  description:
-    "Writing from Pivot Prime on operations, execution and building businesses that scale in the UAE.",
-};
+export const metadata: Metadata = pageMetadata("insights");
 
 export default function InsightsPage() {
   return (

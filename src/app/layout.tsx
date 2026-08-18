@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { SITE_URL, pageMetadata } from "@/content/metadata";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -8,9 +9,14 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+// metadataBase makes canonical and Open Graph URLs absolute. Without it Next
+// emits relative URLs, which a crawler and a link preview both resolve wrongly.
+// Per-page title and description live in src/content/metadata.ts; nothing
+// inherits a template, because the five service pages are the ones meant to rank
+// and a shared description would set them competing for the same words.
 export const metadata: Metadata = {
-  title: "Pivot Prime - Unlock Your Prime",
-  description: "Strategic clarity, hands-on execution, and practical support for growing businesses ready to scale, streamline operations, and achieve sustainable results.",
+  metadataBase: new URL(SITE_URL),
+  ...pageMetadata("home"),
 };
 
 import Navbar from "@/components/Navbar";

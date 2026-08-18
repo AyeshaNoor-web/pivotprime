@@ -97,3 +97,18 @@ standfirst missing, and read it as carelessness rather than as a decision.
 carries a `tracked:` field naming its `PENDING-COPY` entry, and the two are
 cross-checked. That cross-check has now caught two omissions in the record on
 work the code was handling correctly.
+
+## Content files with a spec section are generated, not typed
+
+If `docs/spec.md` has a section for it, generate the content file from that
+section rather than transcribing it. `src/content/services-detail.ts` shows the
+shape: the 4.1 blocks were produced programmatically from the document, so the
+strings in the repository are the document's own text.
+
+Every case in `docs/PENDING-COPY.md` section 1c came from hand entry. Ten
+sentences were tightened or reordered by whoever typed them, including one that
+reduced a named and priced service to a common noun. None of it looked wrong on
+the page, which is what makes it expensive.
+
+The existing hand-entered files are covered by `npm run audit:copy` and are not
+worth migrating now. This applies to anything new.

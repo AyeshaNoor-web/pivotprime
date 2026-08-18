@@ -20,6 +20,10 @@ import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
 import ServiceCards from "@/components/ServiceCards";
 import PatternsList from "@/components/PatternsList";
 import CaseStudies from "@/components/CaseStudies";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
+
+export const metadata: Metadata = pageMetadata("home");
 
 export default function Home() {
   return (
@@ -311,7 +315,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
             <Link href="/for-founders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/founder.svg" alt="Founder" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/founder.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
               <p className="text-xl font-bold text-neon">
                 You’re a Founder and<br />everything still depends<br />on you.
@@ -320,7 +324,7 @@ export default function Home() {
 
             <Link href="/for-smes" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/SME.svg" alt="SME" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/SME.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
               <p className="text-xl font-bold text-neon">
                 You’re running an SME<br />that is growing but not<br />settled.
@@ -329,7 +333,7 @@ export default function Home() {
             
             <Link href="/for-corporate-leaders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/Strategy.svg" alt="Corporate Leader" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/Strategy.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
               <p className="text-xl font-bold text-neon">
                 You’re a Corporate Leader<br />expected to deliver change<br />without any real support.
@@ -338,7 +342,7 @@ export default function Home() {
             
             <Link href="/for-pl-owners" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/growth.svg" alt="Corporate Owner" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/growth.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
               <p className="text-xl font-bold text-neon">
                 You’re a Corporate Owner<br />responsible for aligning<br />execution at scale.
@@ -369,11 +373,15 @@ export default function Home() {
 
       {/* 3.11 Close. REPLACE. The existing background is kept, per the spec. */}
       <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-black px-4 py-32 sm:px-6 lg:px-8">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url("/Group-1577708851-min.jpg")' }}
-        />
+        <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/Group-1577708851-min.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
         <div aria-hidden="true" className="absolute inset-0 z-0 bg-forest/70" />
 
         <div className="relative z-10 mx-auto w-full max-w-4xl text-center text-white">

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
 import { SERVICES } from "@/content/services";
+import { SITE_URL } from "@/content/metadata";
 
 /**
  * Sitemap.
@@ -32,7 +33,7 @@ const ROUTES = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pivotprime.ae";
+  const base = SITE_URL;
 
   const routes = [...ROUTES];
 
