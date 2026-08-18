@@ -89,3 +89,44 @@ export const FRACTIONAL = {
     "We add seats as demand justifies them.",
   ],
 };
+
+/** Spec 4.1, the blocks the designed page compressed. */
+export const CLARITY_AUDIT = {
+  scopeLine: "Scope depends on the size of the business, how many functions are in review, and how many people we interview. A single-site founder-led business sits at the lower end. A multi-division operation with fifty or more staff is a larger piece of work.",
+  whyHeading: "Why this exists",
+  why: [
+    "Every business has a theory about why growth is harder than it should be. Usually the theory is wrong, or it describes a symptom of something further upstream.",
+    "Leaders carry an idealistic picture of how the business works. The people doing the work know what is actually possible. The gap between those two pictures is where almost every operational problem lives. The audit closes it with evidence rather than opinion.",
+  ],
+  lookHeading: "What we look at",
+  look: [
+    "The commercial model, pricing, and margin by product, client or service",
+    "The P&L, cost structure, working capital and how reliably cash is collected",
+    "How work actually flows day to day, and where it stalls, duplicates or reverses",
+    "Which decisions route through the founder, and which of those genuinely need to",
+    "Roles, ownership and accountability, and where they are unclear",
+    "Where automation or AI would remove real cost, and where it would only add another tool",
+    "Data: what is captured, what is trusted, and what leaders are actually deciding on",
+  ],
+  howHeading: "How we do it",
+  how: [
+    "One-to-one interviews with the people doing the work, not only the leadership team. Private conversations surface what people will not say in a room.",
+    "Process mapping end to end. A facilitated workshop per function, where the team walks the process on screen and stress tests it together, so the findings are owned rather than imposed. Direct observation where it helps.",
+  ],
+  getHeading: "What you get",
+  get: [
+    "An as-is versus to-be map of how work runs today and exactly what changes",
+    "A findings report with every gap ranked by risk and by effort",
+    "A prioritised roadmap: what to fix now, what can wait, what will move results",
+    "A baseline set of measurements that the improvements will later be judged against",
+    "A costed view of what to fix internally and what needs outside capacity",
+    "An executive summary written for owners and investors, not only for operations",
+  ],
+  afterHeading: "What happens after",
+  after: ["The audit ends with a decision, not a filing cabinet. Some clients take the roadmap and execute it themselves, and that is a legitimate outcome. Most ask us to run some or all of it, which is where the fractional COO retainer, a placed project manager, CFO or engineer, or a technology build comes in. We will tell you plainly which of those the findings actually justify."],
+  pricingHeading: "Pricing and margin engagements",
+  pricing: [
+    "Sometimes the constraint is not the process, it is the price. We look at contribution margin, delivery effort, variability and risk across every client, product and contract, then design pricing logic you can defend.",
+    "This runs either as part of a full audit, or as a standalone piece of work where pricing is clearly the problem.",
+  ],
+};

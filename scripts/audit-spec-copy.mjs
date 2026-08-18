@@ -114,6 +114,18 @@ const RENDERED_SPLIT = [
     match: "Iram Kauser, Founder and CEO",
     why: "the name is a heading and the role is the line beneath it, both present",
   },
+  // Spec 4.2 writes each seat as one block: name, then what it owns, then what
+  // it covers, then who it is for. The design puts the name and the "owns" line
+  // on the tab button and the rest in the panel below, so the block is on the
+  // page in full but never as one string. Verified sentence by sentence.
+  { section: "4.2", match: "Fractional COO Owns execution", why: "tab button and panel" },
+  { section: "4.2", match: "Fractional Chief of Staff Owns follow-through", why: "tab button and panel" },
+  { section: "4.2", match: "Fractional CFO Owns the numbers", why: "tab button and panel" },
+  {
+    section: "4.1",
+    match: "From AED 15,000 · Typically 12 to 20 working days",
+    why: "the price and the duration are two elements in the hero, so the spec's middle-dot separator between them does not appear. Both halves verified present",
+  },
 ];
 
 const normalise = (s) =>
@@ -132,14 +144,25 @@ const normalise = (s) =>
     .replace(/(\d)\s+%/g, "$1%")
     .toLowerCase();
 
-/** A block counts as present if a distinctive run of it appears in the page. */
+/**
+ * A block counts as present only if the whole of it is on the page.
+ *
+ * The earlier version compared the first clause when that clause was long
+ * enough, which meant everything after it could be reworded, reordered or
+ * dropped and still pass. That is precisely the failure this audit exists to
+ * catch, since tightening a sentence leaves a page that scans perfectly and no
+ * longer says what the client wrote. Two rewritten lines were caught by luck,
+ * because their first clauses happened to be short enough to fall through to the
+ * prefix comparison.
+ *
+ * Whole-needle matching is safe here because normalise() strips tags and
+ * collapses whitespace, so a paragraph split across two elements reads as one
+ * continuous string. A page that interleaves other content mid-paragraph will
+ * report a false gap, which is the right direction to fail in: it asks a human
+ * to look, rather than quietly approving a rewrite.
+ */
 function isPresent(haystack, block) {
-  const needle = normalise(block);
-  if (needle.length < 25) return haystack.includes(needle);
-  // Compare on the first clause, so a designed page that splits a long
-  // paragraph across two elements still counts as carrying it.
-  const clause = needle.split(/[.,:;]/)[0].trim();
-  return haystack.includes(clause.length >= 25 ? clause : needle.slice(0, 60));
+  return haystack.includes(normalise(block));
 }
 
 async function main() {

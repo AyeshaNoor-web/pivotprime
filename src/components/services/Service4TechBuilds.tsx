@@ -117,7 +117,7 @@ export default function Service4TechBuilds() {
               We do not sprinkle AI over a business <span className="text-[#00d76d]">and call it transformation.</span>
             </h2>
             <p className="text-[#a9c8ba] mt-3">
-              A business moves at the speed of its biggest constraint. Making everything else faster only builds a longer queue in front of it.
+              A business moves at the speed of its biggest constraint. Making everything else faster only builds a longer queue in front of it. So, before we build anything we find out where the business is actually losing time, margin or control, and then we build at that point.
             </p>
             <p className="text-[#a9c8ba] mt-3">
               That is the difference between technology that pays for itself and technology that becomes another subscription nobody opens.
@@ -219,7 +219,7 @@ export default function Service4TechBuilds() {
             <div className="bg-[#fdf9f2] border-l-[3px] border-[#af8943] rounded-r-xl p-6 md:p-8">
               <h3 className="font-sans font-bold text-lg text-[#0c1a15] mb-2">Where this starts</h3>
               <p className="text-[#6b5a3c] text-[15.5px]">
-                If you already know what you need built, we can start there. If you are not certain the technology is the actual constraint, start with an audit and we will tell you honestly whether a build is the right answer.
+                If you already know what you need built, we can start there. If you are not certain the technology is the actual constraint, start with an Operational Clarity Audit, and we will tell you honestly whether a build is the right answer.
               </p>
             </div>
           </div>

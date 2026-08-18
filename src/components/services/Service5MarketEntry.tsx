@@ -145,7 +145,7 @@ export default function Service5MarketEntry() {
               There are hundreds of company formation experts in Dubai who will get you a licence and sometimes a bank account. We support all of that, but the licence is where we start rather than where we stop.
             </p>
             <p className="text-[#0c1a15] mb-3">
-              Before anything else we build a financial model with you: every assumption priced in, the investment required, the breakeven point and the expected return.
+              Before anything else we build a financial model with you: every assumption of the entry priced in, the investment required, the breakeven point and the expected return. We are not interested in beginning a UAE entry that will not make money in the UAE.
             </p>
             <p className="text-[#0c1a15]">
               This is where most international businesses go wrong. They price for this market using home-market assumptions and end up busy but unprofitable.

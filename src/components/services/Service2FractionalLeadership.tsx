@@ -67,7 +67,7 @@ export default function Service2FractionalLeadership() {
         "Preparing the leadership team for the decisions ahead of them",
         "Chairing and running the operating rhythm: the meetings, the agendas, the follow-through",
         "Managing cross-functional programmes that have no natural owner",
-        "Protecting senior attention, so leadership works on what only they can do",
+        "Protecting senior attention, so the leadership team works on what only they can do",
         "Sitting in the meetings that matter, including board and investor conversations",
       ],
       n: "Translates decisions into movement across functions, manages the priorities that collide, and keeps senior attention on what matters. For complex organisations where the strategy is right and cannot land on its own.",

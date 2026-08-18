@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/flags";
 import { JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
+import { CLARITY_AUDIT } from "@/content/services-detail";
+import { CopyList, CopyProse } from "./SpecCopyBlocks";
 
 export default function Service1ClarityAudit() {
   const [mapState, setMapState] = useState<0 | 1>(0); // 0 = Messy, 1 = Clean
@@ -258,6 +260,42 @@ export default function Service1ClarityAudit() {
           </div>
         </div>
       </section>
+
+      {/* Spec 4.1, restored. The designed page carried the headline sections but
+          compressed most of the copy beneath them: the argument for the audit,
+          four of the seven things it looks at, four of the six deliverables, the
+          workshop method, what happens afterwards, and the standalone pricing
+          and margin engagement. Copy generated directly from docs/spec.md rather
+          than transcribed. See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={CLARITY_AUDIT.whyHeading} paragraphs={CLARITY_AUDIT.why} />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8 space-y-16">
+          <CopyList heading={CLARITY_AUDIT.lookHeading} items={CLARITY_AUDIT.look} />
+          <CopyProse heading={CLARITY_AUDIT.howHeading} paragraphs={CLARITY_AUDIT.how} />
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8 space-y-16">
+          <CopyList heading={CLARITY_AUDIT.getHeading} items={CLARITY_AUDIT.get} />
+          <CopyProse heading={CLARITY_AUDIT.afterHeading} paragraphs={CLARITY_AUDIT.after} />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={CLARITY_AUDIT.pricingHeading} paragraphs={CLARITY_AUDIT.pricing} />
+          <p className="mx-auto mt-8 max-w-3xl text-sm leading-relaxed text-[#5e6f68]">
+            {CLARITY_AUDIT.scopeLine}
+          </p>
+        </div>
+      </section>
+
     </div>
   );
 }
