@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
+import { WHATSAPP_CTA } from "@/content/cta";
 
 
 export default function Service4TechBuilds() {
@@ -97,8 +99,8 @@ export default function Service4TechBuilds() {
             Priced on the build itself, the systems it has to connect to, and whether you want us to run it afterwards.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-              Talk to us on WhatsApp
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              {WHATSAPP_CTA.label}
             </a>
           </div>
         </div>
@@ -115,7 +117,10 @@ export default function Service4TechBuilds() {
               We do not sprinkle AI over a business <span className="text-[#00d76d]">and call it transformation.</span>
             </h2>
             <p className="text-[#a9c8ba] mt-3">
-              A business moves at the speed of its biggest constraint. Making everything else faster only builds a longer queue in front of it.
+              A business moves at the speed of its biggest constraint. Making everything else faster only builds a longer queue in front of it. So, before we build anything we find out where the business is actually losing time, margin or control, and then we build at that point.
+            </p>
+            <p className="text-[#a9c8ba] mt-3">
+              That is the difference between technology that pays for itself and technology that becomes another subscription nobody opens.
             </p>
           </div>
 
@@ -185,12 +190,12 @@ export default function Service4TechBuilds() {
             <ul className="space-y-3">
               {[
                 "Websites: design, build, maintenance and the digital estate around them",
-                "CRM build and configuration, including migration from spreadsheets",
+                "CRM build and configuration, including migration from spreadsheets and inherited systems",
                 "Workflow automation across sales, operations, finance and fulfilment",
-                "Dashboards and management reporting",
-                "Integrations between systems you already pay for and are not using",
+                "Dashboards and management reporting, so decisions are made on numbers rather than instinct",
+                "Integrations between the systems you already pay for and are not getting value from",
                 "Internal tools and custom applications where nothing off the shelf fits",
-                "AI agents and assistants, where they remove real cost"
+                "AI agents and assistants, where they remove real cost rather than add a feature"
               ].map((item, i) => (
                 <li key={i} className="flex gap-3 items-start text-[15.5px] text-[#0c1a15]">
                   <div className="w-[17px] h-[17px] rounded-full bg-[#009f50] flex-shrink-0 mt-1 flex items-center justify-center">
@@ -214,7 +219,7 @@ export default function Service4TechBuilds() {
             <div className="bg-[#fdf9f2] border-l-[3px] border-[#af8943] rounded-r-xl p-6 md:p-8">
               <h3 className="font-sans font-bold text-lg text-[#0c1a15] mb-2">Where this starts</h3>
               <p className="text-[#6b5a3c] text-[15.5px]">
-                If you already know what you need built, we can start there. If you are not certain the technology is the actual constraint, start with an audit and we will tell you honestly whether a build is the right answer.
+                If you already know what you need built, we can start there. If you are not certain the technology is the actual constraint, start with an Operational Clarity Audit, and we will tell you honestly whether a build is the right answer.
               </p>
             </div>
           </div>
@@ -235,8 +240,8 @@ export default function Service4TechBuilds() {
               Either works. The only technology work we take on is the kind pointed at a real problem.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-                Talk to us on WhatsApp
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+                {WHATSAPP_CTA.label}
               </a>
             </div>
           </div>

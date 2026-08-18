@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
+import { WHATSAPP_CTA } from "@/content/cta";
+import { MARKET_ENTRY } from "@/content/services-detail";
+import { CopyList, CopyProse } from "./SpecCopyBlocks";
 
 
 export default function Service5MarketEntry() {
@@ -48,8 +52,8 @@ export default function Service5MarketEntry() {
             Priced on the entity structure, whether the products need regulatory approval, and how much of the operation we build rather than advise on.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-              Talk to us on WhatsApp
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              {WHATSAPP_CTA.label}
             </a>
           </div>
         </div>
@@ -141,7 +145,7 @@ export default function Service5MarketEntry() {
               There are hundreds of company formation experts in Dubai who will get you a licence and sometimes a bank account. We support all of that, but the licence is where we start rather than where we stop.
             </p>
             <p className="text-[#0c1a15] mb-3">
-              Before anything else we build a financial model with you: every assumption priced in, the investment required, the breakeven point and the expected return.
+              Before anything else we build a financial model with you: every assumption of the entry priced in, the investment required, the breakeven point and the expected return. We are not interested in beginning a UAE entry that will not make money in the UAE.
             </p>
             <p className="text-[#0c1a15]">
               This is where most international businesses go wrong. They price for this market using home-market assumptions and end up busy but unprofitable.
@@ -188,13 +192,39 @@ export default function Service5MarketEntry() {
               If the model says it will not, we would rather tell you before you spend the money than after.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-                Talk to us on WhatsApp
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+                {WHATSAPP_CTA.label}
               </a>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Spec 4.5, restored. The designed page compressed THE MISCONCEPTION to
+          a single clause and dropped most of WHAT WE BUILD and the CLOSE. The
+          design above is kept; this carries the copy the spec sets verbatim.
+          See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse
+            heading={MARKET_ENTRY.misconceptionHeading}
+            paragraphs={MARKET_ENTRY.misconception}
+          />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyList heading={MARKET_ENTRY.buildHeading} items={MARKET_ENTRY.build} />
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={MARKET_ENTRY.closeHeading} paragraphs={[MARKET_ENTRY.close]} />
+        </div>
+      </section>
+
     </div>
   );
 }

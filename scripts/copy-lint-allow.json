@@ -1,0 +1,4 @@
+{
+  "_comment": "Reviewed exceptions to the house rules in spec section 1. Each entry needs file, rule and the exact offending text, plus a note saying who accepted it and why. Keep this list short: an entry here is a decision, not a snooze.",
+  "allow": []
+}

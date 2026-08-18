@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { WHATSAPP_URL } from "@/lib/flags";
 
 export default function WhatsappButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,10 +23,15 @@ export default function WhatsappButton() {
   }, []);
 
   return (
-    <a 
-      href="https://wa.me/971524401075" 
-      target="_blank" 
-      rel="noopener noreferrer" 
+    // #25D366 is Meta's mandated WhatsApp brand green and is deliberately not a
+    // Pivot Prime token. It is the only off-palette colour on the site that is
+    // correct as it stands. Do not "fix" it to --color-neon: the brand
+    // guidelines require this exact value on the WhatsApp mark.
+    // Registered in scripts/palette-allow.json for the same reason.
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-500 ease-in-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
       }`}

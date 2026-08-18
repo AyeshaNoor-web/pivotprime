@@ -1,6 +1,23 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
+import EnquiryForm from "@/components/EnquiryForm";
+
+export const metadata: Metadata = pageMetadata("contact");
+
+import { WHATSAPP_URL } from "@/lib/flags";
 
 
-export default function Contact() {
+export default async function Contact({
+  searchParams,
+}: {
+  searchParams: Promise<{ sent?: string; error?: string }>;
+}) {
+  // Set by the no-JavaScript path, where the route handler redirects back here
+  // with the outcome rather than leaving the visitor on a blank response.
+  const params = await searchParams;
+  const sent = params.sent === "1";
+  const error = params.error ?? null;
+
   return (
     <div className="flex flex-col min-h-screen pt-32 pb-16 bg-gray-50">
       
@@ -44,33 +61,16 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">WhatsApp / Call</p>
-                  <a href="https://wa.me/971524401075" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-black hover:text-primary transition-colors">+971 52 440 1075</a>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-black hover:text-primary transition-colors">+971 52 440 1075</a>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-            <form className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-                <input type="text" id="name" className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white" placeholder="John Doe" />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                <input type="email" id="email" className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white" placeholder="john@company.com" />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                <textarea id="message" rows={5} className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white resize-none" placeholder="Tell us what you're working through..."></textarea>
-              </div>
-              <button type="button" className="w-full py-4 px-8 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all uppercase tracking-wider">
-                Send Message
-              </button>
-            </form>
-          </div>
-
+          {/* Spec 2.3. Delivers to hello@pivotprime.ae with reply-to set to
+              the submitter, plus an autoresponder. Works with JavaScript off:
+              the form posts natively and the route answers with a redirect. */}
+          <EnquiryForm initialStatus={sent ? "sent" : null} initialError={error} />
         </div>
       </section>
 

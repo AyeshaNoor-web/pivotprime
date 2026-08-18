@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/flags";
+import { JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
+import { CLARITY_AUDIT } from "@/content/services-detail";
+import { CopyList, CopyProse } from "./SpecCopyBlocks";
 
 export default function Service1ClarityAudit() {
   const [mapState, setMapState] = useState<0 | 1>(0); // 0 = Messy, 1 = Clean
@@ -57,8 +61,8 @@ export default function Service1ClarityAudit() {
             Scope depends on the size of the business, how many functions are in review, and how many people we interview.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-              Talk to us on WhatsApp
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              {WHATSAPP_CTA.label}
             </a>
           </div>
         </div>
@@ -153,10 +157,16 @@ export default function Service1ClarityAudit() {
               })}
             </div>
             
+            {/* Both captions render, with the inactive one hidden, so neither
+                half of the before-and-after is missing from the served HTML.
+                Same treatment as the seat panels on the fractional page. */}
             <p className="text-[14px] text-[#5e6f68] mt-6 min-h-[44px] max-w-2xl">
-              {mapState === 1
-                ? "Six steps, one direction, every one owned. Same business, same people. What changed is that the work now only moves forwards, and the two steps that existed to fix earlier mistakes are gone."
-                : "Seven steps, four handoffs that double back, and two that nobody owns. This is what most businesses look like when you actually map them rather than describe them."}
+              <span hidden={mapState !== 0}>
+                {"Seven steps, four handoffs that double back, and two that nobody owns. This is what most businesses look like when you actually map them rather than describe them."}
+              </span>
+              <span hidden={mapState !== 1}>
+                {"Six steps, one direction, every one owned. Same business, same people. What changed is that the work now only moves forwards, and the two steps that existed to fix earlier mistakes are gone."}
+              </span>
             </p>
           </div>
         </div>
@@ -246,16 +256,52 @@ export default function Service1ClarityAudit() {
               We will not commit to owning outcomes in a business we have not properly diagnosed.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-                Talk to us on WhatsApp
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+                {WHATSAPP_CTA.label}
               </a>
-              <Link href="/diagnostic" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
-                Take the 4-minute diagnostic
+              <Link href={JOURNEY_CTA.href} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
+                {JOURNEY_CTA.label}
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Spec 4.1, restored. The designed page carried the headline sections but
+          compressed most of the copy beneath them: the argument for the audit,
+          four of the seven things it looks at, four of the six deliverables, the
+          workshop method, what happens afterwards, and the standalone pricing
+          and margin engagement. Copy generated directly from docs/spec.md rather
+          than transcribed. See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={CLARITY_AUDIT.whyHeading} paragraphs={CLARITY_AUDIT.why} />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8 space-y-16">
+          <CopyList heading={CLARITY_AUDIT.lookHeading} items={CLARITY_AUDIT.look} />
+          <CopyProse heading={CLARITY_AUDIT.howHeading} paragraphs={CLARITY_AUDIT.how} />
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8 space-y-16">
+          <CopyList heading={CLARITY_AUDIT.getHeading} items={CLARITY_AUDIT.get} />
+          <CopyProse heading={CLARITY_AUDIT.afterHeading} paragraphs={CLARITY_AUDIT.after} />
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9f8] py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={CLARITY_AUDIT.pricingHeading} paragraphs={CLARITY_AUDIT.pricing} />
+          <p className="mx-auto mt-8 max-w-3xl text-sm leading-relaxed text-[#5e6f68]">
+            {CLARITY_AUDIT.scopeLine}
+          </p>
+        </div>
+      </section>
+
     </div>
   );
 }

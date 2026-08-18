@@ -2,126 +2,307 @@ import Image from "next/image";
 import Link from "next/link";
 import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
+import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
+import { CONTACT_CTA, HERO_CTA, JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
+import {
+  ACCOUNTABLE,
+  CLIENT_LOGOS,
+  CLOSE,
+  FOUNDER,
+  HERO,
+  HOW_WE_ARE_PAID,
+  METRICS,
+  PATTERNS,
+  PROOF,
+  RESULTS,
+} from "@/content/homepage";
+import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
+import ServiceCards from "@/components/ServiceCards";
+import PatternsList from "@/components/PatternsList";
+import CaseStudies from "@/components/CaseStudies";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
+
+export const metadata: Metadata = pageMetadata("home");
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 flex items-center min-h-[85vh]">
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="/home-banner.jpg" 
-            alt="Hero background" 
-            fill 
-            className="object-cover animate-water-pan"
-            priority 
+      {/* 3.1 Hero. REPLACE. Background is kept: spec says it works and it stays. */}
+      <section className="relative flex min-h-[85vh] items-center px-4 pt-32 pb-24 sm:px-6 md:pt-48 md:pb-32 lg:px-8">
+        {/* overflow-hidden contains the water-pan animation, which scales the
+            image to 1.08. Without it the scaled image is wider than the
+            viewport and the whole document scrolls sideways, at every
+            breakpoint including desktop. */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/home-banner.jpg"
+            alt=""
+            fill
+            aria-hidden="true"
+            className="animate-water-pan object-cover"
+            priority
           />
-          <div className="absolute inset-0 bg-[#013325]/50" />
+          <div className="absolute inset-0 bg-forest/50" />
         </div>
-        
-        <div className="relative z-10 max-w-5xl mx-auto w-full text-white">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-tight max-w-4xl font-sans">
-            For businesses ready to operate in their prime state.
+
+        {/* Wider than the old max-w-5xl: the annotation on 3.1 asks for text to
+            run as far across the screen as it reasonably can. */}
+        <div className="relative z-10 mx-auto w-full max-w-6xl text-white">
+          <h1 className="mb-6 max-w-5xl text-4xl leading-tight font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            {HERO.heading}
           </h1>
-          <p className="text-2xl md:text-3xl mb-12 font-medium">
-            Your operations, execution & growth partner
+
+          {/* Set noticeably larger than the paragraph beneath it. Spec 3.1:
+              this sentence is doing the most work on the page. */}
+          <p className="mb-6 max-w-4xl text-2xl leading-snug font-semibold sm:text-3xl md:text-4xl">
+            {HERO.lead}
           </p>
-          <a href="https://wa.me/971524401075" className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-lg group">
-            GET IN TOUCH <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
-          </a>
+
+          <p className="mb-10 max-w-3xl text-base leading-relaxed text-white/85 md:text-lg">
+            {HERO.body}
+          </p>
+
+          {/* No WhatsApp CTA here, deliberately. Spec 3.1: "Nobody gets in touch
+              before they know what is on offer." The conversation CTAs appear
+              further down once the visitor has seen the services and the proof. */}
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <Link
+              href={HERO_CTA.href}
+              className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-4 text-sm font-bold tracking-wide text-white uppercase shadow-lg transition-colors hover:bg-neon/90 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {HERO_CTA.label}
+            </Link>
+
+            {/* Visually secondary, and an in-page anchor rather than a
+                navigation. Spec 3.1. */}
+            <a
+              href={HERO.secondaryHref}
+              className="inline-flex items-center justify-center rounded-md border border-white/40 px-7 py-4 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:border-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+            >
+              {HERO.secondaryLabel}
+            </a>
+          </div>
+
+          {/* Only rendered when the diagnostic is live: it names a four-minute
+              assessment and an immediate score, neither of which stage one
+              ships. */}
+          {DIAGNOSTIC_ENABLED && (
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/75">
+              {HERO.diagnosticExplainer}
+            </p>
+          )}
         </div>
       </section>
 
-      {/* Challenges Section */}
-      <section className="py-24 bg-white text-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4 tracking-tight">
-            We don’t just understand your challenges.
-          </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-[#4FB968] mb-12">
-            We fix what’s really holding your business back
-          </h3>
-          <p className="text-lg md:text-xl text-black font-medium leading-relaxed max-w-3xl mx-auto">
-            Even the best-run businesses hit hidden bottlenecks in operations, culture, and execution. At Pivot Prime, we work alongside you to diagnose what’s slowing the business down, then help you fix it, properly.
+      {/* 3.2 Proof bar. MOVE: the logo rows sat buried inside a later section
+          and belong directly under the hero. */}
+      <section className="border-b border-neutral-100 bg-white py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="mx-auto max-w-3xl text-center text-base font-medium text-neutral-600 md:text-lg">
+            {PROOF.trusted}
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-center text-sm text-neutral-500">
+            {PROOF.featuredPrefix}
+            {PROOF.publications.map((pub, i) => (
+              <span key={pub.href}>
+                <a
+                  href={pub.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={pub.title}
+                  className="font-semibold text-mid underline underline-offset-2 hover:text-forest"
+                >
+                  {pub.name}
+                </a>
+                {i === 0 ? " and " : "."}
+              </span>
+            ))}
           </p>
         </div>
-      </section>
 
-      {/* Patterns Section */}
-      <section className="py-20 bg-white px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-extrabold text-black mb-12 tracking-tight">
-            These are the patterns we<br />see before growth stalls.
-          </h2>
-          <div className="text-xl md:text-2xl leading-relaxed space-y-4">
-            <p>
-              <span className="text-primary font-bold">Everything still depends on the founder</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-400 italic font-light">Profit margins are thin, or disappearing</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-gray-600 font-light">We have a strategy, but execution all over the place</span> <span className="text-gray-400 mx-2">•</span> <span className="text-black font-bold">Revenue is stuck, year on year</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-gray-400 italic font-light">We want to scale, but don&apos;t know how</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-400 italic font-light">Operations feel messy and inefficient</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-primary font-bold">Legacy processes drain time and money.</span> <span className="text-gray-400 mx-2">•</span> <span className="text-gray-600 font-light">The team is stretched. misaligned, or burned out</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
-            <p>
-              <span className="text-black font-bold">We keep losing customers</span> <span className="text-gray-400 mx-2">•</span>
-            </p>
+        {/* Keeps scrolling on desktop and mobile, per spec 3.2: the movement
+            holds attention and is one of the few animations doing a job.
+            overflow-hidden clips the track so it cannot widen the document. */}
+        <div className="mt-10 w-full overflow-hidden">
+          <div className="flex w-max animate-[marquee_40s_linear_infinite] items-center motion-reduce:animate-none">
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex items-center space-x-12 px-6" aria-hidden={copy === 1}>
+                {CLIENT_LOGOS.map((logo) => (
+                  <Image
+                    key={`${copy}-${logo.src}`}
+                    src={logo.src}
+                    alt={copy === 1 ? "" : logo.alt}
+                    width={180}
+                    height={80}
+                    className="h-14 w-auto rounded-lg object-contain opacity-70 transition-opacity hover:opacity-100 md:h-16"
+                  />
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-white text-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-black mb-20 tracking-tight">
-          This is what we have delivered for our clients
-        </h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-20 gap-x-8">
-          <FadeUp delay={100} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">~<CountUp end={2} /> days</div>
-            <div className="text-base text-gray-500 font-medium px-4">freed for founders and<br />leaders, per week</div>
-          </FadeUp>
-          <FadeUp delay={200} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={40} />-<CountUp end={60} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">reduction in<br />duplicated work,<br />rework, and<br />inefficiencies.</div>
-          </FadeUp>
-          <FadeUp delay={300} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={20} />-<CountUp end={35} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">revenue growth</div>
-          </FadeUp>
-          <FadeUp delay={400} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4">+<CountUp end={10} />-<CountUp end={15} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">increase in customer<br />retention</div>
-          </FadeUp>
-          
-          <FadeUp delay={500} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={30} />-<CountUp end={50} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">faster execution<br />across teams</div>
-          </FadeUp>
-          <FadeUp delay={600} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={2} />-<CountUp end={4} />x</div>
-            <div className="text-base text-gray-500 font-medium px-4">higher quality leads</div>
-          </FadeUp>
-          <FadeUp delay={700} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4"><CountUp end={43} />%</div>
-            <div className="text-base text-gray-500 font-medium px-4">fewer mis-hires and<br />faster confidence in<br />new hires</div>
-          </FadeUp>
-          <FadeUp delay={800} className="flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-4 leading-tight">Aligned &<br />Accountable</div>
-            <div className="text-base text-gray-500 font-medium px-4">Team Culture</div>
-          </FadeUp>
+      {/* 3.3 Results. NEW. Sits immediately under the proof bar, before the
+          services: after "we build it" the visitor's next thought is "prove it".
+          Figures are green and count up on scroll; labels and context are in the
+          standard body colour. Spec 3.3. */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <header className="mb-16 max-w-3xl">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              {RESULTS.heading}
+            </h2>
+            <p className="mt-4 text-lg text-neutral-600 md:text-xl">{RESULTS.standfirst}</p>
+          </header>
+
+          {/* Cards with no figure are filtered out rather than shown with a
+              placeholder. Spec 3.3 on metric 6: "Do not launch this card with a
+              placeholder." The copy is written and the card appears the moment
+              the number lands. */}
+          <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            {METRICS.filter((m) => m.figure !== null).map((metric) => (
+              <li key={metric.label} className="min-w-0 [&>*]:max-w-full">
+                <FadeUp>
+                <div className="mb-3 text-5xl font-bold text-mid md:text-6xl">
+                  <CountUp end={metric.figure as number} />
+                  {metric.suffix}
+                </div>
+                <h3 className="mb-2 font-bold text-foreground">{metric.label}</h3>
+                <p className="leading-relaxed text-neutral-600">{metric.context}</p>
+                </FadeUp>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 3.4 What do we actually do. NEW. The hero's secondary CTA anchors here. */}
+      <section id="services" className="scroll-mt-28 bg-white px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <header className="mb-14 max-w-3xl">
+            <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-mid uppercase">
+              {SERVICES_EYEBROW}
+            </p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              {SERVICES_HEADING}
+            </h2>
+          </header>
+
+          <ServiceCards />
+        </div>
+      </section>
+
+      {/* 3.5 The patterns. MOVED below the services: having just read what
+          Pivot Prime sells, the visitor now recognises their own symptom and
+          knows which service it points to. Spec 3.5. */}
+      <section className="bg-white px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-neon uppercase">
+            {PATTERNS.eyebrow}
+          </p>
+          <h2 className="mb-10 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            {PATTERNS.heading}
+          </h2>
+          <PatternsList />
+        </div>
+      </section>
+
+      {/* 3.6 One accountable party. NEW. Full width, dark green. Makes the
+          argument for placing people rather than recommending, which is what
+          separates Pivot Prime from an advisory firm and from a solo fractional
+          operator. Spec 3.6. */}
+      <section className="bg-forest px-4 py-24 text-white sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-8 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
+            {ACCOUNTABLE.heading}
+          </h2>
+          <div className="space-y-5">
+            {ACCOUNTABLE.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-white/85 md:text-lg">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          <blockquote className="mt-12 border-l-2 border-neon pl-6 text-xl leading-snug font-semibold text-white md:text-2xl lg:text-3xl">
+            {ACCOUNTABLE.pullQuote}
+          </blockquote>
+
+          <div className="mt-10">
+            <Link
+              href={CONTACT_CTA.href}
+              className="inline-flex items-center justify-center rounded-md bg-neon px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {ACCOUNTABLE.ctaLabel}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3.7 The person behind it. NEW. Two columns on desktop with the portrait
+          right; on mobile the photo comes first, per the annotation. The
+          portrait has not been supplied, so this renders single-column rather
+          than with stock imagery: spec 8.2 says nothing is better than stock
+          here. Spec 3.7. */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div
+          className={`mx-auto max-w-6xl ${FOUNDER.portrait ? "grid items-center gap-12 md:grid-cols-2" : "max-w-4xl"}`}
+        >
+          {FOUNDER.portrait && (
+            <div className="order-first md:order-last">
+              <Image
+                src={FOUNDER.portrait.src}
+                alt={FOUNDER.portrait.alt}
+                width={720}
+                height={900}
+                className="w-full rounded-2xl object-cover"
+              />
+            </div>
+          )}
+
+          <div>
+            <h2 className="mb-8 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              {FOUNDER.heading}
+            </h2>
+            <div className="space-y-5">
+              {FOUNDER.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="leading-relaxed text-neutral-600">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <Link
+              href={FOUNDER.ctaHref}
+              className="mt-8 inline-flex items-center text-sm font-bold text-forest uppercase hover:text-mid"
+            >
+              {FOUNDER.ctaLabel}
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">
+                &rarr;
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3.8 Case studies. KEEP. Placement is confirmed by the spec: directly
+          after the founder section and before the personas, so the founder
+          section establishes who is behind the work, the case studies prove it,
+          and the personas then ask the visitor to place themselves. */}
+      <section className="bg-white px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <CaseStudies />
         </div>
       </section>
 
       {/* Audiences Section */}
-      <section className="py-24 bg-[#093524] text-center px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-forest text-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
             You don’t have to figure it all<br />out alone
           </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-[#4FB968] mb-12 max-w-2xl mx-auto leading-tight">
+          <h3 className="text-3xl md:text-4xl font-medium text-neon mb-12 max-w-2xl mx-auto leading-tight">
             We are your operations, growth and execution partner.
           </h3>
           <p className="text-xl md:text-2xl text-white font-medium leading-relaxed mb-10 max-w-3xl mx-auto">
@@ -132,38 +313,38 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
-            <Link href="/for-founders" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-founders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/founder.svg" alt="Founder" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/founder.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re a Founder and<br />everything still depends<br />on you.
               </p>
             </Link>
 
-            <Link href="/for-smes" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-smes" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/SME.svg" alt="SME" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/SME.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re running an SME<br />that is growing but not<br />settled.
               </p>
             </Link>
             
-            <Link href="/for-corporate-leaders" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-corporate-leaders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/Strategy.svg" alt="Corporate Leader" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/Strategy.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re a Corporate Leader<br />expected to deliver change<br />without any real support.
               </p>
             </Link>
             
-            <Link href="/for-corporate-owners" className="bg-[#123e2d] border border-[#21533e] rounded-xl p-8 flex items-center hover:bg-[#164b36] transition-colors group">
+            <Link href="/for-pl-owners" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
               <div className="mr-6">
-                <Image src="/growth.svg" alt="Corporate Owner" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
+                <Image src="/growth.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
               </div>
-              <p className="text-xl font-bold text-[#4FB968]">
+              <p className="text-xl font-bold text-neon">
                 You’re a Corporate Owner<br />responsible for aligning<br />execution at scale.
               </p>
             </Link>
@@ -171,78 +352,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sat in the System Section */}
-      <section className="py-24 bg-black text-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
-            We&apos;ve sat in the system.
+      {/* 3.10 How we are paid. NEW. Built from the spec's own block. No
+          percentage or formula is published, as 3.10 requires. Awaiting Iram's
+          confirmation of the wording before launch, not before build. */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            {HOW_WE_ARE_PAID.heading}
           </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-primary mb-12">
-            Now we help reshape it.
-          </h3>
-          <div className="space-y-6 text-lg md:text-xl text-white font-medium max-w-3xl mx-auto">
-            <p>
-              We&apos;ve worked inside some of the world&apos;s largest organisations and we&apos;ve also sat across the table from them.
-            </p>
-            <p>
-              We know what strategy looks like on paper and we know what actually happens when it meets people, processes, and pressure.
-            </p>
-            <p>
-              Today, we work with ambitious businesses at different stages.
-            </p>
-            <p>
-              Our role is simple. We help you cut through complexity, align strategy with execution, and build operations that actually support growth.
-            </p>
-          </div>
-        </div>
-        
-        {/* Logos Marquee */}
-        <div className="w-full mt-12 overflow-hidden bg-black py-10 border-y border-[#21352b]">
-          <div className="w-max flex items-center animate-[marquee_40s_linear_infinite]">
-            {/* We render the sequence of logos twice to create the seamless infinite scroll effect */}
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center space-x-12 px-6">
-                <Image src="/logos/logo-text-block-2.jpg" alt="logo-text-block-2" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/clogo3a.jpg" alt="clogo3a" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/Frame-17.jpg" alt="Frame 17" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/insurancehub-with-bg-white.jpg" alt="insurancehub" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/stydio-with-bg.jpg" alt="stydio" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/instagram.jpg" alt="instagram" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/man-cave-with-bg.jpg" alt="man cave" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/bop-foundation-with-bg-white.jpg" alt="bop foundation" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                <Image src="/logos/nivishe.jpg" alt="nivishe" width={180} height={80} className="h-16 md:h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
-              </div>
+          <p className="mb-8 text-xl font-semibold text-mid md:text-2xl">{HOW_WE_ARE_PAID.lead}</p>
+          <div className="space-y-5">
+            {HOW_WE_ARE_PAID.body.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-neutral-600 md:text-lg">
+                {paragraph}
+              </p>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Break Through Section */}
-      <section className="relative py-32 px-4 sm:px-6 lg:px-8 text-center bg-black min-h-[60vh] flex items-center">
-        {/* Background faces image from the live site */}
-        <div className="absolute inset-0 z-0" style={{ backgroundImage: 'url("/Group-1577708851-min.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        
-        {/* Dark overlay to make text readable */}
-        <div className="absolute inset-0 z-0 bg-black/20" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight leading-tight">
-            We help leaders and teams<br />break through for good.
+      {/* 3.11 Close. REPLACE. The existing background is kept, per the spec. */}
+      <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-black px-4 py-32 sm:px-6 lg:px-8">
+        <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/Group-1577708851-min.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+        <div aria-hidden="true" className="absolute inset-0 z-0 bg-forest/70" />
+
+        <div className="relative z-10 mx-auto w-full max-w-4xl text-center text-white">
+          <h2 className="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
+            {CLOSE.heading}
           </h2>
-          <h3 className="text-2xl md:text-3xl font-medium text-primary mb-12">
-            When strategy and execution finally line up, growth follows.
-          </h3>
-          <div className="space-y-6 text-lg md:text-xl text-white font-medium max-w-3xl mx-auto mb-12">
-            <p>
-              At Pivot Prime, we focus on what actually gets in the way. We look at how decisions are made, how work flows, and where accountability breaks down.
-            </p>
-            <p>
-              Then we work alongside you to fix it properly, so growth becomes stable, repeatable, and sustainable.
-            </p>
+
+          {/* Gated: the sentence promises a scored view in four minutes, which
+              the contact page cannot honour. No substitute is invented, because
+              the spec provides none. */}
+          {DIAGNOSTIC_ENABLED && (
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/85">{CLOSE.standfirst}</p>
+          )}
+
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href={JOURNEY_CTA.href}
+              className="inline-flex items-center justify-center rounded-md bg-neon px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {JOURNEY_CTA.label}
+            </Link>
+            <a
+              href={WHATSAPP_CTA.href}
+              target={WHATSAPP_CTA.external ? "_blank" : undefined}
+              rel={WHATSAPP_CTA.external ? "noopener noreferrer" : undefined}
+              className="inline-flex items-center justify-center rounded-md border border-white/50 px-7 py-4 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:border-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+            >
+              {WHATSAPP_CTA.label}
+            </a>
           </div>
-          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 text-xs font-bold tracking-wider uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded shadow-lg group">
-            BOOK DISCOVERY CALL <span className="ml-2 font-normal text-lg leading-none group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
         </div>
       </section>
 

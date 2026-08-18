@@ -1,4 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
+
+export const metadata: Metadata = pageMetadata("forCorporateLeaders");
 
 
 export default function ForCorporateLeaders() {
@@ -25,7 +29,7 @@ export default function ForCorporateLeaders() {
           {/* Section 1 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Execution support without headcount</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through embedded execution support.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through Build and Place. Scoped per engagement.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -49,7 +53,7 @@ export default function ForCorporateLeaders() {
           {/* Section 2 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">On-demand specialist bench</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through a plug-in partner network.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through Build and Place. Scoped per engagement.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -73,7 +77,7 @@ export default function ForCorporateLeaders() {
           {/* Section 3 */}
           <div className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Executive Sounding Board + Critical Comms Support</h2>
-            <h3 className="text-xl text-primary font-bold mb-8">Through confidential decision and communication support.</h3>
+            <h3 className="text-xl text-primary font-bold mb-8">Through a Fractional COO retainer, monthly or ad hoc.</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
@@ -97,11 +101,27 @@ export default function ForCorporateLeaders() {
         </div>
       </section>
 
+      {/* Spec 5 routing block: each persona page points at the service the
+          findings actually justify. */}
+      <section className="px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-4 max-w-4xl rounded-xl border border-forest/10 bg-forest/[0.04] p-8 text-center">
+          <p className="mb-6 text-lg leading-relaxed text-neutral-700">
+            You do not need to hire for everything. You do need access to people who know what they are doing, without a long approval cycle or a permanent cost.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/services/build-and-place" className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90">
+              How we staff an engagement
+              <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-24 bg-[#093524] text-center px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-forest text-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <Link href="/contact" className="inline-flex items-center justify-center px-10 py-5 font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-xl text-lg group">
-            BOOK YOUR FIRST CONVERSATION <span className="ml-3 font-normal text-2xl leading-none group-hover:translate-x-1 transition-transform">→</span>
+          <Link href="/contact" className="inline-flex items-center justify-center px-10 py-5 font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-xl text-lg group">
+            Book your first conversation <span className="ml-3 font-normal text-2xl leading-none group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
       </section>

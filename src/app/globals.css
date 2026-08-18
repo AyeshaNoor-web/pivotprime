@@ -2,13 +2,25 @@
 
 @theme {
   --font-sans: var(--font-poppins);
-  
-  --color-primary: #009F50;
-  --color-primary-dark: #008744;
-  --color-dark: #121212;
-  --color-light: #f5f5f5;
+
+  /* The approved brand palette is five values and only five. Confirmed against
+     the swatch plate at the top of the copy spec. Surfaces and borders on dark
+     are derived from these with white alpha, following the mockups, rather than
+     by adding new greens. Do not extend this list without a swatch to point at. */
+  --color-forest: #013325;
+  --color-neon: #00d76d;
+  --color-mid: #009f50;
   --color-background: #ffffff;
   --color-foreground: #000000;
+
+  /* Alias retained because bg-primary and text-primary are used site-wide.
+     Same value as --color-mid. */
+  --color-primary: #009f50;
+
+  /* There is no sixth green. Hover states use opacity on an existing token,
+     following the mockups: hover:bg-mid/90 on light, hover:bg-neon/90 on dark.
+     --color-primary-dark (#008744), --color-dark and --color-light were removed
+     rather than left as unguarded off-palette values. */
 
   --animate-water-pan: water-pan 20s ease-in-out infinite alternate;
 }
@@ -16,6 +28,23 @@
 @layer base {
   body {
     @apply bg-background text-foreground antialiased font-sans;
+  }
+
+  /* Spec 2.1: the About dropdown items are in-page anchors, built with smooth
+     scroll and a real URL fragment so /about#team can be linked directly.
+     Guarded by prefers-reduced-motion per spec 8.3, which asks for all
+     animation to stop for users who have motion sensitivity enabled. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* The navigation floats over the page, so an anchor target scrolled flush to
+     the viewport top lands underneath it. */
+  :target,
+  [id] {
+    scroll-margin-top: 7rem;
   }
 }
 

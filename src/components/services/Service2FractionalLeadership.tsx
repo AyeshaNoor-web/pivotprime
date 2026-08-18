@@ -1,30 +1,45 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useSyncExternalStore } from "react";
+import { useRevealOnScroll } from "@/lib/use-reveal-on-scroll";
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/flags";
+import { JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
+import { SEAT_IDS, seatIndexFromHash } from "@/lib/seat-anchors";
+import { FRACTIONAL } from "@/content/services-detail";
+import { CopyProse } from "./SpecCopyBlocks";
+
+// The URL fragment is an external mutable source. useSyncExternalStore is the
+// supported way to read one without a hydration mismatch: the server snapshot is
+// always empty, and React re-reads on the client after hydration. Reading
+// location.hash during render, or syncing it with setState inside an effect,
+// would either mismatch or trigger the cascading render the lint rule flags.
+const subscribeToHash = (onChange: () => void) => {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+};
+const getHash = () => window.location.hash;
+const getServerHash = () => "";
 
 export default function Service2FractionalLeadership() {
-  const [activeSeat, setActiveSeat] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const curveRef = useRef<HTMLDivElement>(null);
+  // Which seat is open is derived from the fragment rather than held
+  // separately, so /services/fractional-coo#cfo opens the CFO seat when opened
+  // cold, and selecting a seat makes the URL shareable. Spec 4.2 calls these
+  // anchors load-bearing: persona pages and the homepage card link into a seat.
+  const hash = useSyncExternalStore(subscribeToHash, getHash, getServerHash);
+  const activeSeat = seatIndexFromHash(hash);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 }
-    );
+  const selectSeat = (index: number) => {
+    // replaceState rather than assigning location.hash: assignment pushes a
+    // history entry per click and makes the browser jump to the element.
+    window.history.replaceState(null, "", `#${SEAT_IDS[index]}`);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  };
+  // Shared so the reveal never hides content from a crawler or from a
+  // visitor who has reduced motion enabled. See the hook for why.
+  const [curveRef, isVisible] = useRevealOnScroll<HTMLDivElement>();
 
-    if (curveRef.current) {
-      observer.observe(curveRef.current);
-    }
 
-    return () => observer.disconnect();
-  }, []);
 
   const SEATS = [
     {
@@ -37,25 +52,25 @@ export default function Service2FractionalLeadership() {
         "Process design, SOPs and operational governance",
         "Supplier, cost and margin discipline",
         "Hiring, team structure and onboarding",
-        "Dashboards and reporting, so decisions are made on numbers",
+        "Dashboards and reporting, so decisions are made on numbers rather than instinct",
         "Managing the delivery team, whether that is your people or ours",
       ],
-      n: "For businesses where the work happens but nothing finishes predictably.",
+      n: "The operating model, the weekly delivery, the team. For businesses where the work happens but nothing finishes predictably.",
     },
     {
-      title: "Chief of Staff",
+      title: "Fractional Chief of Staff",
       short: "Owns follow-through",
       h: "What the Chief of Staff seat covers",
       l: [
         "Translating strategic decisions into work that actually moves",
         "Priority management across functions, and resolving the ones that collide",
         "Preparing the leadership team for the decisions ahead of them",
-        "Chairing the operating rhythm: the meetings, agendas and follow-through",
+        "Chairing and running the operating rhythm: the meetings, the agendas, the follow-through",
         "Managing cross-functional programmes that have no natural owner",
-        "Protecting senior attention, so leadership works on what only they can do",
+        "Protecting senior attention, so the leadership team works on what only they can do",
         "Sitting in the meetings that matter, including board and investor conversations",
       ],
-      n: "For complex organisations where the strategy is right and cannot land on its own.",
+      n: "Translates decisions into movement across functions, manages the priorities that collide, and keeps senior attention on what matters. For complex organisations where the strategy is right and cannot land on its own.",
     },
     {
       title: "Fractional CFO",
@@ -70,7 +85,7 @@ export default function Service2FractionalLeadership() {
         "Budgeting, cost control and supplier terms",
         "Statutory reporting, audit and compliance coordination",
       ],
-      n: "For businesses raising capital, or where the absence of a finance seat is felt every week.",
+      n: "Cash, runway and forecasting, collections, board and investor reporting, and readiness for the next round. For businesses raising capital, or where the founder feels the absence of a finance seat every week.",
     },
   ];
 
@@ -92,15 +107,15 @@ export default function Service2FractionalLeadership() {
           </p>
           
           <div className="flex flex-wrap items-baseline gap-6 mt-8 pt-6 border-t border-white/20">
-            <b className="font-sans font-bold text-2xl text-[#00d76d] tracking-tight">Scoped per engagement</b>
+            <b className="font-sans font-bold text-2xl text-[#00d76d] tracking-tight">Scoped per engagement.</b>
             <span className="text-sm text-[#8fb3a4]">Three-month minimum</span>
           </div>
           <p className="text-[14.5px] text-[#a9c8ba] mt-4 max-w-2xl">
             Priced on the days a month, the seniority of the seat, and how much of the delivery team sits underneath it. We agree all three before anything is quoted.
           </p>
           <div className="mt-8">
-            <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-              Talk to us on WhatsApp
+            <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+              {WHATSAPP_CTA.label}
             </a>
           </div>
         </div>
@@ -189,10 +204,13 @@ export default function Service2FractionalLeadership() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6">
             {SEATS.map((seat, i) => (
-              <div
+              <button
                 key={i}
-                onClick={() => setActiveSeat(i)}
-                className={`border rounded-xl p-5 cursor-pointer transition-all duration-200 ${
+                type="button"
+                id={SEAT_IDS[i]}
+                onClick={() => selectSeat(i)}
+                aria-pressed={activeSeat === i}
+                className={`border rounded-xl p-5 text-left cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009f50] focus-visible:ring-offset-2 ${
                   activeSeat === i
                     ? "border-[#013325] bg-[#013325] text-white shadow-lg -translate-y-1"
                     : "border-[#e3eae6] bg-white text-[#0c1a15] hover:border-[#cfe3d8] hover:-translate-y-1 hover:shadow-md"
@@ -202,33 +220,44 @@ export default function Service2FractionalLeadership() {
                 <p className={`text-[13.5px] m-0 ${activeSeat === i ? "text-[#bfd8cd]" : "text-[#5e6f68]"}`}>
                   {seat.short}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
 
+          {/* All three panels are rendered and the inactive ones hidden, rather
+              than rendering only the active seat. Two thirds of this page's
+              substantive copy, the Chief of Staff and CFO coverage, was absent
+              from the server-rendered HTML because it only existed once a
+              visitor clicked. Spec 4.5: content must not depend on JavaScript
+              having run. The `hidden` attribute keeps it in the document and out
+              of the accessibility tree, so the tab behaviour is unchanged. */}
           <div className="mt-8 pt-8 border-t border-[#e3eae6]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 animate-fade-in">
-              <div>
-                <div className="font-sans font-semibold text-[10.5px] tracking-[0.2em] uppercase text-[#af8943] mb-4">
-                  {SEATS[activeSeat].h}
+            {SEATS.map((seat, si) => (
+              <div
+                key={si}
+                hidden={activeSeat !== si}
+                className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 animate-fade-in"
+              >
+                <div>
+                  <div className="font-sans font-semibold text-[10.5px] tracking-[0.2em] uppercase text-[#af8943] mb-4">
+                    {seat.h}
+                  </div>
+                  <p className="text-[#5e6f68]">{seat.n}</p>
                 </div>
-                <p className="text-[#5e6f68]">
-                  {SEATS[activeSeat].n}
-                </p>
+                <div>
+                  <ul className="space-y-3">
+                    {seat.l.map((item, i) => (
+                      <li key={i} className="flex gap-3 items-start text-[15.5px] text-[#0c1a15]">
+                        <div className="w-[17px] h-[17px] rounded-full bg-[#009f50] flex-shrink-0 mt-1 flex items-center justify-center">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" className="w-[11px] h-[11px]"><path d="M20 6 9 17l-5-5"/></svg>
+                        </div>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div>
-                <ul className="space-y-3">
-                  {SEATS[activeSeat].l.map((item, i) => (
-                    <li key={i} className="flex gap-3 items-start text-[15.5px] text-[#0c1a15]">
-                      <div className="w-[17px] h-[17px] rounded-full bg-[#009f50] flex-shrink-0 mt-1 flex items-center justify-center">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" className="w-2.5 h-2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                      </div>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -270,16 +299,26 @@ export default function Service2FractionalLeadership() {
               The diagnostic will tell you in four minutes, before anyone quotes you anything.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://wa.me/971524401075" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
-                Talk to us on WhatsApp
+              <a href={WHATSAPP_URL} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-[#00d76d] text-[#013325] rounded-full hover:bg-white hover:-translate-y-0.5 transition-all">
+                {WHATSAPP_CTA.label}
               </a>
-              <Link href="/diagnostic" className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
-                Take the 4-minute diagnostic
+              <Link href={JOURNEY_CTA.href} className="inline-flex items-center px-6 py-3 font-semibold text-[15px] bg-transparent text-white border border-white/30 rounded-full hover:border-white transition-colors">
+                {JOURNEY_CTA.label}
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Spec 4.2 WHY THIS EXISTS, restored. The designed page opened straight
+          into the seats, so the argument for a fractional seat at all was
+          missing. See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={FRACTIONAL.whyHeading} paragraphs={FRACTIONAL.why} />
+        </div>
+      </section>
+
     </div>
   );
 }

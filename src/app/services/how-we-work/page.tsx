@@ -1,4 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/content/metadata";
+
+export const metadata: Metadata = pageMetadata("howWeWork");
 
 
 export default function WhatWeDo() {
@@ -7,9 +11,10 @@ export default function WhatWeDo() {
       
       {/* Hero Section */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center py-16 md:py-24">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-6 tracking-tight leading-tight">
-          It’s about doing what works
+        <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-4 tracking-tight leading-tight">
+          How we work
         </h1>
+        <p className="text-2xl md:text-3xl text-mid font-semibold mb-6">It’s about doing what works</p>
         <p className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed">
           At Pivot Prime, we help uncover what’s blocking progress, we align your teams and we turn strategy in to real results. <span className="text-primary font-bold">Without the fluff.</span>
         </p>
@@ -99,7 +104,7 @@ export default function WhatWeDo() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-24 bg-[#093524] text-white px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-24 bg-forest text-white px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-8 leading-tight">
             Most consultants stop at strategy.<br/>
@@ -109,7 +114,7 @@ export default function WhatWeDo() {
             Businesses don’t need more ideas, they need results. With Pivot Prime you get real support, real momentum, and real results.
           </p>
 
-          <div className="bg-[#123e2d] border border-[#21533e] rounded-3xl p-10 md:p-16">
+          <div className="bg-white/5 border border-white/[0.14] rounded-3xl p-10 md:p-16">
             <h3 className="text-6xl md:text-8xl font-bold text-primary mb-4">90%</h3>
             <p className="text-xl font-medium mb-4">of senior executives say they miss goals due to poor execution*</p>
             <p className="text-sm text-gray-400">*Source: Robert S. Kaplan, David P. Norton, Balanced Scorecard</p>
@@ -203,8 +208,8 @@ export default function WhatWeDo() {
                   Designed for founders, senior leaders, and managers navigating complex decisions and people dynamics.
                 </p>
               </div>
-              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow w-fit">
-                BOOK DISCOVERY CALL
+              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
+                Book discovery call
               </Link>
             </div>
 
@@ -212,14 +217,14 @@ export default function WhatWeDo() {
               <div>
                 <h3 className="text-2xl font-bold mb-6">Team building workshops and communication labs</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  We run practical sessions that improve how teams communicate, make decisions, and work together under pressure. Our approach draws on behavioral and personality assessments, neuroscience, and organizational psychology to help teams understand how they think, react, and interact at work.
+                  We run practical sessions that improve how teams communicate, make decisions, and work together under pressure. Our approach draws on behavioural and personality assessments, neuroscience, and organisational psychology to help teams understand how they think, react, and interact at work.
                 </p>
                 <p className="text-black font-medium mb-8">
                   When teams struggle to work well together, progress slows and effort is wasted.
                 </p>
               </div>
-              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow w-fit">
-                BOOK DISCOVERY CALL
+              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
+                Book discovery call
               </Link>
             </div>
           </div>
@@ -288,13 +293,29 @@ export default function WhatWeDo() {
           </div>
         </div>
 
-        <div className="text-center bg-[#093524] text-white p-12 md:p-20 rounded-3xl">
+        {/* Spec 4.6 routing block, at the end of the Pathway. */}
+        <div className="mx-auto mb-12 max-w-3xl rounded-xl border border-forest/10 bg-forest/[0.04] p-8 text-center">
+          <h3 className="mb-3 text-2xl font-bold text-forest">Where this starts</h3>
+          <p className="mb-6 leading-relaxed text-neutral-600">
+            Almost every engagement begins with an Operational Clarity Audit, because we will not
+            take responsibility for outcomes in a business we have not properly diagnosed.
+          </p>
+          <Link
+            href="/services/operational-clarity-audit"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:bg-mid/90"
+          >
+            See what the audit covers
+            <span aria-hidden="true" className="ml-2 text-lg leading-none">&rarr;</span>
+          </Link>
+        </div>
+
+        <div className="text-center bg-forest text-white p-12 md:p-20 rounded-3xl">
           <h3 className="text-3xl md:text-5xl font-extrabold mb-10 leading-tight">
             Stop guessing what is holding growth back,<br/>
             start with a proper diagnosis.
           </h3>
-          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 font-bold tracking-wide uppercase text-white bg-primary hover:bg-primary-dark transition-colors rounded-md shadow-lg group">
-            BOOK YOUR FIRST CONVERSATION <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
+          <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 font-bold tracking-wide uppercase text-white bg-primary hover:bg-neon/90 transition-colors rounded-md shadow-lg group">
+            Book your first conversation <span className="ml-2 font-normal text-xl leading-none group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
       </section>

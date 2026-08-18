@@ -1,34 +1,31 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useCountUp } from "@/lib/use-reveal-on-scroll";
 
-export default function CountUp({ end, suffix = "", prefix = "", duration = 2000 }: { end: number, suffix?: string, prefix?: string, duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          let start = 0;
-          const increment = end / (duration / 16);
-          const animate = () => {
-            start += increment;
-            if (start < end) {
-              setCount(Math.ceil(start));
-              requestAnimationFrame(animate);
-            } else {
-              setCount(end);
-            }
-          };
-          requestAnimationFrame(animate);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [end, duration]);
-  
-  return <span ref={ref}>{prefix}{count}{suffix}</span>;
+/**
+ * Counts a figure up from zero when it scrolls into view. Spec 3.3 and 8.3.
+ *
+ * All behaviour lives in useCountUp, alongside the other reveal primitives, so
+ * the below-the-fold and reduced-motion checks exist once rather than in three
+ * near-identical copies.
+ */
+export default function CountUp({
+  end,
+  suffix = "",
+  prefix = "",
+  duration = 2000,
+}: {
+  end: number;
+  suffix?: string;
+  prefix?: string;
+  duration?: number;
+}) {
+  const [ref, value] = useCountUp<HTMLSpanElement>(end, duration);
+
+  return (
+    <span ref={ref}>
+      {prefix}
+      {value}
+      {suffix}
+    </span>
+  );
 }
