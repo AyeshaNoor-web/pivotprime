@@ -10,19 +10,30 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  /** True when a panel was opened deliberately, by click or keyboard. Hover
+   *  neither opens nor closes while something is pinned. */
+  const [pinned, setPinned] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   // Close an open dropdown on Escape or on a click outside. Without this a
   // keyboard user who opens a menu has no way back out of it.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpenMenu(null);
-        setMobileOpen(false);
-      }
+      if (e.key !== "Escape") return;
+      // Return focus to the trigger, so a keyboard user is not dropped at the
+      // top of the document after closing.
+      const open = openMenu;
+      setOpenMenu(null);
+      setPinned(false);
+      setMobileOpen(false);
+      if (open) triggerRefs.current[open]?.focus();
     };
     const onClick = (e: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenMenu(null);
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenMenu(null);
+        setPinned(false);
+      }
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClick);
@@ -30,16 +41,34 @@ export default function Navbar() {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClick);
     };
-  }, []);
+    // Re-registered when the open menu changes, so Escape knows which trigger to
+    // return focus to. Reading it from a ref during render is not allowed.
+  }, [openMenu]);
 
   const closeAll = () => {
     setOpenMenu(null);
+    setPinned(false);
     setMobileOpen(false);
     setMobileSection(null);
   };
 
+  /**
+   * A disclosure, not a hover menu.
+   *
+   * The previous version set the open menu from onMouseEnter and toggled it from
+   * onClick. By the time the click handler ran, hover had already opened the
+   * panel, so the click read it as open and closed it: on a pointer device the
+   * menu appeared on hover and vanished the instant you clicked the label, and
+   * on touch, where there is no hover, the tap hit the same conflict.
+   *
+   * Click is now authoritative and hover is an enhancement. Opening by click
+   * pins the panel, so moving the pointer away cannot close it, and hover only
+   * acts when nothing is pinned and the device actually has a hovering pointer.
+   * A phone therefore never depends on hover to reach anything.
+   */
   const renderDesktopItem = (item: NavItem) => {
     const isOpen = openMenu === item.label;
+    const panelId = `menu-${item.label.replace(/[^a-z]+/gi, "-").toLowerCase()}`;
 
     if (!item.children) {
       return (
@@ -57,14 +86,36 @@ export default function Navbar() {
       <div
         key={item.label}
         className="relative flex h-full items-center"
-        onMouseEnter={() => setOpenMenu(item.label)}
-        onMouseLeave={() => setOpenMenu(null)}
+        // Only on devices that genuinely hover. A touch browser may synthesise
+        // pointerenter immediately before the tap, which would re-create the
+        // conflict this replaced.
+        onPointerEnter={(e) => {
+          if (e.pointerType !== "mouse" || pinned) return;
+          setOpenMenu(item.label);
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType !== "mouse" || pinned) return;
+          setOpenMenu(null);
+        }}
       >
         <button
           type="button"
           aria-expanded={isOpen}
           aria-haspopup="true"
-          onClick={() => setOpenMenu(isOpen ? null : item.label)}
+          aria-controls={panelId}
+          ref={(el) => {
+            triggerRefs.current[item.label] = el;
+          }}
+          onClick={() => {
+            // Authoritative: it does not matter how the panel came to be open.
+            if (isOpen && pinned) {
+              setOpenMenu(null);
+              setPinned(false);
+            } else {
+              setOpenMenu(item.label);
+              setPinned(true);
+            }
+          }}
           className="flex items-center rounded-sm px-1 py-2 text-sm font-bold tracking-wide text-neutral-900 uppercase transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-mid focus-visible:outline-none"
         >
           {item.label}
@@ -83,21 +134,20 @@ export default function Navbar() {
             entire dropdown out of the server HTML, which left
             /services/how-we-work linked from nowhere: no crawler and no reader
             without JavaScript could reach it. The five other service pages
-            survived only because the homepage cards happen to link them.
-            Found by walking the site rather than checking pages in isolation. */}
-        <div hidden={!isOpen} className="absolute top-full left-0 z-50 w-64 pt-2">
-            <ul className="rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5">
-              {item.children.map((child) => (
-                <li key={child.href}>
-                  <Link
-                    href={child.href}
-                    onClick={closeAll}
-                    className="block px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-primary focus-visible:bg-neutral-50 focus-visible:text-primary focus-visible:outline-none"
-                  >
-                    {child.label}
-                  </Link>
-                </li>
-              ))}
+            survived only because the homepage cards happen to link them. */}
+        <div id={panelId} hidden={!isOpen} className="absolute top-full left-0 z-50 w-64 pt-2">
+          <ul className="rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5">
+            {item.children.map((child) => (
+              <li key={child.href}>
+                <Link
+                  href={child.href}
+                  onClick={closeAll}
+                  className="block px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-primary focus-visible:bg-neutral-50 focus-visible:text-primary focus-visible:outline-none"
+                >
+                  {child.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
