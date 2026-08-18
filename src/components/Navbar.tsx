@@ -156,7 +156,7 @@ export default function Navbar() {
 
   return (
     <nav ref={navRef} className="absolute top-4 right-4 left-4 z-50">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-xl bg-white shadow-md">
+      <div className="mx-auto max-w-7xl rounded-xl bg-white shadow-md">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             <Link href="/" className="flex flex-shrink-0 items-center" onClick={closeAll}>
@@ -199,7 +199,7 @@ export default function Navbar() {
         </div>
 
         {mobileOpen && (
-          <div id="mobile-menu" className="border-t border-neutral-100 bg-white lg:hidden">
+          <div id="mobile-menu" className="border-t border-neutral-100 bg-white lg:hidden rounded-b-xl">
             <div className="space-y-1 px-4 pt-2 pb-6 sm:px-6">
               {NAVIGATION.map((item) => {
                 if (!item.children) {
