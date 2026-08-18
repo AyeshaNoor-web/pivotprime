@@ -237,6 +237,15 @@ const DECISIONS = [
     },
   },
   {
+    what: "the What We Offer heading stays an H2",
+    where: "spec 5.3",
+    run: async (get) => {
+      const html = await (await get("/for-pl-owners")).text();
+      if (/<h1[^>]*>[^<]*What We Offer/.test(html)) return "it is an H1, spec 5.3 says demote to H2";
+      return /<h2[^>]*>[^<]*What We Offer/.test(html) ? null : "heading not found as an H2";
+    },
+  },
+  {
     what: "the six permanent redirects still resolve",
     where: "spec 2.1 and 2.4",
     run: async (get) => {

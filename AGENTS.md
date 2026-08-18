@@ -112,3 +112,22 @@ the page, which is what makes it expensive.
 
 The existing hand-entered files are covered by `npm run audit:copy` and are not
 worth migrating now. This applies to anything new.
+
+### The mechanism for the rule above
+
+An instruction is not enough on its own. `scripts/check-content.mjs` holds a
+`DECISIONS` list: each entry states a decision in one line, names its
+`docs/PENDING-COPY.md` reference, and runs a check that fails when the decision
+stops being true. A failure reads as "this decision was undone", not "this string
+is missing".
+
+The list exists because `/privacy` lost its `noindex` during an unrelated
+refactor and nothing noticed. When you make a decision that lives only as a code
+detail, add it there as well as to `PENDING-COPY`, and prove the check by
+breaking the thing on purpose and watching it fail.
+
+**And check output, never source.** A `grep` of `src/` cannot see an HTML entity.
+Two entries on the live-site-only list were wrong because they were cleared by
+searching source: the spec 2.5 "SME's" typo was in the repo as `SME&apos;s`, and
+a heading recorded as absent everywhere was present on another page. Anything
+cleared by searching source rather than served output is unconfirmed.

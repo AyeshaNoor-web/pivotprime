@@ -195,8 +195,14 @@ treated as unconfirmed.
 ### Section 5.3
 
 "The 'What We Offer' heading is an H1 on this page and an H2 on the other three.
-Demote it to H2." That heading does not exist on the Corporate Leaders page in
-this codebase at all.
+Demote it to H2."
+
+**Nothing to action, but not for the reason first recorded.** The heading does not
+exist on the Corporate Leaders page here, which is the page the demotion targets.
+It does exist on P&L Owners, already as an H2, which is the level the spec asks
+for. The earlier entry said only that it was absent from Corporate Leaders, which
+read as though it were absent everywhere. Now asserted, so it cannot drift to an
+H1 later.
 
 ### Section 6.2
 
