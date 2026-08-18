@@ -131,3 +131,24 @@ Two entries on the live-site-only list were wrong because they were cleared by
 searching source: the spec 2.5 "SME's" typo was in the repo as `SME&apos;s`, and
 a heading recorded as absent everywhere was present on another page. Anything
 cleared by searching source rather than served output is unconfirmed.
+
+## Anything conditionally rendered must still exist in the served HTML
+
+If it renders only while open, active, hovered or scrolled into view, render it
+always and hide it with the `hidden` attribute or CSS. `useState(false)` around
+markup is the shape to avoid.
+
+This pattern has now cost, in order:
+
+- every result figure on the homepage, served as `0`
+- `FadeUp` content, served invisible
+- two thirds of the fractional page, behind a tab
+- both captions of the before-and-after process map
+- **a whole page.** The navigation dropdown rendered only while open, so
+  `/services/how-we-work` was linked from nowhere at all. It resolved, its copy
+  was complete, its metadata was correct, and every check passed on it. The five
+  other service pages were reachable only because the homepage cards happen to
+  link them.
+
+Guarded by `npm run check:links`, which walks the site from the homepage and
+fails when a route in the sitemap is linked from no other page.

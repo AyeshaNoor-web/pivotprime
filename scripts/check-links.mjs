@@ -127,6 +127,52 @@ async function main() {
     }
   }
 
+  // REACHABILITY. Every route the sitemap advertises must be linked from at
+  // least one other served page.
+  //
+  // This exists because /services/how-we-work was linked from nowhere at all.
+  // It resolved, its copy was complete, its metadata was right, and every check
+  // passed on it. Nothing noticed that no crawler and no visitor could arrive.
+  // The five other service pages were reachable only because the homepage cards
+  // happen to link them, which is luck: had that section changed, they would
+  // have orphaned the same way.
+  {
+    const res = await fetch(`${BASE}/sitemap.xml`).catch(() => null);
+    if (!res?.ok) {
+      problems.push({ from: "(sitemap)", href: "/sitemap.xml", why: "could not be fetched" });
+    } else {
+      const xml = await res.text();
+      const advertised = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
+        .map((m) => new URL(m[1]).pathname)
+        .map((p) => (p === "" ? "/" : p));
+
+      // A page is reachable if some OTHER served page links to it.
+      const linkedFrom = new Map();
+      for (const [path, page] of pages) {
+        if (!page.html) continue;
+        for (const m of page.html.matchAll(HREF)) {
+          const target = m[1].replace(BASE, "").split("#")[0];
+          if (!target.startsWith("/")) continue;
+          if (target === path) continue;
+          if (!linkedFrom.has(target)) linkedFrom.set(target, new Set());
+          linkedFrom.get(target).add(path);
+        }
+      }
+
+      for (const route of advertised) {
+        if (route === "/") continue; // the entry point needs no inbound link
+        if (!linkedFrom.has(route) || linkedFrom.get(route).size === 0) {
+          problems.push({
+            from: "(reachability)",
+            href: route,
+            label: "orphan",
+            why: "in the sitemap but linked from no other page, so nobody can reach it",
+          });
+        }
+      }
+    }
+  }
+
   const errors = problems.filter((p) => p.severity !== "note");
   const notes = problems.filter((p) => p.severity === "note");
 
