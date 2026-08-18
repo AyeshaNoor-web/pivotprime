@@ -60,6 +60,9 @@ const stripInstructions = (block) =>
     .replace(/^HEADING,[^-]*-\s*/i, "")
     .replace(/\(TEXT AS PER CARD SHOWN\)/i, "")
     .replace(/\(have this linked to [^)]*\)/i, "")
+    // "Fractional COO #coo\ Owns execution..." embeds the anchor id the builder
+    // must create. The id is an instruction; the sentence after it is the copy.
+    .replace(/\s#[a-z-]+\\?\s*/gi, " ")
     .replace(/\s+/g, " ")
     .trim();
 

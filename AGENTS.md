@@ -75,3 +75,25 @@ one, because the tool built to solve the problem reproduced it:
 
 Before reporting a number a tool produced, find one case in it you can verify by
 hand. If that case is wrong, the number is wrong.
+
+## A gated or deviated decision is not done until the client can see it
+
+The four rules above are all about claiming more than you observed. This one is
+the opposite failure: doing the work correctly and leaving no trace of it where
+the client looks.
+
+Anything gated behind a flag, deferred to a later phase, or built differently
+from the spec needs an entry in `docs/PENDING-COPY.md`, written in the client's
+language rather than ours. The code change is not finished until that entry
+exists.
+
+Spec 3.11 gives the homepage close a supporting sentence promising a scored
+result in four minutes. It is correctly gated, because the contact page cannot
+honour that promise while the diagnostic is off. It was recorded nowhere the
+client would look, so she would have opened her own close section, found the
+standfirst missing, and read it as carelessness rather than as a decision.
+
+`scripts/audit-spec-copy.mjs` holds the gated list in code. Every entry there
+carries a `tracked:` field naming its `PENDING-COPY` entry, and the two are
+cross-checked. That cross-check has now caught two omissions in the record on
+work the code was handling correctly.

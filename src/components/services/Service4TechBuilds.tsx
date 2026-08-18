@@ -119,6 +119,9 @@ export default function Service4TechBuilds() {
             <p className="text-[#a9c8ba] mt-3">
               A business moves at the speed of its biggest constraint. Making everything else faster only builds a longer queue in front of it.
             </p>
+            <p className="text-[#a9c8ba] mt-3">
+              That is the difference between technology that pays for itself and technology that becomes another subscription nobody opens.
+            </p>
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-6 md:p-8 overflow-hidden">
@@ -187,12 +190,12 @@ export default function Service4TechBuilds() {
             <ul className="space-y-3">
               {[
                 "Websites: design, build, maintenance and the digital estate around them",
-                "CRM build and configuration, including migration from spreadsheets",
+                "CRM build and configuration, including migration from spreadsheets and inherited systems",
                 "Workflow automation across sales, operations, finance and fulfilment",
-                "Dashboards and management reporting",
-                "Integrations between systems you already pay for and are not using",
+                "Dashboards and management reporting, so decisions are made on numbers rather than instinct",
+                "Integrations between the systems you already pay for and are not getting value from",
                 "Internal tools and custom applications where nothing off the shelf fits",
-                "AI agents and assistants, where they remove real cost"
+                "AI agents and assistants, where they remove real cost rather than add a feature"
               ].map((item, i) => (
                 <li key={i} className="flex gap-3 items-start text-[15.5px] text-[#0c1a15]">
                   <div className="w-[17px] h-[17px] rounded-full bg-[#009f50] flex-shrink-0 mt-1 flex items-center justify-center">

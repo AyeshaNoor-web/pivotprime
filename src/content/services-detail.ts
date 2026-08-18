@@ -78,3 +78,14 @@ export const MARKET_ENTRY = {
   close:
     "We take clients from a licence to a functioning, properly priced operation that can actually succeed here. If the model says it will not, we would rather tell you before you spend the money than after.",
 };
+
+/** Spec 4.2, blocks 6 to 9 and 14. */
+export const FRACTIONAL = {
+  whyHeading: "Why this exists",
+  why: [
+    "Most growing businesses do not need a permanent executive. They need executive-level expertise for a defined period: someone senior enough to design the operating model, build the processes, set the standard for how things should run, and hold the delivery week to week.",
+    "Every seat works the same way. We build the structure, then hand it to someone cheaper to run. A COO builds the operating model and hands the day to day to an operations lead. A Chief of Staff establishes the operating rhythm and decision rights, then leaves them running without needing a person to enforce them. A CFO builds the reporting, forecasting and controls, then hands them to a finance manager or your accountant.",
+    "In each case you keep the senior judgement without carrying a full-time executive salary, and the structure keeps working long after the intensive phase ends.",
+    "We add seats as demand justifies them.",
+  ],
+};

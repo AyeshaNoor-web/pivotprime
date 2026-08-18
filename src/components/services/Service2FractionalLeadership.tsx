@@ -6,6 +6,8 @@ import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/flags";
 import { JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
 import { SEAT_IDS, seatIndexFromHash } from "@/lib/seat-anchors";
+import { FRACTIONAL } from "@/content/services-detail";
+import { CopyProse } from "./SpecCopyBlocks";
 
 // The URL fragment is an external mutable source. useSyncExternalStore is the
 // supported way to read one without a hydration mismatch: the server snapshot is
@@ -50,25 +52,25 @@ export default function Service2FractionalLeadership() {
         "Process design, SOPs and operational governance",
         "Supplier, cost and margin discipline",
         "Hiring, team structure and onboarding",
-        "Dashboards and reporting, so decisions are made on numbers",
+        "Dashboards and reporting, so decisions are made on numbers rather than instinct",
         "Managing the delivery team, whether that is your people or ours",
       ],
-      n: "For businesses where the work happens but nothing finishes predictably.",
+      n: "The operating model, the weekly delivery, the team. For businesses where the work happens but nothing finishes predictably.",
     },
     {
-      title: "Chief of Staff",
+      title: "Fractional Chief of Staff",
       short: "Owns follow-through",
       h: "What the Chief of Staff seat covers",
       l: [
         "Translating strategic decisions into work that actually moves",
         "Priority management across functions, and resolving the ones that collide",
         "Preparing the leadership team for the decisions ahead of them",
-        "Chairing the operating rhythm: the meetings, agendas and follow-through",
+        "Chairing and running the operating rhythm: the meetings, the agendas, the follow-through",
         "Managing cross-functional programmes that have no natural owner",
         "Protecting senior attention, so leadership works on what only they can do",
         "Sitting in the meetings that matter, including board and investor conversations",
       ],
-      n: "For complex organisations where the strategy is right and cannot land on its own.",
+      n: "Translates decisions into movement across functions, manages the priorities that collide, and keeps senior attention on what matters. For complex organisations where the strategy is right and cannot land on its own.",
     },
     {
       title: "Fractional CFO",
@@ -83,7 +85,7 @@ export default function Service2FractionalLeadership() {
         "Budgeting, cost control and supplier terms",
         "Statutory reporting, audit and compliance coordination",
       ],
-      n: "For businesses raising capital, or where the absence of a finance seat is felt every week.",
+      n: "Cash, runway and forecasting, collections, board and investor reporting, and readiness for the next round. For businesses raising capital, or where the founder feels the absence of a finance seat every week.",
     },
   ];
 
@@ -105,7 +107,7 @@ export default function Service2FractionalLeadership() {
           </p>
           
           <div className="flex flex-wrap items-baseline gap-6 mt-8 pt-6 border-t border-white/20">
-            <b className="font-sans font-bold text-2xl text-[#00d76d] tracking-tight">Scoped per engagement</b>
+            <b className="font-sans font-bold text-2xl text-[#00d76d] tracking-tight">Scoped per engagement.</b>
             <span className="text-sm text-[#8fb3a4]">Three-month minimum</span>
           </div>
           <p className="text-[14.5px] text-[#a9c8ba] mt-4 max-w-2xl">
@@ -307,6 +309,16 @@ export default function Service2FractionalLeadership() {
           </div>
         </div>
       </section>
+
+      {/* Spec 4.2 WHY THIS EXISTS, restored. The designed page opened straight
+          into the seats, so the argument for a fractional seat at all was
+          missing. See docs/PENDING-COPY.md. */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <CopyProse heading={FRACTIONAL.whyHeading} paragraphs={FRACTIONAL.why} />
+        </div>
+      </section>
+
     </div>
   );
 }
