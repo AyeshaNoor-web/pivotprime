@@ -189,6 +189,78 @@ const EXPECTATIONS = [
 ];
 
 /**
+ * Deliberate decisions that live only as a code detail.
+ *
+ * A correct decision with no assertion behind it is one refactor away from being
+ * silently undone. Not hypothetical: migrating /privacy onto the shared metadata
+ * helper dropped its noindex, which has to hold until a UAE-qualified adviser
+ * signs the policy text off. Nothing failed, because nothing was watching.
+ *
+ * Each entry is a decision recorded in prose elsewhere. This is the part that
+ * notices when it stops being true.
+ */
+const DECISIONS = [
+  {
+    what: "/diagnostic 404s while the flag is off",
+    where: "PENDING-COPY 0.1",
+    run: async (get) => {
+      const res = await get("/diagnostic");
+      return res.status === 404 ? null : `expected 404, got ${res.status}`;
+    },
+  },
+  {
+    what: "/privacy carries noindex while the policy is unsigned",
+    where: "PENDING-COPY item 1.8",
+    run: async (get) => {
+      const html = await (await get("/privacy")).text();
+      return /<meta name="robots" content="[^"]*noindex/.test(html)
+        ? null
+        : "no noindex, but the policy text is not signed off";
+    },
+  },
+  {
+    what: "the sitemap excludes the gated diagnostic",
+    where: "PENDING-COPY 0.1",
+    run: async (get) => {
+      const xml = await (await get("/sitemap.xml")).text();
+      return xml.includes("/diagnostic") ? "sitemap lists the gated route" : null;
+    },
+  },
+  {
+    what: "robots.txt disallows the gated diagnostic and the API",
+    where: "spec 4.5",
+    run: async (get) => {
+      const txt = await (await get("/robots.txt")).text();
+      if (!txt.includes("Disallow: /api/")) return "does not disallow /api/";
+      if (!txt.includes("Disallow: /diagnostic")) return "does not disallow the gated route";
+      return txt.includes("Sitemap:") ? null : "does not point at the sitemap";
+    },
+  },
+  {
+    what: "the six permanent redirects still resolve",
+    where: "spec 2.1 and 2.4",
+    run: async (get) => {
+      const pairs = [
+        ["/what-we-do", "/services/how-we-work"],
+        ["/who-we-are", "/about"],
+        ["/our-blog", "/insights"],
+        ["/for-corporate-owners", "/for-pl-owners"],
+        ["/contact-us", "/contact"],
+        ["/services/fractional-leadership", "/services/fractional-coo"],
+      ];
+      for (const [from, to] of pairs) {
+        const res = await get(from, { redirect: "manual" });
+        if (res.status !== 308) return `${from} returned ${res.status}, expected 308`;
+        const location = res.headers.get("location") ?? "";
+        if (!location.endsWith(to)) return `${from} goes to ${location}, expected ${to}`;
+      }
+      return null;
+    },
+  },
+];
+
+
+/**
  * Copy that must NOT appear.
  *
  * A forbidden assertion is only meaningful if it fires when the content IS
@@ -342,6 +414,28 @@ async function main() {
   for (const { route, assert } of FORBIDDEN) {
     const page = await fetchPage(route);
     if (page) check(page, assert, false);
+  }
+
+  // Deliberate decisions that would otherwise be undone silently.
+  {
+    const fetchRaw = (path, init) => fetch(`${BASE}${path}`, init);
+    for (const decision of DECISIONS) {
+      assertions += 1;
+      let problem;
+      try {
+        problem = await decision.run(fetchRaw);
+      } catch (err) {
+        problem = `check threw: ${err.message}`;
+      }
+      if (problem) {
+        failures.push({
+          route: "decision",
+          kind: "structure",
+          spec: decision.where,
+          detail: `${decision.what} — ${problem}`,
+        });
+      }
+    }
   }
 
   // SEO, spec 4.5: a unique title and description on every page, a canonical,

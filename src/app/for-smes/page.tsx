@@ -42,7 +42,7 @@ export default function ForSMEs() {
               </div>
               <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 flex flex-col justify-center">
                 <p className="text-primary font-bold text-lg mb-4">This is a 15-20 day analysis.</p>
-                <p className="text-black font-medium">This is where most SME&apos;s start. It creates a clear baseline before structural or operational changes are made.</p>
+                <p className="text-black font-medium">This is where most SMEs start. It creates a clear baseline before structural or operational changes are made.</p>
               </div>
             </div>
           </div>

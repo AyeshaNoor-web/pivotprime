@@ -174,6 +174,13 @@ Each was checked by looking for the **corrected** text, not by confirming the
 faulty text was absent. Those are different questions, and conflating them is
 what let the persona pages ship the spec's own working notes as live copy.
 
+**One entry on this list was wrong.** Correction 5 was recorded as live-site only
+because a search of the source for `SME's` found nothing. The text was there as
+`SME&apos;s`, which no literal search of the source will ever match. Checks that
+read the served page do not have this blind spot, which is why the pre-launch
+pass found it. Anything checked by grepping source rather than output should be
+treated as unconfirmed.
+
 ### Section 2.5, typographical corrections
 
 | # | Correction | Status here |
@@ -182,7 +189,7 @@ what let the persona pages ship the spec's own working notes as live copy.
 | 2 | "intergrated execution roadmap" to "integrated" | **Live-site only.** Neither spelling appears anywhere in this codebase, so there is no sentence to correct |
 | 3 | "The team is stretched. misaligned, or burned out" | **Applied**, and the corrected wording is carried into the rebuilt 3.5 patterns list |
 | 4 | "Legacy processes drain time and money." trailing stop | **Superseded.** Spec 3.5 rewrites the patterns list and that pattern is not in it, so the sentence no longer exists to punctuate |
-| 5 | "This is where most SME's start" to "SMEs" | **Live-site only.** Neither version appears in this codebase |
+| 5 | "This is where most SME's start" to "SMEs" | **Applied.** Previously recorded here as live-site only, wrongly. The faulty text was in this repo all along as `SME&apos;s`, and the audit that cleared it grepped the source for a literal apostrophe. An HTML entity is invisible to that search. Found by the pre-launch checks, which read the served page rather than the source |
 | 6 | "We understand human behavior" to "behaviour" | **Applied.** The faulty version was live in this repo |
 
 ### Section 5.3
