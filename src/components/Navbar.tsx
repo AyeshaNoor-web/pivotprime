@@ -79,10 +79,13 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {isOpen && (
-          // White menu, per the annotation on spec 7.2: "keep the hover menu
-          // white in pivot prime design please as original website".
-          <div className="absolute top-full left-0 z-50 w-64 pt-2">
+        {/* Always rendered, hidden when closed. Rendering only on open kept the
+            entire dropdown out of the server HTML, which left
+            /services/how-we-work linked from nowhere: no crawler and no reader
+            without JavaScript could reach it. The five other service pages
+            survived only because the homepage cards happen to link them.
+            Found by walking the site rather than checking pages in isolation. */}
+        <div hidden={!isOpen} className="absolute top-full left-0 z-50 w-64 pt-2">
             <ul className="rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5">
               {item.children.map((child) => (
                 <li key={child.href}>
@@ -95,9 +98,8 @@ export default function Navbar() {
                   </Link>
                 </li>
               ))}
-            </ul>
-          </div>
-        )}
+          </ul>
+        </div>
       </div>
     );
   };
