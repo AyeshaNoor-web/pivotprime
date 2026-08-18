@@ -214,6 +214,36 @@ const EXPECTATIONS = [
  * Every gated assertion must fail under that build. If one passes, it is dead
  * weight and needs a better needle.
  */
+/**
+ * Tab sets, accordions and toggles: every panel must be in the served HTML,
+ * including the inactive ones.
+ *
+ * A component that renders only its active panel hides the rest from crawlers
+ * and from anyone whose JavaScript has not run. Two thirds of the fractional
+ * page's substance was invisible that way, and it is a silent failure because
+ * the page looks complete in a browser.
+ *
+ * These count panels rather than checking their copy, so reverting to
+ * one-at-a-time rendering fails even if the copy is otherwise intact.
+ */
+const PANEL_SETS = [
+  {
+    route: "/services/fractional-coo",
+    spec: "4.2",
+    pattern: /What the [^<]*seat covers/g,
+    expect: 3,
+    why: "all three seat panels, not only the active one",
+  },
+  {
+    route: "/services/operational-clarity-audit",
+    spec: "4.1",
+    pattern: /(Seven steps, four handoffs|Six steps, one direction)/g,
+    expect: 2,
+    why: "both states of the before-and-after map",
+  },
+];
+
+
 const FORBIDDEN = [
   {
     route: "/",
@@ -311,6 +341,22 @@ async function main() {
   for (const { route, assert } of FORBIDDEN) {
     const page = await fetchPage(route);
     if (page) check(page, assert, false);
+  }
+
+  // Every panel of a tab set or toggle, including the inactive ones.
+  for (const { route, spec, pattern, expect, why } of PANEL_SETS) {
+    const page = await fetchPage(route);
+    if (!page) continue;
+    assertions += 1;
+    const found = (page.html.match(pattern) ?? []).length;
+    if (found !== expect) {
+      failures.push({
+        route,
+        kind: "structure",
+        spec,
+        detail: `expected ${expect} panels in the served HTML (${why}), found ${found}`,
+      });
+    }
   }
 
   // Structural: exactly one H1, and the H2 sequence in document order.

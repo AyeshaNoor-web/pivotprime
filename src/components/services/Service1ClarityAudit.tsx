@@ -157,10 +157,16 @@ export default function Service1ClarityAudit() {
               })}
             </div>
             
+            {/* Both captions render, with the inactive one hidden, so neither
+                half of the before-and-after is missing from the served HTML.
+                Same treatment as the seat panels on the fractional page. */}
             <p className="text-[14px] text-[#5e6f68] mt-6 min-h-[44px] max-w-2xl">
-              {mapState === 1
-                ? "Six steps, one direction, every one owned. Same business, same people. What changed is that the work now only moves forwards, and the two steps that existed to fix earlier mistakes are gone."
-                : "Seven steps, four handoffs that double back, and two that nobody owns. This is what most businesses look like when you actually map them rather than describe them."}
+              <span hidden={mapState !== 0}>
+                {"Seven steps, four handoffs that double back, and two that nobody owns. This is what most businesses look like when you actually map them rather than describe them."}
+              </span>
+              <span hidden={mapState !== 1}>
+                {"Six steps, one direction, every one owned. Same business, same people. What changed is that the work now only moves forwards, and the two steps that existed to fix earlier mistakes are gone."}
+              </span>
             </p>
           </div>
         </div>

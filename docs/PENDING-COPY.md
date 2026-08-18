@@ -229,6 +229,77 @@ which is what `npm run check:overflow` and `npm run check:content` now guard.
 
 ---
 
+## 1c. Copy that was rewritten rather than cut — **for Iram**
+
+This is separate from anything missing, because the two need different reactions.
+A sentence that was cut leaves a hole somebody eventually notices. A sentence
+that was rewritten leaves a page that reads perfectly well and no longer says
+what you wrote. Nothing about the page looks wrong.
+
+All of the below has been restored to your wording. Nothing here needs a decision
+unless you disagree with a restoration.
+
+### The two that change what the page sells
+
+**1. The audit lost its name.** Spec 4.4 routes an uncertain visitor with "start
+with an **Operational Clarity Audit**, and we will tell you honestly whether a
+build is the right answer". The page shipped "start with **an audit**". The named
+service became a common noun, on the page whose job is routing people into it,
+and it is the only priced offer on the site.
+
+**2. The sentence where you turn work down was deleted.** Spec 4.5 reads "We are
+not interested in beginning a UAE entry that will not make money in the UAE." It
+was not on the page at all. It is the strongest line in that section, because it
+is the only place the firm says no.
+
+Both read as blunt, which is presumably why they went. Blunt was the point.
+
+### The rest, restored
+
+| Your wording | What shipped |
+|---|---|
+| so **the leadership team** works on what only they can do | so **leadership** works on what only they can do |
+| Dashboards and reporting, so decisions are made on numbers **rather than instinct** | …made on numbers |
+| **Chairing and running** the operating rhythm: **the** meetings, **the** agendas, **the** follow-through | Chairing the operating rhythm: the meetings, agendas and follow-through |
+| **Fractional** Chief of Staff | Chief of Staff |
+| migration from spreadsheets **and inherited systems** | migration from spreadsheets |
+| Dashboards and management reporting, **so decisions are made on numbers rather than instinct** | Dashboards and management reporting |
+| Integrations between **the** systems you already pay for and **are not getting value from** | …and are not using |
+| AI agents and assistants, where they remove real cost **rather than add a feature** | …where they remove real cost |
+| every assumption **of the entry** priced in | every assumption priced in |
+
+Two further sentences had gone entirely: spec 4.4's "So, before we build anything
+we find out where the business is actually losing time, margin or control, and
+then we build at that point", and the three seat descriptions on 4.2 had each
+lost their middle sentence, the one saying what the seat actually covers.
+
+### Why this was not caught sooner
+
+The check that compares the site against your document originally matched on the
+opening clause of each block. A sentence whose first few words survived passed,
+however much of the rest had been changed. It now matches the whole block, which
+found ten rewrites and three deletions that the earlier version had approved.
+
+---
+
+## 1d. Design against spec, resolved toward the spec — **for Iram**
+
+Three service pages were built from the mockups rather than from your document,
+so in places the designer's captions had replaced your copy: spec 4.3's five
+seats, each a full paragraph, existed on the page only as two-word labels reading
+"drives delivery" and "owns the numbers".
+
+**Your copy is restored and the designs are kept.** Nothing your designer built
+has been removed. On the Build and Place diagram the role names stay, because
+they identify the parts of the picture; only the descriptor line under each was
+removed, because the cards now carry the same idea in full and printing it twice
+reads as a mistake.
+
+If you want a diagram to carry more once you have seen the page, that is a
+conversation. It was not a decision to take on your behalf now.
+
+---
+
 ## 2. Spec contradictions, logged and worked around
 
 ### 2.1 The fractional service slug — **logged, decided**
