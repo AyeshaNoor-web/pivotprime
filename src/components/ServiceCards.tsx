@@ -51,7 +51,7 @@ export default function ServiceCards() {
         className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-4 pt-1 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 md:pb-0 md:pt-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {SERVICES.map((service, i) => (
+        {SERVICES.map((service) => (
           <li
             key={service.slug}
             className="flex flex-shrink-0 w-[84vw] max-w-[340px] snap-center md:w-auto md:max-w-none md:flex-shrink"
@@ -60,14 +60,8 @@ export default function ServiceCards() {
               href={service.href}
               className="group frosted-card-light flex w-full flex-col rounded-2xl p-7 sm:p-8 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:border-mid/30 focus-visible:ring-2 focus-visible:ring-mid focus-visible:ring-offset-2 focus-visible:outline-none"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span
-                  aria-hidden="true"
-                  className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-forest/5 text-xs font-bold tracking-wider text-forest"
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-[11px] font-semibold text-mid/80 uppercase tracking-wider md:hidden">
+              <div className="flex items-center justify-end mb-2 md:hidden">
+                <span className="text-[11px] font-semibold text-mid/80 uppercase tracking-wider">
                   Swipe →
                 </span>
               </div>

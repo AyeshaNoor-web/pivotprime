@@ -81,10 +81,7 @@ export default function Service4TechBuilds() {
         <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.09)_1px,transparent_1px)] [background-size:28px_28px]" />
         
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <span className="block font-sans font-semibold text-[10.5px] tracking-[0.24em] uppercase text-[#00d76d] mb-4">
-            Service four
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mt-4 mb-6 max-w-2xl font-sans text-white">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-2xl font-sans text-white">
             Technology <span className="text-[#00d76d]">Builds.</span>
           </h1>
           <p className="text-[#bfd8cd] text-lg max-w-2xl">
