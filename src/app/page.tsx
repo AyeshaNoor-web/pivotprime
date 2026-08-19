@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 3.1 Hero. REPLACE. Background is kept: spec says it works and it stays. */}
-      <section className="relative flex min-h-[88vh] items-center px-4 pt-32 pb-24 sm:px-6 md:pt-44 md:pb-32 lg:px-8">
+      <section className="relative flex min-h-[92vh] items-center px-4 pt-32 pb-20 sm:px-6 md:pt-40 md:pb-28 lg:px-8">
         {/* overflow-hidden contains the water-pan animation, which scales the
             image to 1.08. Without it the scaled image is wider than the
             viewport and the whole document scrolls sideways, at every
@@ -44,33 +44,41 @@ export default function Home() {
             className="animate-water-pan object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-forest/65 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-forest/75 backdrop-blur-[1.5px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,215,109,0.12),transparent_60%)] pointer-events-none" />
         </div>
 
         {/* Wider than the old max-w-5xl: the annotation on 3.1 asks for text to
             run as far across the screen as it reasonably can. */}
         <div className="relative z-10 mx-auto w-full max-w-6xl text-white">
-          <h1 className="mb-6 max-w-5xl text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 backdrop-blur-md shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-neon animate-pulse" />
+            <span className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-white/90">
+              Interim Leadership &amp; Operational Execution
+            </span>
+          </div>
+
+          <h1 className="max-w-5xl text-4xl leading-[1.08] font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white">
             {HERO.heading}
           </h1>
 
           {/* Set noticeably larger than the paragraph beneath it. Spec 3.1:
               this sentence is doing the most work on the page. */}
-          <p className="mb-6 max-w-4xl text-2xl leading-snug font-semibold text-white/95 sm:text-3xl md:text-4xl">
+          <p className="mt-6 max-w-4xl text-2xl leading-snug font-bold text-white/95 sm:text-3xl md:text-4xl">
             {HERO.lead}
           </p>
 
-          <p className="mb-10 max-w-3xl text-base leading-relaxed text-white/85 md:text-lg">
+          <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/80 md:text-lg">
             {HERO.body}
           </p>
 
           {/* No WhatsApp CTA here, deliberately. Spec 3.1: "Nobody gets in touch
               before they know what is on offer." The conversation CTAs appear
               further down once the visitor has seen the services and the proof. */}
-          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Link
               href={HERO_CTA.href}
-              className="inline-flex items-center justify-center rounded-full bg-neon px-8 py-4 text-xs font-bold tracking-wider text-forest uppercase shadow-lg transition-all hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-full bg-neon px-9 py-4 text-xs font-bold tracking-wider text-forest uppercase shadow-xl transition-all duration-200 hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
             >
               {HERO_CTA.label}
             </Link>
@@ -79,7 +87,7 @@ export default function Home() {
                 navigation. Spec 3.1. */}
             <a
               href={HERO.secondaryHref}
-              className="inline-flex items-center justify-center rounded-full border border-white/40 backdrop-blur-md px-8 py-4 text-xs font-bold tracking-wider text-white uppercase transition-all hover:border-neon hover:text-neon hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/[0.06] backdrop-blur-md px-9 py-4 text-xs font-bold tracking-wider text-white uppercase transition-all duration-200 hover:bg-white/15 hover:border-white/50 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
             >
               {HERO.secondaryLabel}
             </a>
@@ -93,6 +101,31 @@ export default function Home() {
               {HERO.diagnosticExplainer}
             </p>
           )}
+
+          {/* 3 Executive Pillars Highlights Bar */}
+          <div className="mt-14 pt-8 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="flex items-start gap-3">
+              <span className="text-neon text-sm font-bold mt-0.5">01</span>
+              <div>
+                <h4 className="text-sm font-bold text-white tracking-wide">Actuarial Grounding</h4>
+                <p className="text-xs text-white/70 mt-1 leading-relaxed">Mathematical discipline on margins, risk, and unit economics.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-neon text-sm font-bold mt-0.5">02</span>
+              <div>
+                <h4 className="text-sm font-bold text-white tracking-wide">Fractional C-Suite</h4>
+                <p className="text-xs text-white/70 mt-1 leading-relaxed">Interim COO, CFO &amp; Chief of Staff leadership on demand.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-neon text-sm font-bold mt-0.5">03</span>
+              <div>
+                <h4 className="text-sm font-bold text-white tracking-wide">Turnkey Delivery</h4>
+                <p className="text-xs text-white/70 mt-1 leading-relaxed">We stay until the operations, hiring, and tools run predictably.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
