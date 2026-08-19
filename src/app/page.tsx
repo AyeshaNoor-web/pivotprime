@@ -27,12 +27,9 @@ export const metadata: Metadata = pageMetadata("home");
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* 3.1 Hero. REPLACE. Background is kept: spec says it works and it stays. */}
-      <section className="relative flex min-h-[85vh] items-center px-4 pt-32 pb-20 sm:px-6 md:pt-40 md:pb-24 lg:px-8">
-        {/* overflow-hidden contains the water-pan animation, which scales the
-            image to 1.08. Without it the scaled image is wider than the
-            viewport and the whole document scrolls sideways, at every
-            breakpoint including desktop. */}
+      {/* 3.1 Hero */}
+      <section className="relative flex min-h-[100svh] items-center px-4 pt-28 pb-16 sm:px-6 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28 lg:px-8">
+        {/* Background — layered gradient lets the wave texture breathe */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src="/home-banner.jpg"
@@ -42,55 +39,61 @@ export default function Home() {
             className="animate-water-pan object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-forest/65 backdrop-blur-[2px]" />
+          {/* Bottom-heavy gradient: bright at top, darker at bottom so text always reads */}
+          <div className="absolute inset-0 bg-gradient-to-b from-forest/50 via-forest/60 to-forest/85" />
+          {/* Subtle radial vignette on left where text lives */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_0%_50%,rgba(1,51,37,0.35),transparent)]" />
         </div>
 
-        {/* Wider than the old max-w-5xl: the annotation on 3.1 asks for text to
-            run as far across the screen as it reasonably can. */}
         <div className="relative z-10 mx-auto w-full max-w-6xl text-white">
-          <h1 className="max-w-5xl text-4xl leading-[1.08] font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white">
+          {/* Eyebrow */}
+          <span className="mb-6 block text-xs font-bold tracking-[0.22em] text-neon uppercase">
+            Operations · Strategy · Execution
+          </span>
+
+          {/* Neon accent rule */}
+          <div className="mb-6 h-[3px] w-12 rounded-full bg-neon" aria-hidden="true" />
+
+          <h1 className="max-w-4xl text-[2.6rem] leading-[1.06] font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
             {HERO.heading}
           </h1>
 
-          {/* Set noticeably larger than the paragraph beneath it. Spec 3.1:
-              this sentence is doing the most work on the page. */}
-          <p className="mt-8 max-w-4xl text-2xl leading-snug font-semibold text-white/95 sm:text-3xl md:text-4xl">
+          {/* Lead — the most important sentence */}
+          <p className="mt-6 max-w-2xl text-xl leading-snug font-semibold text-white/95 sm:text-2xl md:text-3xl">
             {HERO.lead}
           </p>
 
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/85 md:text-lg">
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base md:text-lg">
             {HERO.body}
           </p>
 
-          {/* No WhatsApp CTA here, deliberately. Spec 3.1: "Nobody gets in touch
-              before they know what is on offer." The conversation CTAs appear
-              further down once the visitor has seen the services and the proof. */}
-          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          {/* CTAs */}
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <Link
               href={HERO_CTA.href}
-              className="inline-flex items-center justify-center rounded-full bg-neon px-8 py-4 text-xs font-bold tracking-wider text-forest uppercase shadow-lg transition-all duration-200 hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-full bg-neon px-7 py-3.5 text-xs font-bold tracking-wider text-forest uppercase shadow-lg transition-all duration-200 hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
             >
-              {HERO_CTA.label}
+              Book a Consultation
             </Link>
 
-            {/* Visually secondary, and an in-page anchor rather than a
-                navigation. Spec 3.1. */}
             <a
               href={HERO.secondaryHref}
-              className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/[0.08] backdrop-blur-md px-8 py-4 text-xs font-bold tracking-wider text-white uppercase transition-all duration-200 hover:border-white/60 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/[0.08] backdrop-blur-md px-7 py-3.5 text-xs font-bold tracking-wider text-white uppercase transition-all duration-200 hover:border-white/60 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
             >
               {HERO.secondaryLabel}
             </a>
           </div>
 
-          {/* Only rendered when the diagnostic is live: it names a four-minute
-              assessment and an immediate score, neither of which stage one
-              ships. */}
           {DIAGNOSTIC_ENABLED && (
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/75">
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70">
               {HERO.diagnosticExplainer}
             </p>
           )}
+
+          {/* Social proof micro-line */}
+          <p className="mt-10 text-xs text-white/50 tracking-wide">
+            Trusted by SMEs across insurance, fintech, wellness &amp; retail.
+          </p>
         </div>
       </section>
 
@@ -288,27 +291,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3.7 The person behind it. NEW. Two columns on desktop with the portrait
-          right; on mobile the photo comes first, per the annotation. The
-          portrait has not been supplied, so this renders single-column rather
-          than with stock imagery: spec 8.2 says nothing is better than stock
-          here. Spec 3.7. */}
+      {/* 3.7 The person behind it. Two columns always: portrait right on
+          desktop, above the copy on mobile. When the portrait file has not
+          yet been supplied the right column shows a branded placeholder so
+          the layout does not collapse and the two-column intent is preserved.
+          Spec 8.2: nothing is better than stock, so the placeholder uses
+          initials + brand colour rather than any photography. Spec 3.7. */}
       <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
-        <div
-          className={`mx-auto max-w-6xl ${FOUNDER.portrait ? "grid items-center gap-12 md:grid-cols-2" : "max-w-4xl"}`}
-        >
-          {FOUNDER.portrait && (
-            <div className="order-first md:order-last">
-              <Image
-                src={FOUNDER.portrait.src}
-                alt={FOUNDER.portrait.alt}
-                width={720}
-                height={900}
-                className="w-full rounded-2xl object-cover"
-              />
-            </div>
-          )}
-
+        <div className="mx-auto max-w-6xl grid items-center gap-12 md:grid-cols-2">
+          {/* Copy column — left on desktop */}
           <div>
             <h2 className="mb-8 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
               {FOUNDER.heading}
@@ -330,6 +321,42 @@ export default function Home() {
               </span>
             </Link>
           </div>
+
+          {/* Portrait column — right on desktop, top on mobile */}
+          <div className="order-first md:order-last">
+            {FOUNDER.portrait ? (
+              <Image
+                src={FOUNDER.portrait.src}
+                alt={FOUNDER.portrait.alt}
+                width={720}
+                height={900}
+                className="w-full rounded-2xl object-cover"
+              />
+            ) : (
+              /* Placeholder: shown until Iram supplies the Arabian Mirror
+                 portrait at full resolution (spec 8.1 / item 1.9).
+                 Uses brand colours and initials — no stock imagery. */
+              <div
+                aria-label="Portrait of Iram Kauser — image coming soon"
+                className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-2xl bg-forest"
+              >
+                {/* Subtle dot-grid texture, matching the dark section above */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:24px_24px]"
+                />
+                <div className="relative z-10 flex flex-col items-center gap-5 text-center px-8">
+                  {/* Initials badge */}
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-neon/60 bg-neon/10 text-3xl font-extrabold tracking-tight text-neon select-none">
+                    IK
+                  </div>
+                  <p className="text-sm font-semibold text-white/60 uppercase tracking-widest">
+                    Portrait coming soon
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
@@ -350,21 +377,68 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3.10 How we are paid. NEW. Built from the spec's own block. No
-          percentage or formula is published, as 3.10 requires. Awaiting Iram's
-          confirmation of the wording before launch, not before build. */}
-      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-            {HOW_WE_ARE_PAID.heading}
-          </h2>
-          <p className="mb-8 text-xl font-semibold text-mid md:text-2xl">{HOW_WE_ARE_PAID.lead}</p>
-          <div className="space-y-5">
-            {HOW_WE_ARE_PAID.body.map((paragraph) => (
-              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-neutral-600 md:text-lg">
-                {paragraph}
-              </p>
-            ))}
+      {/* 3.10 How we are paid. Dark card treatment — the performance-linked
+          model is a differentiator and deserves visual weight. No percentage
+          or formula published per spec 3.10. */}
+      <section className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="relative overflow-hidden rounded-3xl bg-forest px-6 py-12 sm:px-10 sm:py-16 md:px-16 md:py-20">
+            {/* Dot-grid texture */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:26px_26px] pointer-events-none"
+            />
+
+            {/* Content */}
+            <div className="relative z-10 grid gap-10 md:grid-cols-2 md:gap-16 md:items-start">
+              {/* Left — heading block */}
+              <div>
+                <span className="block text-xs font-bold tracking-[0.22em] text-neon uppercase mb-4">
+                  Chapter 04 — Fees
+                </span>
+                <div className="mb-5 h-[3px] w-10 rounded-full bg-neon" aria-hidden="true" />
+                <h2 className="text-3xl font-extrabold tracking-tight text-white leading-tight md:text-4xl">
+                  {HOW_WE_ARE_PAID.heading}
+                </h2>
+
+                {/* Lead sentence — neon highlight */}
+                <p className="mt-5 text-lg font-semibold leading-snug text-neon md:text-xl">
+                  {HOW_WE_ARE_PAID.lead}
+                </p>
+
+                {/* Outcome badge */}
+                <div className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-neon/30 bg-neon/10 px-4 py-2">
+                  <span className="h-2 w-2 rounded-full bg-neon flex-shrink-0" aria-hidden="true" />
+                  <span className="text-xs font-bold tracking-wider text-neon uppercase">
+                    Performance-linked fees
+                  </span>
+                </div>
+              </div>
+
+              {/* Right — body copy */}
+              <div className="space-y-5">
+                {HOW_WE_ARE_PAID.body.map((paragraph) => (
+                  <p
+                    key={paragraph.slice(0, 40)}
+                    className="leading-relaxed text-white/80 text-sm sm:text-base"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+
+                {/* Bottom strip — what it means in practice */}
+                <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.06] p-5 flex gap-4 items-start">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-neon/15 text-neon">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-white/70 leading-relaxed">
+                    Every engagement starts with a measurement baseline. That baseline is what our outcome-linked fee is held against.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

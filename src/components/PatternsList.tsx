@@ -42,7 +42,7 @@ export default function PatternsList() {
               <button
                 type="button"
                 onClick={() => toggleItem(i)}
-                className={`group flex w-full sm:w-auto items-center gap-3 rounded-2xl px-5 py-3.5 text-left text-sm sm:text-base font-semibold transition-all duration-200 border cursor-pointer ${
+                className={`group flex w-full sm:w-auto items-center gap-3 rounded-2xl px-4 py-3 sm:px-5 sm:py-3.5 text-left text-sm font-semibold transition-all duration-200 border cursor-pointer ${
                   isChecked
                     ? "bg-forest text-white border-forest shadow-md scale-[1.02] ring-2 ring-neon/40"
                     : "frosted-card-light text-forest/90 border-forest/15 hover:border-mid/40 hover:bg-forest/[0.04]"
@@ -65,31 +65,27 @@ export default function PatternsList() {
         })}
       </ul>
 
-      {/* Dynamic Resolution CTA Bar */}
-      <div
-        className={`mt-8 overflow-hidden rounded-2xl bg-forest p-6 text-white shadow-xl border border-white/10 transition-all duration-300 ${
-          selectedCount > 0
-            ? "max-h-40 opacity-100 translate-y-0"
-            : "max-h-24 opacity-80"
-        }`}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-neon">
+      {/* Dynamic Resolution CTA Bar — stacks vertically on mobile */}
+      <div className="mt-8 rounded-2xl bg-forest p-5 sm:p-6 text-white shadow-xl border border-white/10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Label + description */}
+          <div className="min-w-0">
+            <p className="text-xs font-bold uppercase tracking-wider text-neon leading-tight">
               {selectedCount > 0
                 ? `${selectedCount} Operational Blocker${selectedCount > 1 ? "s" : ""} Identified`
                 : "Select the symptoms that sound familiar"}
             </p>
-            <p className="text-sm sm:text-base text-white/90 font-medium mt-0.5">
+            <p className="text-sm text-white/90 font-medium mt-1 leading-snug">
               {selectedCount > 0
                 ? "We solve these exact bottlenecks with structured operating models."
                 : "Tap any blockers above to see how we structure the fix."}
             </p>
           </div>
 
+          {/* Full-width on mobile, auto-width on sm+ */}
           <Link
             href={contactHref}
-            className="inline-flex items-center justify-center self-start sm:self-center px-6 py-2.5 rounded-full text-sm font-bold bg-neon text-forest hover:bg-white transition-all shadow-md flex-shrink-0"
+            className="inline-flex w-full sm:w-auto flex-shrink-0 items-center justify-center px-6 py-3 rounded-full text-sm font-bold bg-neon text-forest hover:bg-white transition-all shadow-md"
           >
             Discuss Your Fix →
           </Link>

@@ -31,7 +31,7 @@ export default function Service3BuildPlace() {
   return (
     <div className="animate-fade-in">
       {/* Hero Section */}
-      <header className="bg-[#013325] text-white relative overflow-hidden py-16 md:py-24">
+      <header className="bg-[#013325] text-white relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24">
         <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.09)_1px,transparent_1px)] [background-size:28px_28px]" />
         
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
