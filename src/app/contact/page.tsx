@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/content/metadata";
 import EnquiryForm from "@/components/EnquiryForm";
@@ -63,7 +64,9 @@ export default async function Contact({
 
             {/* Right Column: Enquiry Form */}
             <div className="lg:col-span-6">
-              <EnquiryForm initialStatus={sent ? "sent" : null} initialError={error} />
+              <Suspense fallback={<div className="h-96 rounded-2xl bg-neutral-100/50 animate-pulse" />}>
+                <EnquiryForm initialStatus={sent ? "sent" : null} initialError={error} />
+              </Suspense>
             </div>
 
           </div>

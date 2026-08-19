@@ -21,7 +21,15 @@ export default function PatternsList() {
     setSelected((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
-  const selectedCount = Object.values(selected).filter(Boolean).length;
+  const selectedItems = PATTERNS.items.filter((_, i) => selected[i]);
+  const selectedCount = selectedItems.length;
+
+  const contactHref = selectedCount > 0
+    ? `/contact?message=${encodeURIComponent(
+        "I would like to discuss fixing these operational bottlenecks:\n• " +
+        selectedItems.join("\n• ")
+      )}`
+    : "/contact";
 
   return (
     <div className="relative">
@@ -80,7 +88,7 @@ export default function PatternsList() {
           </div>
 
           <Link
-            href="/contact"
+            href={contactHref}
             className="inline-flex items-center justify-center self-start sm:self-center px-6 py-2.5 rounded-full text-sm font-bold bg-neon text-forest hover:bg-white transition-all shadow-md flex-shrink-0"
           >
             Discuss Your Fix →

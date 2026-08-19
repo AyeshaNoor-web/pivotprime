@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 /**
  * Contact form, spec 2.3.
@@ -24,10 +25,14 @@ export default function EnquiryForm({
   initialStatus?: "sent" | null;
   initialError?: string | null;
 }) {
+  const searchParams = useSearchParams();
+  const prefilledMessage = searchParams?.get("message") || "";
+
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">(
     initialStatus === "sent" ? "sent" : initialError ? "error" : "idle",
   );
   const [error, setError] = useState<string | null>(initialError ?? null);
+  const [message, setMessage] = useState(prefilledMessage);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -125,6 +130,8 @@ export default function EnquiryForm({
           name="message"
           rows={4}
           required
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell us what you're working through..."
           className="w-full resize-none rounded-xl border border-neutral-200 bg-white px-4 py-3.5 text-sm transition-all placeholder:text-neutral-400 focus:border-neon focus:ring-2 focus:ring-neon/30 focus:outline-none"
         />
