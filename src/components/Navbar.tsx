@@ -2,9 +2,44 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { NAVIGATION, type NavItem } from "@/content/navigation";
 import { HEADER_CTA } from "@/content/cta";
+
+function PivotLogo() {
+  return (
+    <div className="flex items-center gap-2.5">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 36 35"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="shrink-0 text-neon"
+        aria-hidden="true"
+      >
+        <path d="M24.711 0.003H18.048V6.581H24.711V0.003Z" fill="currentColor" />
+        <path d="M13.533 0H8.056V5.407H13.533V0Z" fill="currentColor" />
+        <path d="M24.117 10.927H18.64V16.334H24.117V10.927Z" fill="currentColor" />
+        <path d="M23.407 21.489H19.349V25.496H23.407V21.489Z" fill="currentColor" />
+        <path d="M13.052 11.627H8.993V15.634H13.052V11.627Z" fill="currentColor" />
+        <path d="M12.598 21.715H9V25.267H12.598V21.715Z" fill="currentColor" />
+        <path d="M3.34 11.988H0.01V15.276H3.34V11.988Z" fill="currentColor" />
+        <path d="M23.042 31.713H19.712V35H23.042V31.713Z" fill="currentColor" />
+        <path d="M35.528 31.713H32.198V35H35.528V31.713Z" fill="currentColor" />
+        <path d="M3.33 0.213H0V3.5H3.33V0.213Z" fill="currentColor" />
+        <path d="M2.872 22.073H0V24.909H2.872V22.073Z" fill="currentColor" />
+        <path d="M12.257 31.948H9.385V34.784H12.257V31.948Z" fill="currentColor" />
+        <path d="M1.977 32.851H0.02V34.784H1.977V32.851Z" fill="currentColor" />
+        <path d="M35.531 10.343H28.868V16.921H35.531V10.343Z" fill="currentColor" />
+        <path d="M35.528 20.789H30.051V26.196H35.528V20.789Z" fill="currentColor" />
+        <path d="M35.531 0.003H28.868V6.581H35.531V0.003Z" fill="currentColor" />
+      </svg>
+      <span className="text-lg font-bold tracking-tight text-white font-sans">
+        Pivot<span className="font-semibold text-white/95">Prime</span>
+      </span>
+    </div>
+  );
+}
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -75,7 +110,7 @@ export default function Navbar() {
         <Link
           key={item.label}
           href={item.href}
-          className="rounded-sm px-1 py-2 text-sm font-bold tracking-wide text-neutral-900 uppercase transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-mid focus-visible:outline-none"
+          className="rounded-full px-3 py-1.5 text-xs font-semibold tracking-wider text-white/80 uppercase transition-colors hover:text-neon focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
         >
           {item.label}
         </Link>
@@ -116,11 +151,11 @@ export default function Navbar() {
               setPinned(true);
             }
           }}
-          className="flex items-center rounded-sm px-1 py-2 text-sm font-bold tracking-wide text-neutral-900 uppercase transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-mid focus-visible:outline-none"
+          className="flex items-center rounded-full px-3 py-1.5 text-xs font-semibold tracking-wider text-white/80 uppercase transition-colors hover:text-neon focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
         >
           {item.label}
           <svg
-            className={`ml-1 h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            className={`ml-1 h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? "rotate-180 text-neon" : "text-white/60"}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -135,14 +170,14 @@ export default function Navbar() {
             /services/how-we-work linked from nowhere: no crawler and no reader
             without JavaScript could reach it. The five other service pages
             survived only because the homepage cards happen to link them. */}
-        <div id={panelId} hidden={!isOpen} className="absolute top-full left-0 z-50 w-64 pt-2">
-          <ul className="rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5">
+        <div id={panelId} hidden={!isOpen} className="absolute top-full left-0 z-50 w-64 pt-3">
+          <ul className="rounded-2xl bg-forest/95 backdrop-blur-xl border border-white/15 py-2 shadow-2xl ring-1 ring-black/20">
             {item.children.map((child) => (
               <li key={child.href}>
                 <Link
                   href={child.href}
                   onClick={closeAll}
-                  className="block px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-primary focus-visible:bg-neutral-50 focus-visible:text-primary focus-visible:outline-none"
+                  className="block mx-1.5 rounded-xl px-3.5 py-2 text-xs font-medium text-white/85 transition-colors hover:bg-white/10 hover:text-neon focus-visible:bg-white/10 focus-visible:text-neon focus-visible:outline-none"
                 >
                   {child.label}
                 </Link>
@@ -155,127 +190,119 @@ export default function Navbar() {
   };
 
   return (
-    <nav ref={navRef} className="absolute top-4 right-4 left-4 z-50">
-      <div className="mx-auto max-w-7xl rounded-xl bg-white shadow-md">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex h-20 items-center justify-between">
-            <Link href="/" className="flex flex-shrink-0 items-center" onClick={closeAll}>
-              <Image src="/pivot-logo.svg" alt="Pivot Prime" width={150} height={40} className="h-8 w-auto" />
-            </Link>
+    <nav ref={navRef} className="fixed top-4 right-4 left-4 z-50">
+      <div className="mx-auto max-w-6xl rounded-full glass-nav px-4 sm:px-6">
+        <div className="flex h-16 items-center justify-between">
+          <Link href="/" className="flex flex-shrink-0 items-center" onClick={closeAll}>
+            <PivotLogo />
+          </Link>
 
-            <div className="hidden lg:flex lg:items-center lg:gap-x-5">
-              {NAVIGATION.map(renderDesktopItem)}
+          <div className="hidden lg:flex lg:items-center lg:gap-x-3">
+            {NAVIGATION.map(renderDesktopItem)}
+            <a
+              href={HEADER_CTA.href}
+              target={HEADER_CTA.external ? "_blank" : undefined}
+              rel={HEADER_CTA.external ? "noopener noreferrer" : undefined}
+              className="ml-3 inline-flex items-center justify-center rounded-full bg-neon px-5 py-2 text-xs font-bold tracking-wider text-forest uppercase shadow-md transition-all hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+            >
+              {HEADER_CTA.label}
+            </a>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            className="inline-flex items-center justify-center rounded-full p-2 text-white/80 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none lg:hidden"
+          >
+            <span className="sr-only">{mobileOpen ? "Close main menu" : "Open main menu"}</span>
+            <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={mobileOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {mobileOpen && (
+        <div
+          id="mobile-menu"
+          className="mx-auto mt-2 max-w-6xl rounded-2xl border border-white/15 bg-forest/95 backdrop-blur-xl p-4 text-white shadow-2xl lg:hidden"
+        >
+          <div className="space-y-1">
+            {NAVIGATION.map((item) => {
+              if (!item.children) {
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={closeAll}
+                    className="block rounded-xl px-3.5 py-2 text-sm font-medium text-white/90 hover:bg-white/10 hover:text-neon"
+                  >
+                    {item.label}
+                  </Link>
+                );
+              }
+
+              const expanded = mobileSection === item.label;
+              return (
+                <div key={item.label}>
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    onClick={() => setMobileSection(expanded ? null : item.label)}
+                    className="flex w-full items-center justify-between rounded-xl px-3.5 py-2 text-sm font-medium text-white/90 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+                  >
+                    {item.label}
+                    <svg
+                      className={`h-4 w-4 transition-transform ${expanded ? "rotate-180 text-neon" : "text-white/60"}`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {expanded && (
+                    <ul className="mt-1 space-y-1 border-l border-white/20 pl-4 ml-3">
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={closeAll}
+                            className="block rounded-lg px-3 py-1.5 text-xs font-medium text-white/70 hover:bg-white/10 hover:text-neon"
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+
+            <div className="pt-4 pb-2">
               <a
                 href={HEADER_CTA.href}
                 target={HEADER_CTA.external ? "_blank" : undefined}
                 rel={HEADER_CTA.external ? "noopener noreferrer" : undefined}
-                className="ml-2 inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-bold tracking-wide text-white uppercase shadow-sm transition-colors hover:bg-mid/90 focus-visible:ring-2 focus-visible:ring-mid focus-visible:ring-offset-2 focus-visible:outline-none"
+                onClick={closeAll}
+                className="flex w-full items-center justify-center rounded-full bg-neon px-5 py-3 text-xs font-bold tracking-wider text-forest uppercase shadow-md transition-all hover:bg-white"
               >
                 {HEADER_CTA.label}
-                <span aria-hidden="true" className="ml-2 text-lg leading-none">
-                  →
-                </span>
               </a>
             </div>
-
-            <button
-              type="button"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-menu"
-              className="inline-flex items-center justify-center rounded-md p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 focus-visible:ring-2 focus-visible:ring-mid focus-visible:outline-none lg:hidden"
-            >
-              <span className="sr-only">{mobileOpen ? "Close main menu" : "Open main menu"}</span>
-              <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={mobileOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                />
-              </svg>
-            </button>
           </div>
         </div>
-
-        {mobileOpen && (
-          <div id="mobile-menu" className="border-t border-neutral-100 bg-white lg:hidden rounded-b-xl">
-            <div className="space-y-1 px-4 pt-2 pb-6 sm:px-6">
-              {NAVIGATION.map((item) => {
-                if (!item.children) {
-                  return (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={closeAll}
-                      className="block rounded-md px-3 py-2 text-base font-medium text-neutral-900 hover:bg-neutral-50 hover:text-primary"
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                }
-
-                const expanded = mobileSection === item.label;
-                return (
-                  <div key={item.label}>
-                    {/* A real disclosure button. The previous mobile menu used a
-                        plain div for these headings, so the sections could not be
-                        operated by keyboard or announced to a screen reader. */}
-                    <button
-                      type="button"
-                      aria-expanded={expanded}
-                      onClick={() => setMobileSection(expanded ? null : item.label)}
-                      className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium text-neutral-900 hover:bg-neutral-50 focus-visible:ring-2 focus-visible:ring-mid focus-visible:outline-none"
-                    >
-                      {item.label}
-                      <svg
-                        className={`h-4 w-4 transition-transform ${expanded ? "rotate-180" : ""}`}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-
-                    {expanded && (
-                      <ul className="mt-1 space-y-1 border-l-2 border-neutral-200 pl-4">
-                        {item.children.map((child) => (
-                          <li key={child.href}>
-                            <Link
-                              href={child.href}
-                              onClick={closeAll}
-                              className="block rounded-md px-3 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-primary"
-                            >
-                              {child.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                );
-              })}
-
-              <div className="px-3 pt-4 pb-2">
-                <a
-                  href={HEADER_CTA.href}
-                  target={HEADER_CTA.external ? "_blank" : undefined}
-                  rel={HEADER_CTA.external ? "noopener noreferrer" : undefined}
-                  onClick={closeAll}
-                  className="flex w-full items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-bold tracking-wide text-white uppercase shadow-sm transition-colors hover:bg-mid/90"
-                >
-                  {HEADER_CTA.label}
-                  <span aria-hidden="true" className="ml-2 text-lg leading-none">
-                    →
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </nav>
   );
 }

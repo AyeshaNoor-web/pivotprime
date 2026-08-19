@@ -56,6 +56,22 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .glass-nav {
+    @apply bg-forest/90 backdrop-blur-xl border border-white/15 shadow-[0_12px_36px_rgba(0,0,0,0.3)];
+  }
+
+  .glass-card-dark {
+    @apply bg-white/[0.04] backdrop-blur-md border border-white/[0.12] hover:border-neon/40 hover:bg-white/[0.07] transition-all;
+  }
+
+  .glass-badge-dark {
+    @apply bg-forest/85 backdrop-blur-xl border border-neon/30 shadow-[0_8px_24px_rgba(0,0,0,0.4)];
+  }
+
+  .frosted-card-light {
+    @apply bg-white/95 backdrop-blur-md border border-neutral-200/80 shadow-[0_16px_48px_rgba(1,51,37,0.06)];
+  }
 }
 
 @keyframes marquee {

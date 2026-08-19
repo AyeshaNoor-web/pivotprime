@@ -78,16 +78,16 @@ export default function EnquiryForm({
       action="/api/enquiry"
       method="post"
       onSubmit={onSubmit}
-      className="space-y-6 rounded-2xl border border-neutral-100 bg-neutral-50 p-8"
+      className="space-y-5 rounded-2xl border border-neutral-200/80 bg-neutral-50/50 p-6 sm:p-8 backdrop-blur-sm"
     >
       {error && (
-        <p role="alert" className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+        <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-semibold text-red-800">
           {error}
         </p>
       )}
 
       <div>
-        <label htmlFor="name" className="mb-2 block text-sm font-bold text-neutral-700">
+        <label htmlFor="name" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-neutral-600">
           Full name
         </label>
         <input
@@ -96,13 +96,14 @@ export default function EnquiryForm({
           type="text"
           required
           autoComplete="name"
-          className="w-full rounded-xl border border-neutral-200 bg-white px-5 py-4 transition-all focus:border-transparent focus:ring-2 focus:ring-mid focus:outline-none"
+          placeholder="Your name"
+          className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3.5 text-sm transition-all placeholder:text-neutral-400 focus:border-neon focus:ring-2 focus:ring-neon/30 focus:outline-none"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="mb-2 block text-sm font-bold text-neutral-700">
-          Email address
+        <label htmlFor="email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-neutral-600">
+          Work email
         </label>
         <input
           id="email"
@@ -110,20 +111,22 @@ export default function EnquiryForm({
           type="email"
           required
           autoComplete="email"
-          className="w-full rounded-xl border border-neutral-200 bg-white px-5 py-4 transition-all focus:border-transparent focus:ring-2 focus:ring-mid focus:outline-none"
+          placeholder="you@company.com"
+          className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3.5 text-sm transition-all placeholder:text-neutral-400 focus:border-neon focus:ring-2 focus:ring-neon/30 focus:outline-none"
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="mb-2 block text-sm font-bold text-neutral-700">
-          Message
+        <label htmlFor="message" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-neutral-600">
+          Message / Biggest Challenge Right Now
         </label>
         <textarea
           id="message"
           name="message"
-          rows={5}
+          rows={4}
           required
-          className="w-full resize-none rounded-xl border border-neutral-200 bg-white px-5 py-4 transition-all focus:border-transparent focus:ring-2 focus:ring-mid focus:outline-none"
+          placeholder="Tell us what you're working through..."
+          className="w-full resize-none rounded-xl border border-neutral-200 bg-white px-4 py-3.5 text-sm transition-all placeholder:text-neutral-400 focus:border-neon focus:ring-2 focus:ring-neon/30 focus:outline-none"
         />
       </div>
 
@@ -138,10 +141,13 @@ export default function EnquiryForm({
       <button
         type="submit"
         disabled={state === "sending"}
-        className="w-full rounded-xl bg-primary px-8 py-4 font-bold tracking-wider text-white uppercase shadow-lg transition-all hover:bg-mid/90 focus-visible:ring-2 focus-visible:ring-mid focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-70"
+        className="w-full rounded-full bg-neon px-8 py-3.5 font-bold tracking-wider text-forest uppercase shadow-md transition-all hover:bg-forest hover:text-white hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-70 text-xs"
       >
-        {state === "sending" ? "Sending" : "Send message"}
+        {state === "sending" ? "Sending..." : "Request a discovery call"}
       </button>
+      <p className="text-center text-[11px] text-neutral-500 font-medium">
+        We use your details only to prepare the call.
+      </p>
     </form>
   );
 }

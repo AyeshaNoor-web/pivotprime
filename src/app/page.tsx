@@ -20,6 +20,7 @@ import { SERVICES_EYEBROW, SERVICES_HEADING } from "@/content/services";
 import ServiceCards from "@/components/ServiceCards";
 import PatternsList from "@/components/PatternsList";
 import CaseStudies from "@/components/CaseStudies";
+import PersonaSwitcher from "@/components/PersonaSwitcher";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/content/metadata";
 
@@ -29,7 +30,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 3.1 Hero. REPLACE. Background is kept: spec says it works and it stays. */}
-      <section className="relative flex min-h-[85vh] items-center px-4 pt-32 pb-24 sm:px-6 md:pt-48 md:pb-32 lg:px-8">
+      <section className="relative flex min-h-[88vh] items-center px-4 pt-32 pb-24 sm:px-6 md:pt-44 md:pb-32 lg:px-8">
         {/* overflow-hidden contains the water-pan animation, which scales the
             image to 1.08. Without it the scaled image is wider than the
             viewport and the whole document scrolls sideways, at every
@@ -43,19 +44,19 @@ export default function Home() {
             className="animate-water-pan object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-forest/50" />
+          <div className="absolute inset-0 bg-forest/65 backdrop-blur-[2px]" />
         </div>
 
         {/* Wider than the old max-w-5xl: the annotation on 3.1 asks for text to
             run as far across the screen as it reasonably can. */}
         <div className="relative z-10 mx-auto w-full max-w-6xl text-white">
-          <h1 className="mb-6 max-w-5xl text-4xl leading-tight font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="mb-6 max-w-5xl text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             {HERO.heading}
           </h1>
 
           {/* Set noticeably larger than the paragraph beneath it. Spec 3.1:
               this sentence is doing the most work on the page. */}
-          <p className="mb-6 max-w-4xl text-2xl leading-snug font-semibold sm:text-3xl md:text-4xl">
+          <p className="mb-6 max-w-4xl text-2xl leading-snug font-semibold text-white/95 sm:text-3xl md:text-4xl">
             {HERO.lead}
           </p>
 
@@ -69,7 +70,7 @@ export default function Home() {
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Link
               href={HERO_CTA.href}
-              className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-4 text-sm font-bold tracking-wide text-white uppercase shadow-lg transition-colors hover:bg-neon/90 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-full bg-neon px-8 py-4 text-xs font-bold tracking-wider text-forest uppercase shadow-lg transition-all hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
             >
               {HERO_CTA.label}
             </Link>
@@ -78,7 +79,7 @@ export default function Home() {
                 navigation. Spec 3.1. */}
             <a
               href={HERO.secondaryHref}
-              className="inline-flex items-center justify-center rounded-md border border-white/40 px-7 py-4 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:border-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-full border border-white/40 backdrop-blur-md px-8 py-4 text-xs font-bold tracking-wider text-white uppercase transition-all hover:border-neon hover:text-neon hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
             >
               {HERO.secondaryLabel}
             </a>
@@ -209,34 +210,96 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3.6 One accountable party. NEW. Full width, dark green. Makes the
-          argument for placing people rather than recommending, which is what
-          separates Pivot Prime from an advisory firm and from a solo fractional
-          operator. Spec 3.6. */}
-      <section className="bg-forest px-4 py-24 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="mb-8 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
+      {/* 3.6 One accountable party / Chapter 01: The Gap */}
+      <section className="bg-forest px-4 py-24 text-white sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none" />
+        
+        <div className="mx-auto max-w-6xl relative z-10">
+          <span className="block font-sans font-semibold text-xs tracking-[0.22em] uppercase text-neon mb-4">
+            CHAPTER 01: THE GAP &amp; EXECUTION
+          </span>
+
+          <h2 className="mb-8 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl max-w-4xl">
             {ACCOUNTABLE.heading}
           </h2>
-          <div className="space-y-5">
-            {ACCOUNTABLE.body.map((paragraph) => (
-              <p key={paragraph.slice(0, 40)} className="leading-relaxed text-white/85 md:text-lg">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mt-12">
+            {/* Left side: Body copy & Pull quote */}
+            <div className="lg:col-span-6 space-y-6">
+              {ACCOUNTABLE.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="leading-relaxed text-white/85 text-base md:text-lg">
+                  {paragraph}
+                </p>
+              ))}
 
-          <blockquote className="mt-12 border-l-2 border-neon pl-6 text-xl leading-snug font-semibold text-white md:text-2xl lg:text-3xl">
-            {ACCOUNTABLE.pullQuote}
-          </blockquote>
+              <blockquote className="my-8 border-l-2 border-neon pl-6 text-lg md:text-xl leading-snug font-semibold text-white/95">
+                {ACCOUNTABLE.pullQuote}
+              </blockquote>
 
-          <div className="mt-10">
-            <Link
-              href={CONTACT_CTA.href}
-              className="inline-flex items-center justify-center rounded-md bg-neon px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
-            >
-              {ACCOUNTABLE.ctaLabel}
-            </Link>
+              <div className="pt-2">
+                <Link
+                  href={CONTACT_CTA.href}
+                  className="inline-flex items-center justify-center rounded-full bg-neon px-8 py-4 text-xs font-bold tracking-wider text-forest uppercase transition-all hover:bg-white hover:scale-105 focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+                >
+                  {ACCOUNTABLE.ctaLabel}
+                  <span aria-hidden="true" className="ml-2 text-base leading-none">
+                    →
+                  </span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right side: 2x2 Glassmorphic Feature Grid + Stat Badge */}
+            <div className="lg:col-span-6 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="glass-card-dark rounded-2xl p-6">
+                  <span className="text-neon font-bold text-xs tracking-wider block mb-2">01</span>
+                  <h3 className="text-white font-bold text-lg mb-2">Diagnose</h3>
+                  <p className="text-white/75 text-xs md:text-sm leading-relaxed">
+                    We look at how decisions are made, how work flows, and where accountability quietly breaks down.
+                  </p>
+                </div>
+
+                <div className="glass-card-dark rounded-2xl p-6">
+                  <span className="text-neon font-bold text-xs tracking-wider block mb-2">02</span>
+                  <h3 className="text-white font-bold text-lg mb-2">Align</h3>
+                  <p className="text-white/75 text-xs md:text-sm leading-relaxed">
+                    Strategy stops living on paper. We connect it to owners, sequence, and the operating rhythm of the week.
+                  </p>
+                </div>
+
+                <div className="glass-card-dark rounded-2xl p-6">
+                  <span className="text-neon font-bold text-xs tracking-wider block mb-2">03</span>
+                  <h3 className="text-white font-bold text-lg mb-2">Rebuild</h3>
+                  <p className="text-white/75 text-xs md:text-sm leading-relaxed">
+                    We remove duplicated work and legacy drag, then rebuild the process so it holds without you.
+                  </p>
+                </div>
+
+                <div className="glass-card-dark rounded-2xl p-6">
+                  <span className="text-neon font-bold text-xs tracking-wider block mb-2">04</span>
+                  <h3 className="text-white font-bold text-lg mb-2">Embed</h3>
+                  <p className="text-white/75 text-xs md:text-sm leading-relaxed">
+                    We work alongside your team until the new way is the normal way, and growth becomes repeatable.
+                  </p>
+                </div>
+              </div>
+
+              {/* Glass Stat Badge */}
+              <div className="glass-badge-dark rounded-2xl p-6 flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-3xl sm:text-4xl font-extrabold text-neon tracking-tight">+40–60%</div>
+                  <p className="text-xs text-white/80 font-medium mt-1">
+                    reduction in duplicated work, rework and inefficiencies
+                  </p>
+                </div>
+                <div className="h-10 w-10 rounded-full bg-neon/20 flex items-center justify-center text-neon shrink-0">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -296,59 +359,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Audiences Section */}
-      <section className="py-24 bg-forest text-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
-            You don’t have to figure it all<br />out alone
-          </h2>
-          <h3 className="text-3xl md:text-4xl font-medium text-neon mb-12 max-w-2xl mx-auto leading-tight">
-            We are your operations, growth and execution partner.
-          </h3>
-          <p className="text-xl md:text-2xl text-white font-medium leading-relaxed mb-10 max-w-3xl mx-auto">
-            Whether you’re building, scaling, or holding everything together, we work with people who lead from the front and carry the pressure every day.
-          </p>
-          <p className="text-xl md:text-2xl text-white font-medium mb-16">
-            These are the leaders we support.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
-            <Link href="/for-founders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
-              <div className="mr-6">
-                <Image src="/founder.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
-              </div>
-              <p className="text-xl font-bold text-neon">
-                You’re a Founder and<br />everything still depends<br />on you.
-              </p>
-            </Link>
-
-            <Link href="/for-smes" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
-              <div className="mr-6">
-                <Image src="/SME.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
-              </div>
-              <p className="text-xl font-bold text-neon">
-                You’re running an SME<br />that is growing but not<br />settled.
-              </p>
-            </Link>
-            
-            <Link href="/for-corporate-leaders" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
-              <div className="mr-6">
-                <Image src="/Strategy.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
-              </div>
-              <p className="text-xl font-bold text-neon">
-                You’re a Corporate Leader<br />expected to deliver change<br />without any real support.
-              </p>
-            </Link>
-            
-            <Link href="/for-pl-owners" className="bg-white/5 border border-white/[0.14] rounded-xl p-8 flex items-center hover:bg-white/[0.08] transition-colors group">
-              <div className="mr-6">
-                <Image src="/growth.svg" alt="" aria-hidden="true" width={40} height={40} className="w-10 h-10 group-hover:scale-110 transition-transform" />
-              </div>
-              <p className="text-xl font-bold text-neon">
-                You’re a Corporate Owner<br />responsible for aligning<br />execution at scale.
-              </p>
-            </Link>
-          </div>
+      {/* Audiences Section / Chapter 03 — Who We Serve */}
+      <section className="py-24 bg-neutral-50 px-4 sm:px-6 lg:px-8 border-t border-neutral-100">
+        <div className="max-w-6xl mx-auto">
+          <PersonaSwitcher />
         </div>
       </section>
 
@@ -371,46 +385,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3.11 Close. REPLACE. The existing background is kept, per the spec. */}
-      <section className="relative flex min-h-[60vh] items-center overflow-hidden bg-black px-4 py-32 sm:px-6 lg:px-8">
-        <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/Group-1577708851-min.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-        </div>
-        <div aria-hidden="true" className="absolute inset-0 z-0 bg-forest/70" />
+      {/* 3.11 Close / Banner Card (Chapter 05 Style) */}
+      <section className="px-4 py-20 sm:px-6 lg:px-8 bg-white">
+        <div className="mx-auto max-w-6xl rounded-[32px] bg-forest text-white p-10 sm:p-14 md:p-20 relative overflow-hidden border border-white/10 shadow-2xl text-center">
+          <div aria-hidden="true" className="absolute inset-0 z-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none" />
 
-        <div className="relative z-10 mx-auto w-full max-w-4xl text-center text-white">
-          <h2 className="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
-            {CLOSE.heading}
-          </h2>
+          <div className="relative z-10 mx-auto w-full max-w-4xl text-center text-white">
+            <span className="block font-sans font-semibold text-xs tracking-[0.22em] uppercase text-neon mb-4">
+              CHAPTER 05: GET STARTED
+            </span>
 
-          {/* Gated: the sentence promises a scored view in four minutes, which
-              the contact page cannot honour. No substitute is invented, because
-              the spec provides none. */}
-          {DIAGNOSTIC_ENABLED && (
-            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/85">{CLOSE.standfirst}</p>
-          )}
+            <h2 className="mb-6 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
+              {CLOSE.heading}
+            </h2>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href={JOURNEY_CTA.href}
-              className="inline-flex items-center justify-center rounded-md bg-neon px-7 py-4 text-sm font-bold tracking-wide text-forest uppercase transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
-            >
-              {JOURNEY_CTA.label}
-            </Link>
-            <a
-              href={WHATSAPP_CTA.href}
-              target={WHATSAPP_CTA.external ? "_blank" : undefined}
-              rel={WHATSAPP_CTA.external ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center justify-center rounded-md border border-white/50 px-7 py-4 text-sm font-bold tracking-wide text-white uppercase transition-colors hover:border-white focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
-            >
-              {WHATSAPP_CTA.label}
-            </a>
+            {/* Gated: the sentence promises a scored view in four minutes, which
+                the contact page cannot honour. No substitute is invented, because
+                the spec provides none. */}
+            {DIAGNOSTIC_ENABLED && (
+              <p className="mx-auto mb-10 max-w-2xl text-lg text-white/85">{CLOSE.standfirst}</p>
+            )}
+
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mt-8">
+              <Link
+                href={JOURNEY_CTA.href}
+                className="inline-flex items-center justify-center rounded-full bg-neon px-8 py-4 text-xs font-bold tracking-wider text-forest uppercase transition-all hover:bg-white hover:scale-105 shadow-lg focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:ring-offset-forest focus-visible:outline-none"
+              >
+                {JOURNEY_CTA.label}
+              </Link>
+              <a
+                href={WHATSAPP_CTA.href}
+                target={WHATSAPP_CTA.external ? "_blank" : undefined}
+                rel={WHATSAPP_CTA.external ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center justify-center rounded-full border border-white/40 backdrop-blur-md px-8 py-4 text-xs font-bold tracking-wider text-white uppercase transition-all hover:border-neon hover:text-neon hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-neon focus-visible:outline-none"
+              >
+                {WHATSAPP_CTA.label}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -418,3 +429,4 @@ export default function Home() {
     </div>
   );
 }
+

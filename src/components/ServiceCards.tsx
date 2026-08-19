@@ -21,16 +21,16 @@ export default function ServiceCards() {
         <li key={service.slug} className="flex">
           <Link
             href={service.href}
-            className="group flex w-full flex-col rounded-xl border border-forest/10 bg-forest/[0.04] p-8 transition-colors hover:bg-forest/[0.07] focus-visible:ring-2 focus-visible:ring-mid focus-visible:ring-offset-2 focus-visible:outline-none"
+            className="group frosted-card-light flex w-full flex-col rounded-2xl p-8 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:border-mid/30 focus-visible:ring-2 focus-visible:ring-mid focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <span
               aria-hidden="true"
-              className="mb-4 block text-xs font-semibold tracking-[0.2em] text-forest/45"
+              className="mb-4 inline-flex items-center justify-center w-8 h-8 rounded-full bg-forest/5 text-xs font-bold tracking-wider text-forest"
             >
               {String(i + 1).padStart(2, "0")}
             </span>
 
-            <h3 className="text-lg font-bold text-forest">{service.title}</h3>
+            <h3 className="text-lg font-bold text-forest group-hover:text-mid transition-colors">{service.title}</h3>
 
             {/* Same slot and type size on every card, so the row stays balanced
                 whether or not it carries a figure. Spec 3.4. */}
@@ -44,15 +44,15 @@ export default function ServiceCards() {
               ))}
             </div>
 
-            <p className="mt-6 border-t border-forest/10 pt-5 text-sm leading-relaxed text-neutral-500">
+            <p className="mt-6 border-t border-neutral-200/80 pt-5 text-sm leading-relaxed text-neutral-500">
               {service.scopeLine}
             </p>
 
-            <span className="mt-auto inline-flex items-center pt-6 text-sm font-bold text-forest">
+            <span className="mt-auto inline-flex items-center pt-6 text-sm font-bold text-forest group-hover:text-mid">
               {service.ctaLabel}
               <span
                 aria-hidden="true"
-                className="ml-2 text-lg leading-none transition-transform group-hover:translate-x-1"
+                className="ml-2 text-lg leading-none transition-transform group-hover:translate-x-1.5"
               >
                 →
               </span>
