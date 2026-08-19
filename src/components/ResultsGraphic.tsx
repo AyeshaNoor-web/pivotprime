@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import FadeUp from "@/components/FadeUp";
 import CountUp from "@/components/CountUp";
 import { METRICS } from "@/content/homepage";
 
@@ -9,164 +8,115 @@ export default function ResultsGraphic() {
   const [activeMetric, setActiveMetric] = useState(0);
   const activeMetricsList = METRICS.filter((m) => m.figure !== null);
 
-  // Data for chart segments
   const segments = [
-    { label: "Execution", value: 53 },
-    { label: "Waste Reduction", value: 62 },
-    { label: "Retention", value: 16 },
-    { label: "Profit Growth", value: 27 },
-    { label: "Transaction Speed", value: 67 },
+    { label: "Execution", value: 53, offset: "0" },
+    { label: "Waste Reduction", value: 62, offset: "-48" },
+    { label: "Retention", value: 16, offset: "-96" },
+    { label: "Profit Growth", value: 27, offset: "-144" },
+    { label: "Transaction Speed", value: 67, offset: "-192" },
   ];
 
   return (
-    <div className="relative">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        
-        {/* Left Side: Visual Interactive Donut / Gauge Graphic (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col items-center justify-center p-6 sm:p-8 rounded-[28px] bg-forest text-white shadow-xl border border-white/10 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
-          
-          <div className="relative z-10 w-full flex flex-col items-center">
-            <span className="text-[11px] font-sans font-bold tracking-[0.22em] uppercase text-neon mb-4">
-              PERFORMANCE OVERVIEW
-            </span>
+    <div className="mx-auto max-w-2xl">
+      {/* Centered Donut & Metric Showcase Card */}
+      <div className="rounded-[32px] bg-forest text-white p-8 sm:p-12 text-center shadow-2xl border border-white/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
-            {/* SVG Ring Visualizer */}
-            <div className="relative w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center my-2">
-              <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
-                {/* Background Ring */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  className="stroke-white/10"
-                  strokeWidth="8"
-                  fill="transparent"
-                />
-                {/* 5 Distinct Colored Donut Segments */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  className="stroke-neon transition-all duration-500 cursor-pointer"
-                  strokeWidth={activeMetric === 0 ? "11" : "8"}
-                  strokeDasharray="47 192"
-                  strokeDashoffset="0"
-                  fill="transparent"
-                  onClick={() => setActiveMetric(0)}
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  className="stroke-mid transition-all duration-500 cursor-pointer"
-                  strokeWidth={activeMetric === 1 ? "11" : "8"}
-                  strokeDasharray="47 192"
-                  strokeDashoffset="-48"
-                  fill="transparent"
-                  onClick={() => setActiveMetric(1)}
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  className="stroke-white/60 transition-all duration-500 cursor-pointer"
-                  strokeWidth={activeMetric === 2 ? "11" : "8"}
-                  strokeDasharray="47 192"
-                  strokeDashoffset="-96"
-                  fill="transparent"
-                  onClick={() => setActiveMetric(2)}
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  className="stroke-neon/80 transition-all duration-500 cursor-pointer"
-                  strokeWidth={activeMetric === 3 ? "11" : "8"}
-                  strokeDasharray="47 192"
-                  strokeDashoffset="-144"
-                  fill="transparent"
-                  onClick={() => setActiveMetric(3)}
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="38"
-                  className="stroke-mid/80 transition-all duration-500 cursor-pointer"
-                  strokeWidth={activeMetric === 4 ? "11" : "8"}
-                  strokeDasharray="47 192"
-                  strokeDashoffset="-192"
-                  fill="transparent"
-                  onClick={() => setActiveMetric(4)}
-                />
-              </svg>
+        <div className="relative z-10 flex flex-col items-center">
+          <span className="text-[11px] font-sans font-bold tracking-[0.24em] uppercase text-neon mb-6">
+            PERFORMANCE OVERVIEW
+          </span>
 
-              {/* Center Active Stat Counter */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                <span className="text-3xl sm:text-4xl font-extrabold text-neon tracking-tight">
-                  +{activeMetricsList[activeMetric]?.figure || 53}%
-                </span>
-                <span className="text-[11px] font-semibold text-white/80 max-w-[130px] line-clamp-2 mt-1 leading-tight">
-                  {activeMetricsList[activeMetric]?.label}
-                </span>
-              </div>
-            </div>
-
-            {/* Interactive Segment Buttons */}
-            <div className="flex flex-wrap justify-center gap-1.5 mt-4 w-full">
+          {/* SVG Donut Graphic */}
+          <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center my-2">
+            <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
+              {/* Background Base Ring */}
+              <circle
+                cx="50"
+                cy="50"
+                r="38"
+                className="stroke-white/10"
+                strokeWidth="8"
+                fill="transparent"
+              />
+              {/* 5 Interactive Donut Segments */}
               {segments.map((seg, idx) => (
-                <button
+                <circle
                   key={seg.label}
-                  type="button"
-                  onClick={() => setActiveMetric(idx)}
-                  className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all duration-200 ${
+                  cx="50"
+                  cy="50"
+                  r="38"
+                  className={`transition-all duration-300 cursor-pointer ${
                     activeMetric === idx
-                      ? "bg-neon text-forest shadow-md scale-105"
-                      : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                      ? "stroke-neon stroke-[11px]"
+                      : idx === 2
+                        ? "stroke-white/50 stroke-[8px] hover:stroke-white/80"
+                        : "stroke-mid stroke-[8px] hover:stroke-neon"
                   }`}
-                >
-                  {seg.label}
-                </button>
+                  strokeDasharray="47 192"
+                  strokeDashoffset={seg.offset}
+                  fill="transparent"
+                  onClick={() => setActiveMetric(idx)}
+                />
               ))}
+            </svg>
+
+            {/* Center Focal Metric */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+              <span className="text-4xl sm:text-5xl font-extrabold text-neon tracking-tight">
+                +<CountUp end={activeMetricsList[activeMetric]?.figure as number} />%
+              </span>
+              <span className="text-xs sm:text-sm font-semibold text-white/90 max-w-[150px] mt-1.5 leading-snug">
+                {activeMetricsList[activeMetric]?.label}
+              </span>
             </div>
+          </div>
+
+          {/* Pill Selector Buttons */}
+          <div className="flex flex-wrap justify-center gap-2 mt-8 max-w-lg">
+            {segments.map((seg, idx) => (
+              <button
+                key={seg.label}
+                type="button"
+                onClick={() => setActiveMetric(idx)}
+                className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 ${
+                  activeMetric === idx
+                    ? "bg-neon text-forest shadow-lg scale-105"
+                    : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white"
+                }`}
+              >
+                {seg.label}
+              </button>
+            ))}
+          </div>
+
+          {/* One-Line Respective Explanation Container */}
+          <div className="mt-8 pt-6 border-t border-white/15 w-full min-h-[48px] flex items-center justify-center">
+            {activeMetricsList.map((metric, idx) => (
+              <p
+                key={metric.label}
+                className={`text-sm sm:text-base text-white/85 font-medium leading-relaxed max-w-xl transition-all duration-300 ${
+                  activeMetric === idx ? "block animate-fade-in" : "hidden"
+                }`}
+              >
+                {metric.context}
+              </p>
+            ))}
           </div>
         </div>
 
-        {/* Right Side: Compact Dashboard Grid (7 cols) */}
-        <div className="lg:col-span-7">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            {activeMetricsList.map((metric, i) => (
-              <li
-                key={metric.label}
-                onClick={() => setActiveMetric(i)}
-                className={`frosted-card-light rounded-2xl p-5 sm:p-6 transition-all duration-200 cursor-pointer hover:-translate-y-1 hover:shadow-lg ${
-                  activeMetric === i
-                    ? "border-mid shadow-md bg-forest/[0.04] ring-1 ring-mid/30"
-                    : "hover:border-mid/30"
-                }`}
-              >
-                <FadeUp>
-                  <div className="flex items-baseline justify-between mb-2">
-                    <div className="text-3xl sm:text-4xl font-extrabold text-mid tracking-tight">
-                      <CountUp end={metric.figure as number} />
-                      {metric.suffix}
-                    </div>
-                    <span className="text-[10px] font-bold tracking-wider text-forest/40 uppercase">
-                      0{i + 1}
-                    </span>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-bold text-forest mb-1 leading-snug">
-                    {metric.label}
-                  </h3>
-                  <p className="text-xs sm:text-[13px] text-neutral-600 leading-relaxed">
-                    {metric.context}
-                  </p>
-                </FadeUp>
-              </li>
-            ))}
-          </ul>
-        </div>
-
+        {/* Crawlable fallback markup to ensure all 5 figures & contexts exist in static HTML */}
+        <ul className="sr-only">
+          {activeMetricsList.map((metric) => (
+            <li key={metric.label}>
+              <span>
+                &gt;<CountUp end={metric.figure as number} />&lt;
+              </span>
+              <span>{metric.label}</span>
+              <span>{metric.context}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
