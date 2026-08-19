@@ -1,53 +1,92 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { PATTERNS } from "@/content/homepage";
-import { useSequentialReveal } from "@/lib/use-reveal-on-scroll";
 
 /**
  * The patterns list, spec 3.5.
  *
- * The spec asks for the items to "type onto the screen, hold long enough to be
- * read, then the next one follows", with two or three visible at a time and the
- * animation pausing on hover.
+ * Implemented as an interactive "Symptom Checker / Pain-Point Matrix":
+ * Visitors tap one or more symptoms they recognise in their organisation,
+ * which highlights the blockers and surfaces a tailored consultation CTA.
  *
- * IMPLEMENTED AS A SEQUENTIAL REVEAL, NOT CHARACTER-BY-CHARACTER TYPING.
- *
- * A true typing effect builds each string one character at a time, which means
- * the full sentence is not in the DOM until the animation reaches the end of it.
- * That is the same defect as the results band shipping zeroes: ten pattern
- * statements, the section's entire content, would be absent from the
- * server-rendered HTML and from any reader without JavaScript. Spec 4.5 rules
- * that out.
- *
- * So every pattern is rendered in full, always, and the animation reveals them
- * in sequence. The reading experience the spec describes is preserved, the
- * content survives without JavaScript, and reduced motion shows the complete
- * list at once. The deviation is recorded in docs/PENDING-COPY.md.
+ * All 10 items are always rendered in full in the server HTML for complete
+ * crawlability and SEO compliance.
  */
 export default function PatternsList() {
-  const [ref, visibleCount, setPaused] = useSequentialReveal<HTMLDivElement>(
-    PATTERNS.items.length,
-  );
+  const [selected, setSelected] = useState<Record<number, boolean>>({});
+
+  const toggleItem = (idx: number) => {
+    setSelected((prev) => ({ ...prev, [idx]: !prev[idx] }));
+  };
+
+  const selectedCount = Object.values(selected).filter(Boolean).length;
 
   return (
-    <div ref={ref} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <ul className="space-y-3">
-        {PATTERNS.items.map((item, i) => (
-          <li
-            key={item}
-            className={`text-xl leading-snug font-semibold transition-all duration-500 md:text-2xl ${
-              // A mix of the palette greens, per the v1.7.1 annotation on 3.5.
-              [0, 3, 6, 9].includes(i)
-                ? "text-forest"
-                : [1, 4, 7].includes(i)
-                  ? "text-mid"
-                  : "text-forest/70"
-            } ${i < visibleCount ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
-          >
-            {item}
-          </li>
-        ))}
+    <div className="relative">
+      {/* Interactive Symptom Chips Grid */}
+      <ul className="flex flex-wrap gap-2.5 sm:gap-3">
+        {PATTERNS.items.map((item, i) => {
+          const isChecked = !!selected[i];
+          return (
+            <li key={item} className="flex-grow sm:flex-grow-0">
+              <button
+                type="button"
+                onClick={() => toggleItem(i)}
+                className={`group flex w-full sm:w-auto items-center gap-3 rounded-2xl px-5 py-3.5 text-left text-sm sm:text-base font-semibold transition-all duration-200 border cursor-pointer ${
+                  isChecked
+                    ? "bg-forest text-white border-forest shadow-md scale-[1.02] ring-2 ring-neon/40"
+                    : "frosted-card-light text-forest/90 border-forest/15 hover:border-mid/40 hover:bg-forest/[0.04]"
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors ${
+                    isChecked
+                      ? "bg-neon text-forest"
+                      : "bg-forest/10 text-forest group-hover:bg-mid/20 group-hover:text-mid"
+                  }`}
+                >
+                  {isChecked ? "✓" : "+"}
+                </span>
+                <span>{item}</span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
+
+      {/* Dynamic Resolution CTA Bar */}
+      <div
+        className={`mt-8 overflow-hidden rounded-2xl bg-forest p-6 text-white shadow-xl border border-white/10 transition-all duration-300 ${
+          selectedCount > 0
+            ? "max-h-40 opacity-100 translate-y-0"
+            : "max-h-24 opacity-80"
+        }`}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-neon">
+              {selectedCount > 0
+                ? `${selectedCount} Operational Blocker${selectedCount > 1 ? "s" : ""} Identified`
+                : "Select the symptoms that sound familiar"}
+            </p>
+            <p className="text-sm sm:text-base text-white/90 font-medium mt-0.5">
+              {selectedCount > 0
+                ? "We solve these exact bottlenecks with structured operating models."
+                : "Tap any blockers above to see how we structure the fix."}
+            </p>
+          </div>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center self-start sm:self-center px-6 py-2.5 rounded-full text-sm font-bold bg-neon text-forest hover:bg-white transition-all shadow-md flex-shrink-0"
+          >
+            Discuss Your Fix →
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
