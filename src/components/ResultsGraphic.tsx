@@ -1,31 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import CountUp from "@/components/CountUp";
+import { useState, useEffect, useRef } from "react";
 import { METRICS } from "@/content/homepage";
+import CountUp from "@/components/CountUp";
 
 export default function ResultsGraphic() {
   const [activeMetric, setActiveMetric] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const activeMetricsList = METRICS.filter((m) => m.figure !== null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const segments = [
-    { label: "Execution", value: 53, offset: "0" },
-    { label: "Waste Reduction", value: 62, offset: "-48" },
-    { label: "Retention", value: 16, offset: "-96" },
-    { label: "Profit Growth", value: 27, offset: "-144" },
-    { label: "Transaction Speed", value: 67, offset: "-192" },
+    { label: "Execution", value: 53, angle: 0 },
+    { label: "Waste Reduction", value: 62, angle: 72 },
+    { label: "Retention", value: 16, angle: 144 },
+    { label: "Profit Growth", value: 27, angle: 216 },
+    { label: "Transaction Speed", value: 67, angle: 288 },
   ];
 
-  // Auto-shift through segments every 3.5s unless hovered/interacted
+  // Silky smooth auto-timer
   useEffect(() => {
     if (isPaused) return;
 
-    const timer = setInterval(() => {
+    timerRef.current = setInterval(() => {
       setActiveMetric((prev) => (prev + 1) % segments.length);
-    }, 3500);
+    }, 4000);
 
-    return () => clearInterval(timer);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [isPaused, segments.length]);
 
   return (
@@ -46,51 +49,60 @@ export default function ResultsGraphic() {
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-neon animate-pulse" />
           </div>
 
-          {/* SVG Donut Graphic */}
-          <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center my-2">
+          {/* SVG Donut Graphic with Silky Rotating Glow Arc */}
+          <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center my-2 select-none">
             <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
-              {/* Background Base Ring */}
+              {/* Background Track with 5 Segment Dividers */}
               <circle
                 cx="50"
                 cy="50"
                 r="38"
-                className="stroke-white/10"
-                strokeWidth="8"
+                className="stroke-white/15"
+                strokeWidth="7"
+                strokeDasharray="45 3"
                 fill="transparent"
               />
-              {/* 5 Interactive & Auto-Rotating Donut Segments */}
-              {segments.map((seg, idx) => (
+
+              {/* Smoothly Rotating Active Neon Indicator Arc */}
+              <g
+                className="transition-transform duration-700 ease-out origin-center"
+                style={{
+                  transform: `rotate(${activeMetric * 72}deg)`,
+                  transformOrigin: "50px 50px",
+                }}
+              >
                 <circle
-                  key={seg.label}
                   cx="50"
                   cy="50"
                   r="38"
-                  className={`transition-all duration-500 cursor-pointer ${
-                    activeMetric === idx
-                      ? "stroke-neon stroke-[12px] opacity-100"
-                      : idx === 2
-                        ? "stroke-white/40 stroke-[8px] opacity-70 hover:stroke-white/80 hover:opacity-100"
-                        : "stroke-mid stroke-[8px] opacity-70 hover:stroke-neon hover:opacity-100"
-                  }`}
-                  strokeDasharray="47 192"
-                  strokeDashoffset={seg.offset}
+                  className="stroke-neon drop-shadow-[0_0_12px_rgba(0,215,109,0.6)]"
+                  strokeWidth="11"
+                  strokeDasharray="45 194"
+                  strokeLinecap="round"
                   fill="transparent"
-                  onClick={() => {
-                    setActiveMetric(idx);
-                    setIsPaused(true);
-                  }}
                 />
-              ))}
+              </g>
             </svg>
 
-            {/* Center Focal Metric */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-              <span className="text-4xl sm:text-5xl font-extrabold text-neon tracking-tight">
-                +<CountUp end={activeMetricsList[activeMetric]?.figure as number} />%
-              </span>
-              <span className="text-xs sm:text-sm font-semibold text-white/90 max-w-[150px] mt-1.5 leading-snug">
-                {activeMetricsList[activeMetric]?.label}
-              </span>
+            {/* Smooth Cross-Fading Center Metric Content */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {activeMetricsList.map((metric, idx) => (
+                <div
+                  key={metric.label}
+                  className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-700 ease-out ${
+                    activeMetric === idx
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  <span className="text-4xl sm:text-5xl font-extrabold text-neon tracking-tight">
+                    +{metric.figure}%
+                  </span>
+                  <span className="text-xs sm:text-sm font-semibold text-white/90 max-w-[160px] mt-2 leading-snug">
+                    {metric.label}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -115,13 +127,15 @@ export default function ResultsGraphic() {
             ))}
           </div>
 
-          {/* One-Line Respective Explanation Container */}
-          <div className="mt-8 pt-6 border-t border-white/15 w-full min-h-[48px] flex items-center justify-center">
+          {/* One-Line Respective Explanation Container with Absolute Cross-Fade */}
+          <div className="mt-8 pt-6 border-t border-white/15 w-full relative h-12 flex items-center justify-center">
             {activeMetricsList.map((metric, idx) => (
               <p
                 key={metric.label}
-                className={`text-sm sm:text-base text-white/90 font-medium leading-relaxed max-w-xl transition-all duration-500 ${
-                  activeMetric === idx ? "block animate-fade-in" : "hidden"
+                className={`absolute inset-x-0 mx-auto text-sm sm:text-base text-white/90 font-medium leading-relaxed max-w-xl transition-all duration-700 ease-out ${
+                  activeMetric === idx
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3 pointer-events-none"
                 }`}
               >
                 {metric.context}
@@ -130,7 +144,7 @@ export default function ResultsGraphic() {
           </div>
         </div>
 
-        {/* Crawlable fallback markup to ensure all 5 figures & contexts exist in static HTML */}
+        {/* Crawlable fallback markup ensuring figures and copy exist in static HTML */}
         <ul className="sr-only">
           {activeMetricsList.map((metric) => (
             <li key={metric.label}>
