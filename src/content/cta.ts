@@ -62,7 +62,7 @@ export const WHATSAPP_CTA: Cta = {
 
 /** The short form used in the header, where the full label does not fit. */
 export const HEADER_CTA: Cta = {
-  label: "Talk to us",
+  label: "Book Consultation",
   href: WHATSAPP_URL,
   external: HAS_WHATSAPP,
 };
