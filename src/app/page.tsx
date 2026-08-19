@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import FadeUp from "@/components/FadeUp";
-import CountUp from "@/components/CountUp";
 import { DIAGNOSTIC_ENABLED } from "@/lib/flags";
 import { CONTACT_CTA, HERO_CTA, JOURNEY_CTA, WHATSAPP_CTA } from "@/content/cta";
 import {
@@ -11,7 +9,6 @@ import {
   FOUNDER,
   HERO,
   HOW_WE_ARE_PAID,
-  METRICS,
   PATTERNS,
   PROOF,
   RESULTS,
@@ -21,6 +18,7 @@ import ServiceCards from "@/components/ServiceCards";
 import PatternsList from "@/components/PatternsList";
 import CaseStudies from "@/components/CaseStudies";
 import PersonaSwitcher from "@/components/PersonaSwitcher";
+import ResultsGraphic from "@/components/ResultsGraphic";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/content/metadata";
 
@@ -149,33 +147,19 @@ export default function Home() {
           services: after "we build it" the visitor's next thought is "prove it".
           Figures are green and count up on scroll; labels and context are in the
           standard body colour. Spec 3.3. */}
-      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+      <section className="bg-white px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <header className="mb-16 max-w-3xl">
+          <header className="mb-12 max-w-3xl">
+            <span className="block font-sans font-semibold text-xs tracking-[0.22em] uppercase text-mid mb-3">
+              MEASURED IMPACT
+            </span>
             <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
               {RESULTS.heading}
             </h2>
             <p className="mt-4 text-lg text-neutral-600 md:text-xl">{RESULTS.standfirst}</p>
           </header>
 
-          {/* Cards with no figure are filtered out rather than shown with a
-              placeholder. Spec 3.3 on metric 6: "Do not launch this card with a
-              placeholder." The copy is written and the card appears the moment
-              the number lands. */}
-          <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-            {METRICS.filter((m) => m.figure !== null).map((metric) => (
-              <li key={metric.label} className="min-w-0 [&>*]:max-w-full">
-                <FadeUp>
-                <div className="mb-3 text-5xl font-bold text-mid md:text-6xl">
-                  <CountUp end={metric.figure as number} />
-                  {metric.suffix}
-                </div>
-                <h3 className="mb-2 font-bold text-foreground">{metric.label}</h3>
-                <p className="leading-relaxed text-neutral-600">{metric.context}</p>
-                </FadeUp>
-              </li>
-            ))}
-          </ul>
+          <ResultsGraphic />
         </div>
       </section>
 
