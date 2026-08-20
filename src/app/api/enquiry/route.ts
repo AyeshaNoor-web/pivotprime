@@ -24,7 +24,11 @@ const FROM = "Pivot Prime <hello@pivotprime.ae>";
 const EnquirySchema = z.object({
   name: z.string().trim().min(1, "Enter your name").max(120),
   email: z.email("Enter a valid email address").max(200),
-  message: z.string().trim().min(1, "Enter a message").max(5000),
+  // Optional on purpose. Name and email are enough to reply to, and a required
+  // free-text box costs enquiries on the one page whose whole job is enquiries.
+  // The spec sets the routing for this form (2.3) and says nothing about its
+  // fields, so this is a product decision rather than a deviation.
+  message: z.string().trim().max(5000).optional().default(""),
   // Bots fill hidden fields; people do not. Cheaper and more private than a
   // third-party captcha, and it never asks a real visitor to prove anything.
   company: z.string().max(0).optional(),
@@ -118,7 +122,11 @@ export async function POST(request: NextRequest) {
       subject: `Website enquiry from ${name}`,
       html: `<p><strong>Name</strong><br>${escapeHtml(name)}</p>
 <p><strong>Email</strong><br><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-<p><strong>Message</strong><br>${escapeHtml(message).replace(/\n/g, "<br>")}</p>`,
+${
+        message
+          ? `<p><strong>Message</strong><br>${escapeHtml(message).replace(/\n/g, "<br>")}</p>`
+          : "<p><em>No message was left. Reply to this email to reach them.</em></p>"
+      }`,
     });
 
     if (enquiry.error) {
@@ -132,14 +140,17 @@ export async function POST(request: NextRequest) {
       from: FROM,
       to: email,
       replyTo: TO,
-      subject: "We have your message",
+      subject: "We have your enquiry",
       html: `<p>Thank you for getting in touch with Pivot Prime.</p>
-<p>We have your message and someone will reply within one working day. If it is urgent, WhatsApp is the fastest way to reach us.</p>
-<p>For reference, this is what you sent:</p>
+<p>We have your enquiry and someone will reply within one working day. If it is urgent, WhatsApp is the fastest way to reach us.</p>
+${
+        message
+          ? `<p>For reference, this is what you sent:</p>
 <blockquote style="border-left:3px solid #009f50;margin:0;padding-left:16px;color:#5e6f68">
 ${escapeHtml(message).replace(/\n/g, "<br>")}
-</blockquote>
-<p>Pivot Prime<br><a href="mailto:${TO}">${TO}</a></p>`,
+</blockquote>`
+          : ""
+      }<p>Pivot Prime<br><a href="mailto:${TO}">${TO}</a></p>`,
     });
 
     if (receipt.error) {

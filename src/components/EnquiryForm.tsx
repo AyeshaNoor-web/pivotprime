@@ -123,13 +123,13 @@ export default function EnquiryForm({
 
       <div>
         <label htmlFor="message" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-neutral-600">
-          Message / Biggest Challenge Right Now
+          Message / Biggest Challenge Right Now{" "}
+          <span className="font-medium normal-case tracking-normal text-neutral-400">(optional)</span>
         </label>
         <textarea
           id="message"
           name="message"
           rows={4}
-          required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell us what you're working through..."
