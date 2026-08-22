@@ -3,15 +3,29 @@
 @theme {
   --font-sans: var(--font-poppins);
 
-  /* The approved brand palette is five values and only five. Confirmed against
-     the swatch plate at the top of the copy spec. Surfaces and borders on dark
-     are derived from these with white alpha, following the mockups, rather than
-     by adding new greens. Do not extend this list without a swatch to point at. */
+  /* The approved brand palette is ten values. The five below are the original
+     swatch plate at the top of the copy spec; the five after them come from the
+     client's swatch on slide 3 of Website Revisions 2208v1, 22 August 2026.
+     Surfaces and borders on dark are still derived from these with white alpha,
+     following the mockups, rather than by adding new greens.
+     Do not extend this list without a swatch to point at. */
   --color-forest: #013325;
   --color-neon: #00d76d;
   --color-mid: #009f50;
   --color-background: #ffffff;
   --color-foreground: #000000;
+
+  /* The five added by the client's swatch, slide 3 of Website Revisions 2208v1.
+     Transcribed from the image, since the deck carries no text. The swatch's top
+     row is identical to the five above, so nothing existing is redefined.
+
+     The NAMES are ours: the swatch labels each circle with its hex and nothing
+     else. Recorded in docs/PENDING-COPY.md so Iram can rename them. */
+  --color-shell: #fefbf8;
+  --color-mist: #e8f4ec;
+  --color-sand: #e8d7b5;
+  --color-bronze: #9f7a3d;
+  --color-linen: #efeae0;
 
   /* Alias retained because bg-primary and text-primary are used site-wide.
      Same value as --color-mid. */

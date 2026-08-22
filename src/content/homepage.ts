@@ -193,17 +193,18 @@ export const FOUNDER = {
   ctaHref: "/about#team",
   /**
    * Supplied by the client on 22 August 2026 and dropped in at
-   * public/iram-kauser.jpg. A seated portrait, 1066x1600.
+   * public/iram-kauser.jpg. A seated portrait. Superseded 22 August 2026 by the 4099x6149 original.
    *
    * Spec 8.1 asks for "the seated portrait from the Arabian Mirror feature.
-   * Full resolution, not a crop from the article". This is a seated portrait
-   * and is not a crop from the article, but whether it is the Arabian Mirror
-   * frame at its original resolution is not something the file itself can
-   * confirm, so item 1.9 is closed as delivered rather than as verified.
+   * Full resolution, not a crop from the article". At 4099x6149 the resolution
+   * question is settled: it is over seven times the 552px the frame occupies on
+   * a desktop screen. Whether it is the Arabian Mirror frame specifically is
+   * still not something the file can confirm.
    *
    * Rendered in a 4:5 frame to match the section, anchored to the top: the
-   * source is 2:3, so a centred crop would take roughly 134px off the top and
-   * cut into her head.
+   * source is 2:3, so a centred crop would take off the top and cut into her
+   * head. The replacement has the same aspect and framing, so object-top
+   * carries over unchanged.
    */
   portrait: { src: "/iram-kauser.jpg", alt: "Iram Kauser, Founder and CEO of Pivot Prime" } as {
     src: string;

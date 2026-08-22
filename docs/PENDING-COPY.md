@@ -388,6 +388,35 @@ contractions and we will.
 
 ---
 
+## 1g. Five new colours, and what we named them — **for Iram**
+
+Your swatch on slide 3 of *Website Revisions 2208v1* adds five colours. They are in
+the build as design tokens:
+
+| Your hex | The name we gave it |
+|---|---|
+| `#fefbf8` | shell |
+| `#e8f4ec` | mist |
+| `#e8d7b5` | sand |
+| `#9f7a3d` | bronze |
+| `#efeae0` | linen |
+
+**The names are ours, not yours.** Your swatch labels each circle with its hex code
+and nothing else, and the code needs a word rather than a number so that a colour can
+be changed in one place later. Rename any of them and we will follow.
+
+The top row of your swatch is identical to the five colours already in the build, so
+nothing existing changed.
+
+**Six colours in the two mockups are not on the swatch and we have not used them.**
+Four are close enough to a swatch colour to be that colour with a rounding error.
+Two are a gold and a dark olive, `#c8af50` and `#3a3510`, that have no relative on
+the swatch at all. Four more are nearest to a swatch colour of a completely different
+family: `#b8d9c6` is a pale green whose closest match is a sand. Rather than guess, we
+have left all of them out and the audit lists each one. See `docs/REVISIONS-2208.md`.
+
+---
+
 ## 2. Spec contradictions, logged and worked around
 
 ### 2.1 The fractional service slug — **logged, decided**

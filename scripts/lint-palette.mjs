@@ -2,8 +2,9 @@
 /**
  * Palette guard.
  *
- * The approved brand palette is five values, defined once as tokens in
- * src/app/globals.css. Everything else on dark is derived from them with white
+ * The approved brand palette is ten values, defined once as tokens in
+ * src/app/globals.css: five from the spec's swatch plate and five added from the
+ * client's swatch of 22 August 2026. Everything else on dark is derived from them with white
  * alpha, following the mockups, rather than by inventing new greens. This script
  * fails the build when a raw hex colour appears anywhere it should not.
  *
