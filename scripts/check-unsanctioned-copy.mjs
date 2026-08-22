@@ -47,7 +47,6 @@ const norm = (s) =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "");
 
-const stripTags = (html) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
 // Every word of the spec, normalised, as one haystack. A heading is sanctioned
 // if the document contains it anywhere: which section it came from is the copy
@@ -56,66 +55,114 @@ const specHaystack = norm(Object.values(loadSpecBlocks()).flat().join(" "));
 
 const sanctioned = new Map(SANCTIONED.entries.map((e) => [norm(e.text), e]));
 
-async function routes() {
-  const res = await fetch(`${BASE}/sitemap.xml`);
+/**
+ * The sitemap is a starting point, not the route list.
+ *
+ * Driving off it alone silently skipped /privacy, which is deliberately excluded
+ * from the sitemap because it carries noindex. A page nobody indexes still has
+ * headings and buttons a visitor reads, so it still has to trace. Every internal
+ * link found while auditing is followed, so a route can only escape this by
+ * being linked from nowhere, which check-links already fails on.
+ */
+async function seedRoutes() {
+  const res = await fetch(`${BASE}/sitemap.xml`).catch(() => null);
+  if (!res?.ok) return ["/"];
   const xml = await res.text();
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname || "/");
+  const seeds = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname || "/");
+  return seeds.length ? seeds : ["/"];
 }
 
-const HEADING = /<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi;
-const LINK = /<a\b[^>]*>([\s\S]*?)<\/a>/gi;
-const BUTTON = /<button\b[^>]*>([\s\S]*?)<\/button>/gi;
+/**
+ * STRUCTURE, NOT STRING POSITION.
+ *
+ * This used to do `html.split(/<\/header>/i).pop()` to skip the site header.
+ * Two things were wrong with that. `<header>` is a valid sectioning element and
+ * the homepage contains three of them, so it kept only what followed the LAST
+ * one and silently discarded 31 links and 31 buttons, 71% of the page's calls to
+ * action, including every pattern chip. And the site header is a <nav>, not a
+ * <header>, so the slice never excluded the thing it was written to exclude. It
+ * reported "clean" on a page carrying "Discuss Your Fix", which is in neither
+ * the spec nor the allowlist.
+ *
+ * So the document is parsed rather than cut. Chrome loads each route with
+ * JavaScript DISABLED, which is the same served HTML the other checks read, and
+ * the site header and footer are excluded by removing those nodes: they carry
+ * data-site-header and data-site-footer for exactly this. No offset arithmetic
+ * anywhere.
+ */
+const collect = (page, dropChrome) =>
+  page.evaluate((drop) => {
+    const doc = document.cloneNode(true);
+    if (drop) {
+      doc.querySelectorAll("[data-site-header], [data-site-footer]").forEach((n) => n.remove());
+    }
+    const out = [];
+    const text = (el) => (el.textContent ?? "").replace(/\s+/g, " ").trim();
+    doc.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((el) => out.push({ kind: el.tagName.toLowerCase(), text: text(el) }));
+    doc.querySelectorAll("a").forEach((el) => out.push({ kind: "link", text: text(el) }));
+    doc.querySelectorAll("button").forEach((el) => out.push({ kind: "button", text: text(el) }));
+    return out;
+  }, dropChrome);
+
+const { chromium } = await import("playwright-core");
+let browser;
+try {
+  browser = await chromium.launch({ channel: "chrome" });
+} catch (err) {
+  console.error(`reverse-audit: could not launch the system Chrome: ${err.message.split("\n")[0]}`);
+  process.exit(0);
+}
+// JavaScript off, so this reads what the server sent, exactly like the others.
+const context = await browser.newContext({ javaScriptEnabled: false });
 
 const findings = [];
 const seen = new Set();
+const liveNorm = new Set();
 let inspected = 0;
+const queue = await seedRoutes();
+const visited = new Set(queue);
+const allRoutes = [];
 
-for (const route of await routes()) {
-  const res = await fetch(`${BASE}${route}`);
-  if (!res.ok) continue;
-  const html = await res.text();
-  const body = html.split(/<\/header>/i).pop();
+while (queue.length) {
+  const route = queue.shift();
+  const page = await context.newPage();
+  const res = await page.goto(`${BASE}${route}`, { waitUntil: "domcontentloaded" }).catch(() => null);
+  if (!res || !res.ok()) { await page.close(); continue; }
+  allRoutes.push(route);
 
-  const items = [];
-  for (const m of html.matchAll(HEADING)) items.push({ kind: `h${m[1]}`, text: stripTags(m[2]) });
-  for (const m of body.matchAll(LINK)) items.push({ kind: "link", text: stripTags(m[1]) });
-  for (const m of body.matchAll(BUTTON)) items.push({ kind: "button", text: stripTags(m[1]) });
+  for (const { text } of await collect(page, false)) liveNorm.add(norm(text));
 
-  for (const { kind, text } of items) {
-    // Icon-only controls, single words of chrome and anything numeric are not
-    // copy decisions. Two words is the floor for a label worth tracing.
+  for (const href of await page.evaluate(() =>
+    [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")),
+  )) {
+    if (!href || !href.startsWith("/") || href.startsWith("/api")) continue;
+    const target = href.split("#")[0].split("?")[0] || "/";
+    if (!visited.has(target)) { visited.add(target); queue.push(target); }
+  }
+
+  for (const { kind, text } of await collect(page, true)) {
     if (!text || text.split(" ").length < 2) continue;
-    // A link wrapping a whole card yields the card's entire prose as one string.
-    // That is the matcher seeing markup structure, not a label anyone wrote.
     if (text.split(" ").length > 14) continue;
     const key = norm(text);
     if (!key) continue;
     inspected += 1;
-
     if (specHaystack.includes(key)) continue;
     if (sanctioned.has(key)) continue;
-
-    const id = `${key}`;
-    if (seen.has(id)) continue;
-    seen.add(id);
+    if (seen.has(key)) continue;
+    seen.add(key);
     findings.push({ route, kind, text });
   }
+  await page.close();
 }
+await browser.close();
 
 // An allowlist entry that no longer matches anything is a decision that has been
 // quietly reverted or reworded, which is the same defect pointing the other way.
-const live = new Set();
-for (const route of await routes()) {
-  const res = await fetch(`${BASE}${route}`);
-  if (!res.ok) continue;
-  const html = await res.text();
-  for (const m of html.matchAll(HEADING)) live.add(norm(stripTags(m[2])));
-  for (const m of html.matchAll(LINK)) live.add(norm(stripTags(m[1])));
-  for (const m of html.matchAll(BUTTON)) live.add(norm(stripTags(m[1])));
-}
-const stale = SANCTIONED.entries.filter((e) => !live.has(norm(e.text)) && e.mustAppear !== false);
+// Compared against the FULL document, chrome included, so moving a label into the
+// header does not read as a deletion.
+const stale = SANCTIONED.entries.filter((e) => !liveNorm.has(norm(e.text)) && e.mustAppear !== false);
 
-console.log(`reverse-audit: inspected ${inspected} headings and calls to action across the site`);
+console.log(`reverse-audit: inspected ${inspected} headings and calls to action across ${allRoutes.length} routes`);
 
 if (!findings.length && !stale.length) {
   const awaiting = SANCTIONED.entries.filter((e) => e.status === "awaiting-client").length;

@@ -190,7 +190,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav ref={navRef} className="fixed top-4 right-4 left-4 z-50">
+    <nav ref={navRef} data-site-header className="fixed top-4 right-4 left-4 z-50">
       <div className="mx-auto max-w-6xl rounded-full glass-nav px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex flex-shrink-0 items-center" onClick={closeAll}>
