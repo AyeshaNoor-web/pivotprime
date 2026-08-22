@@ -65,7 +65,7 @@ const sanctioned = new Map(SANCTIONED.entries.map((e) => [norm(e.text), e]));
  * being linked from nowhere, which check-links already fails on.
  */
 async function seedRoutes() {
-  const res = await fetch(`${BASE}/sitemap.xml`).catch(() => null);
+  const res = await fetch(`${BASE}/sitemap.xml`, { signal: AbortSignal.timeout(15000) }).catch(() => null);
   if (!res?.ok) return ["/"];
   const xml = await res.text();
   const seeds = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname || "/");
@@ -116,6 +116,7 @@ try {
 const context = await browser.newContext({ javaScriptEnabled: false });
 
 const findings = [];
+const unreachable = [];
 const seen = new Set();
 const liveNorm = new Set();
 let inspected = 0;
@@ -126,8 +127,20 @@ const allRoutes = [];
 while (queue.length) {
   const route = queue.shift();
   const page = await context.newPage();
-  const res = await page.goto(`${BASE}${route}`, { waitUntil: "domcontentloaded" }).catch(() => null);
-  if (!res || !res.ok()) { await page.close(); continue; }
+  // A route that will not load is NOT a route with nothing to report.
+  // Swallowing it produced a confident summary over 3 of 16 routes when this was
+  // pointed at a deployment that was still warming up: same silent failure as the
+  // </header> slice, one layer out. Retried once, then recorded as a hard failure.
+  let res = await page.goto(`${BASE}${route}`, { waitUntil: "domcontentloaded", timeout: 15000 }).catch(() => null);
+  if (!res || !res.ok()) {
+    await page.waitForTimeout(2000);
+    res = await page.goto(`${BASE}${route}`, { waitUntil: "domcontentloaded", timeout: 15000 }).catch(() => null);
+  }
+  if (!res || !res.ok()) {
+    unreachable.push({ route, status: res ? res.status() : "no response" });
+    await page.close();
+    continue;
+  }
   allRoutes.push(route);
 
   for (const { text } of await collect(page, false)) liveNorm.add(norm(text));
@@ -164,7 +177,12 @@ const stale = SANCTIONED.entries.filter((e) => !liveNorm.has(norm(e.text)) && e.
 
 console.log(`reverse-audit: inspected ${inspected} headings and calls to action across ${allRoutes.length} routes`);
 
-if (!findings.length && !stale.length) {
+for (const u of unreachable) {
+  console.error(`\n  ${u.route} could not be loaded (${u.status})`);
+  console.error("    audited 0 items on it, so this run does not cover the whole site");
+}
+
+if (!findings.length && !stale.length && !unreachable.length) {
   const awaiting = SANCTIONED.entries.filter((e) => e.status === "awaiting-client").length;
   console.log(
     `reverse-audit: clean (${SANCTIONED.entries.length - awaiting} traced, ` +
@@ -182,7 +200,8 @@ for (const s of stale) {
   console.error(`    ${s.why}`);
 }
 console.error(
-  `\nreverse-audit: ${findings.length} unsanctioned, ${stale.length} stale.` +
+  `\nreverse-audit: ${findings.length} unsanctioned, ${stale.length} stale, ` +
+    `${unreachable.length} unreachable.` +
     `\nEvery entry needs a spec block behind it, or an entry in scripts/sanctioned-copy.json` +
     `\nnaming who decided it and where the client can read about it.`,
 );
