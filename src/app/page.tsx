@@ -330,7 +330,7 @@ export default function Home() {
                 alt={FOUNDER.portrait.alt}
                 width={720}
                 height={900}
-                className="w-full rounded-2xl object-cover"
+                className="aspect-[4/5] w-full rounded-2xl object-cover object-top"
               />
             ) : (
               /* Placeholder: shown until Iram supplies the Arabian Mirror
