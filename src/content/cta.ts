@@ -60,11 +60,43 @@ export const WHATSAPP_CTA: Cta = {
   external: HAS_WHATSAPP,
 };
 
-/** The short form used in the header, where the full label does not fit. */
+/**
+ * The header button. Spec 2.2, line 226:
+ *
+ *   "The header button currently reads BOOK DISCOVERY CALL. Change it to
+ *    TALK TO US and point it at WhatsApp with the homepage pre-fill."
+ *
+ * That instruction is the whole reason this constant exists, so the label is
+ * not a choice. It read "Book Consultation" for one commit, which is the
+ * wording the line above asks to be removed; restored and recorded in
+ * docs/PENDING-COPY.md section 1e.
+ *
+ * The pre-fill is NOT implemented. The spec refers to "the homepage pre-fill"
+ * as something that already exists, but never gives its text, and there is no
+ * pre-fill anywhere in this repository to inherit. Inventing the first words a
+ * prospect sends a client is not a gap to fill by guessing, so the link opens
+ * WhatsApp with no message and the text is owed. PENDING-COPY item 1.16.
+ */
 export const HEADER_CTA: Cta = {
-  label: "Book Consultation",
+  label: "Talk to us",
   href: WHATSAPP_URL,
   external: HAS_WHATSAPP,
+};
+
+/**
+ * The enquiry form's submit button.
+ *
+ * Functional UI copy, not drawn from the spec: the document sets the form's
+ * routing in 2.3 and never names its submit control. It lives here rather than
+ * inline so the reverse audit can see it and so it has one home.
+ *
+ * It read "Request a discovery call", which was mine and which used the exact
+ * phrase spec 2.2 line 226 instructs removing from the site. Recorded as
+ * invented copy removed, docs/PENDING-COPY.md section 1e.
+ */
+export const ENQUIRY_SUBMIT_CTA: Cta = {
+  label: "Send enquiry",
+  href: "/api/enquiry",
 };
 
 /**

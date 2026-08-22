@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { ENQUIRY_SUBMIT_CTA } from "@/content/cta";
 
 /**
  * Contact form, spec 2.3.
@@ -150,7 +151,7 @@ export default function EnquiryForm({
         disabled={state === "sending"}
         className="w-full rounded-full bg-neon px-8 py-3.5 font-bold tracking-wider text-forest uppercase shadow-md transition-all hover:bg-forest hover:text-white hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-neon focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-70 text-xs"
       >
-        {state === "sending" ? "Sending..." : "Request a discovery call"}
+        {state === "sending" ? "Sending..." : ENQUIRY_SUBMIT_CTA.label}
       </button>
       <p className="text-center text-[11px] text-neutral-500 font-medium">
         We use your details only to prepare the call.

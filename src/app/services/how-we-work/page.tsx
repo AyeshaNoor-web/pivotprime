@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/content/metadata";
+import { CONTACT_CTA } from "@/content/cta";
 
 export const metadata: Metadata = pageMetadata("howWeWork");
 
@@ -209,7 +210,7 @@ export default function WhatWeDo() {
                 </p>
               </div>
               <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
-                Book discovery call
+                {CONTACT_CTA.label}
               </Link>
             </div>
 
@@ -224,7 +225,7 @@ export default function WhatWeDo() {
                 </p>
               </div>
               <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-bold uppercase text-white bg-primary hover:bg-mid/90 transition-colors rounded-md shadow w-fit">
-                Book discovery call
+                {CONTACT_CTA.label}
               </Link>
             </div>
           </div>

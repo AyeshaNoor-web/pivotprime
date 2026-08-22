@@ -126,7 +126,7 @@ client names.
 | 1.6 | Which team members appear, with photographs and one-line credentials | 6.3, 10 #2 | client | About team layer |
 | 1.7 | Which clients may be named, confirmed in writing | 3.8, 10 #1 | client | Case studies, logo bar |
 | 1.8 | Privacy policy legal sign-off by a UAE-qualified adviser | 2.7 | client | `/privacy`, both diagnostics, all three API routes |
-| 1.9 | Founder portrait at full resolution. **The two article URLs are no longer outstanding**: they were carried as hyperlinks in the docx and were only missing from my plain-text conversion. Both are now wired into the proof bar | 8.1, 10 #8 | client | Homepage 3.7, About 6.1 |
+| 1.9 | Founder portrait. **Delivered 22 August 2026 and live on the homepage.** A seated portrait, 1066x1600, at `public/iram-kauser.jpg`. Spec 8.1 asks for the Arabian Mirror frame at full resolution; this is a seated portrait and is not a crop from an article, but the file cannot confirm it is that frame at its original size, so this is closed as delivered rather than as verified. If a larger original exists, send it: at 1066px wide it is very slightly under twice the 552px it occupies on a desktop screen, which is the width a high-density display wants. **The two article URLs are no longer outstanding**: they were carried as hyperlinks in the docx and were only missing from my plain-text conversion. Both are now wired into the proof bar | 8.1, 10 #8 | — | Nothing. Shipped |
 | 1.10 | CRM, dashboard and Scentmatic assets, client data blurred | 8.1, 10 #8 | **Saif** | Technology Builds |
 | 1.11 | Homepage services card 6. **Copy recovered and written, not shipping.** "(TEXT AS PER CARD SHOWN)" points at a reference image in which the card is legible, so it was transcribed rather than invented, and lives in `src/content/services.ts` as `DIAGNOSTIC_CARD`. It does **not** appear in stage one: every line names the diagnostic by duration and output, so it is gated with `NEXT_PUBLIC_ENABLE_DIAGNOSTIC` and ships when the instrument does. Nothing is owed by the client here, and nothing further needs writing | 3.4 | — | Nothing. Ships with the diagnostic |
 | 1.12 | RAKEZ activity scope confirmation for selling software as a standalone product | 10 #7 | client | Technology Builds going live |
@@ -311,6 +311,80 @@ reads as a mistake.
 
 If you want a diagram to carry more once you have seen the page, that is a
 conversation. It was not a decision to take on your behalf now.
+
+---
+
+## 1e. Two calls to action corrected — **for Iram**
+
+Both used wording section 2.2 of your document asks us to remove. Line 226 reads:
+
+> *The header button currently reads BOOK DISCOVERY CALL. Change it to TALK TO US
+> and point it at WhatsApp with the homepage pre-fill.*
+
+**The header button.** It read "Book Consultation" for one commit. That is the
+wording the line above asks to be taken off the site, so it now reads "Talk to
+us" and opens WhatsApp, as instructed. Nothing else about the button changed.
+
+**The enquiry form's button.** It read "Request a discovery call". That was ours,
+not yours, and it used the same phrase. It now reads "Send enquiry", which
+describes what the button does and claims nothing about what happens next.
+
+**A third place we found while checking.** "Book discovery call" was also on the
+How We Work page, twice, on the coaching and workshops cards. Also ours. Both now
+read "Talk to us". You did not ask us to look for it; the new check below found it.
+
+**The pre-fill is not built.** Line 227 says to point the header button at
+WhatsApp "with the homepage pre-fill". Your document refers to that pre-filled
+message as something that already exists, but never gives its wording, and there
+is none in the code we inherited. We are not going to invent the first sentence a
+prospect sends you. **The button opens WhatsApp with an empty message until you
+give us that line.** Tracked as item 1.16.
+
+---
+
+## 1f. Copy on the site that came from neither source — **for Iram**
+
+We now check the site the other way round. Until this week we only asked "is every
+line of your document on the site?", which reached 198 out of 198 and stayed there
+while two buttons nobody had approved sat on screen. A check that only reads your
+document cannot see writing your document never asked for.
+
+So every heading and every button on the site is now traced back to one of three
+places: a block in your document, the wording kept from the current pivotprime.ae,
+or this list.
+
+The 44 below are ours. They are structural and connective writing that
+your document did not supply, mostly the sub-headings that hold a page together and
+the closing lines above a button. **None of it is wrong, and none of it is
+invented positioning.** But none of it is yours either, and you should read it and
+either approve it or replace it.
+
+| Page | Copy we wrote |
+|---|---|
+| `/` | "01 Scaling SME leader"<br>"02 Corporate innovator"<br>"03 Mid-market execution owner"<br>"04 Stretched founder"<br>"Design the execution roadmap →"<br>"Fitness and Wellness Company, UAE"<br>"The business is stable, but strategic momentum is hard to create."<br>"What we have achieved"<br>"You are expected to deliver change without the team it really takes."<br>"You built something real, and everything still runs through you." |
+| `/about` | "At Pivot Prime, we bring four things into every engagement"<br>"We do not just understand your challenges."<br>"We have sat in the system."<br>"• We embed operational discipline"<br>"• We enable data tracking"<br>"• We structure problem solving"<br>"• We understand human behaviour" |
+| `/contact` | "Tell us what’s slowing you down."<br>"WhatsApp us on +971 52 440 1075" |
+| `/for-corporate-leaders` | "Need on-demand execution support?"<br>"Through Build and Place. Scoped per engagement."<br>"Through a Fractional COO retainer, monthly or ad hoc." |
+| `/for-founders` | "Ready to take work off your plate?"<br>"Through a Fractional COO retainer. Scoped per engagement."<br>"Through an Operational Clarity Audit. From AED 15,000."<br>"Through hiring support, role design and Build and Place." |
+| `/for-pl-owners` | "Ready to create real momentum?"<br>"Through Build and Place and Technology Builds."<br>"Through an extended Operational Clarity Audit."<br>"Through fractional Chief of Staff support, a variant of the COO retainer." |
+| `/for-smes` | "Ready to make your business predictable?" |
+| `/services/build-and-place` | "One contract. One accountable party."<br>"The seats we place" |
+| `/services/fractional-coo` | "Find out which seat is actually missing."<br>"Fractional CFO Owns the numbers"<br>"Fractional COO Owns execution"<br>"Fractional Chief of Staff Owns follow-through"<br>"Heavy at the start. Light by the end."<br>"Three seats. Pick the one that is missing."<br>"Where it does not fit" |
+| `/services/operational-clarity-audit` | "Almost every engagement begins with the audit."<br>"How the work runs today, and what it becomes." |
+| `/services/technology-builds` | "An app you want built, or a process that is eating your team." |
+| `/services/uae-market-entry` | "Where it ends up" |
+
+**One thing to correct rather than approve.** Section 6.2 says to keep the About
+content as it stands. We kept the sense but expanded two contractions:
+
+| On pivotprime.ae today | On the rebuild |
+|---|---|
+| "We've sat in the system." | "We have sat in the system." |
+| "We don't just understand your challenges." | "We do not just understand your challenges." |
+
+Section 1 of your document says green blocks must not be re-punctuated. KEEP
+content deserves the same treatment and did not get it. Tell us to restore the
+contractions and we will.
 
 ---
 

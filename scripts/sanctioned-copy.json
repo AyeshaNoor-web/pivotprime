@@ -1,0 +1,684 @@
+{
+  "_readme": [
+    "Copy the site renders that is not a verbatim spec block.",
+    "Every entry names where it came from. check-unsanctioned-copy.mjs fails on anything",
+    "rendered that is neither in docs/spec.md nor listed here, and on any entry here that",
+    "has stopped being rendered.",
+    "",
+    "status traced          = provenance established.",
+    "status awaiting-client = on the site, no source. Listed in docs/PENDING-COPY.md 1f",
+    "                         for the client to approve or replace. Not a free pass."
+  ],
+  "entries": [
+    {
+      "text": "What we have achieved",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "h2"
+    },
+    {
+      "text": "Financial Services Company",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "The challenge",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "The pivot",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "The Results",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Fitness and Wellness Company, UAE",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "h3"
+    },
+    {
+      "text": "You don\u2019t have to figure it all out alone.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "You&#x27;re running an SME that is growing but not settled.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "You are expected to deliver change without the team it really takes.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "h3"
+    },
+    {
+      "text": "The business is stable, but strategic momentum is hard to create.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "h3"
+    },
+    {
+      "text": "You built something real, and everything still runs through you.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "h3"
+    },
+    {
+      "text": "Make your business predictable \u2192",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Get execution support \u2192",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Design the execution roadmap \u2192",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "link"
+    },
+    {
+      "text": "See what you can take off your plate \u2192",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "01 Scaling SME leader",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "button"
+    },
+    {
+      "text": "02 Corporate innovator",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "button"
+    },
+    {
+      "text": "03 Mid-market execution owner",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "button"
+    },
+    {
+      "text": "04 Stretched founder",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/",
+      "element": "button"
+    },
+    {
+      "text": "Back to top",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "Read more",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "How the work runs today, and what it becomes.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/operational-clarity-audit",
+      "element": "h2"
+    },
+    {
+      "text": "Almost every engagement begins with the audit.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/operational-clarity-audit",
+      "element": "h3"
+    },
+    {
+      "text": "As it runs today",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "Heavy at the start. Light by the end.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "h2"
+    },
+    {
+      "text": "Three seats. Pick the one that is missing.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "h2"
+    },
+    {
+      "text": "Where it does not fit",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "h3"
+    },
+    {
+      "text": "Find out which seat is actually missing.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "h3"
+    },
+    {
+      "text": "Fractional COO Owns execution",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "button"
+    },
+    {
+      "text": "Fractional Chief of Staff Owns follow-through",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "button"
+    },
+    {
+      "text": "Fractional CFO Owns the numbers",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/fractional-coo",
+      "element": "button"
+    },
+    {
+      "text": "One contract. One accountable party.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/build-and-place",
+      "element": "h2"
+    },
+    {
+      "text": "The seats we place",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/build-and-place",
+      "element": "h2"
+    },
+    {
+      "text": "An app you want built, or a process that is eating your team.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/technology-builds",
+      "element": "h3"
+    },
+    {
+      "text": "Automate everything",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "Fix the constraint first",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "Where it ends up",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/services/uae-market-entry",
+      "element": "h2"
+    },
+    {
+      "text": "Home-market plan",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "Built for here",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "What we do:",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "The Pivot Prime Method",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "See what is really holding you back.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Decide what to fix and how.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Ensure there are measurable results.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "People, roles, and ways of working must support it.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Executive coaching and leadership labs",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Team building workshops and communication labs",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Strategy sets direction, but execution is what creates results",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "What is blocking progress",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "First conversation",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Discover through a deep diagnostic",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Design the action plan",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Deliver with hands-on support",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Sustained results",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Stop guessing what is holding growth back, start with a proper diagnosis.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Book your first conversation \u2192",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Open main menu",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    },
+    {
+      "text": "You\u2019ve created something real.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "A business that doesn&#x27;t depend on you",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Through an Operational Clarity Audit. From AED 15,000.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-founders",
+      "element": "h3"
+    },
+    {
+      "text": "People you can trust to carry the work",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Through hiring support, role design and Build and Place.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-founders",
+      "element": "h3"
+    },
+    {
+      "text": "Growth without more chaos",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Through a Fractional COO retainer. Scoped per engagement.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-founders",
+      "element": "h3"
+    },
+    {
+      "text": "Ready to take work off your plate?",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-founders",
+      "element": "h2"
+    },
+    {
+      "text": "Revenue is increasing, but margins are uneven.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Predictable profit and cash flow",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Pricing that makes sense",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Operations that can scale",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Ready to make your business predictable?",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-smes",
+      "element": "h2"
+    },
+    {
+      "text": "You\u2019re carrying delivery, risk, and outcomes",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Execution support without headcount",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Through Build and Place. Scoped per engagement.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-corporate-leaders",
+      "element": "h3"
+    },
+    {
+      "text": "On-demand specialist bench",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Executive Sounding Board + Critical Comms Support",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Through a Fractional COO retainer, monthly or ad hoc.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-corporate-leaders",
+      "element": "h3"
+    },
+    {
+      "text": "Need on-demand execution support?",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-corporate-leaders",
+      "element": "h2"
+    },
+    {
+      "text": "You are responsible for the whole system.",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "What We Offer",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Competitive Focus &amp; Advantage Reset",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Through an extended Operational Clarity Audit.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-pl-owners",
+      "element": "h3"
+    },
+    {
+      "text": "Executive Leverage &amp; Strategy Carry-Through",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "Through fractional Chief of Staff support, a variant of the COO retainer.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-pl-owners",
+      "element": "h3"
+    },
+    {
+      "text": "Scaled Execution &amp; Intelligent Modernisation",
+      "status": "traced",
+      "kind": "live-site-keep",
+      "why": "Retained from pivotprime.ae under a KEEP instruction. Verified against the live page's served HTML on 2026-08-20."
+    },
+    {
+      "text": "Through Build and Place and Technology Builds.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-pl-owners",
+      "element": "h3"
+    },
+    {
+      "text": "Ready to create real momentum?",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/for-pl-owners",
+      "element": "h2"
+    },
+    {
+      "text": "From pressure to Prime State",
+      "status": "traced",
+      "kind": "spec",
+      "why": "Appears in docs/spec.md. Green block, or quoted in a KEEP or section 11 instruction that sanctions the existing wording."
+    },
+    {
+      "text": "We do not just understand your challenges.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h2"
+    },
+    {
+      "text": "We have sat in the system.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h2"
+    },
+    {
+      "text": "At Pivot Prime, we bring four things into every engagement",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h2"
+    },
+    {
+      "text": "\u2022 We structure problem solving",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h3"
+    },
+    {
+      "text": "\u2022 We embed operational discipline",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h3"
+    },
+    {
+      "text": "\u2022 We enable data tracking",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h3"
+    },
+    {
+      "text": "\u2022 We understand human behaviour",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/about",
+      "element": "h3"
+    },
+    {
+      "text": "Tell us what\u2019s slowing you down.",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/contact",
+      "element": "h1"
+    },
+    {
+      "text": "WhatsApp us on +971 52 440 1075",
+      "status": "awaiting-client",
+      "kind": "authored",
+      "why": "Written during the rebuild. Traces to neither a spec block nor the live site. Structural or connective copy the spec did not supply. PENDING-COPY section 1f.",
+      "route": "/contact",
+      "element": "link"
+    },
+    {
+      "text": "Send enquiry",
+      "status": "traced",
+      "kind": "ui-chrome",
+      "why": "Functional interface copy, not a copy decision. The spec never names interface controls."
+    }
+  ]
+}
